@@ -14,8 +14,7 @@
 				<table summary="検索欄">
 						<tr>
 						<td>
-							<input type="submit" name="Select" value="公演選択" />
-							<input type="hidden" name="act" value="Select" />
+							<a href="select" >公演選択</a>
 						</td>
 					</tr>
 				</table>
@@ -24,11 +23,45 @@
 				<table summary="検索欄">
 						<tr>
 						<td>
-							<input type="submit" name="Select" value="管理者画面" />
-							<input type="hidden" name="act" value="LoginManager" />
+							<a href type="submit" name="cancel" value="キャンセル">
+							キャンセル
+							</a>
 						</td>
 					</tr>
 				</table>
-			</form>
+</form>
+<form action="t-order" method="post">
+				<table summary="検索欄">
+						<tr>
+						<td>
+							<a href="submit" name="select" value="購入履歴" >
+							購入履歴
+							</a>
+						</td>
+					</tr>
+				</table>
+</form>
+<form action="t-order" method="post">
+				<table summary="検索欄">
+						<tr>
+						<td>
+							<a href type="submit" name="loginUser" value="ログイン">
+							ログイン
+							</a>
+						</td>
+					</tr>
+				</table>
+</form>
+<form action="t-order" method="post">
+				<table summary="検索欄">
+						<tr>
+						<td>
+							<a href type="submit" name="topManager" value="管理者へ">
+							管理者へ
+							</a>
+						</td>
+					</tr>
+				</table>
+</form>
 </body>
 </html>
