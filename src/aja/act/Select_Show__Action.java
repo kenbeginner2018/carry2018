@@ -15,6 +15,7 @@ public class Select_Show__Action extends Action {
 		ArrayList<ShowBean> show = listDao.showList();
 		request.setAttribute("show",show);
 		*/
+
 		return "/select.jsp";
 	}
 
