@@ -28,15 +28,6 @@
 		</table>
 
 
-		<strong>3.有効期限</strong>
-		<table>
-			<tr>
-			<td><input type="text" size="5" name="number" />/
-			<input type="text" size="5" name="number" /></td>
-		</tr>
-		</table>
-
-
 		<strong>4.セキュリティコード</strong>
 		<table>
 			<tr>
