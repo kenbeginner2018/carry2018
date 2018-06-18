@@ -1,18 +1,9 @@
 package aja.act;
 
-import java.util.ArrayList;
 import java.util.regex.Matcher;
 import java.util.regex.Pattern;
 
 import javax.servlet.http.HttpServletRequest;
-import javax.servlet.http.HttpSession;
-
-import aja.bean.CategoryBean;
-import aja.bean.ItemBean;
-import aja.bean.LoginBean;
-import aja.bean.OrderBean;
-import aja.dao.ListDAO;
-import aja.dao.LoginDAO;
 
 public class Item_List_Action extends Action {
 
@@ -22,6 +13,7 @@ public class Item_List_Action extends Action {
 		//動作のためにはListDaoとLoginDaoの実装が必要
 		//実装後にコメントアウトを外すこと
 
+		/*
 
 
 		//リクエスト処理
@@ -105,6 +97,7 @@ public class Item_List_Action extends Action {
 			session.setAttribute("cart", cart);
 		}
 
+		*/
 
 		return "/itemList.jsp";
 	}
