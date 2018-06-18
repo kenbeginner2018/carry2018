@@ -43,8 +43,8 @@
 
 		</table>
 
-
-
+</center>
+	<center>
 		<table summary="検索欄">
 			<tr>
 				<td>
