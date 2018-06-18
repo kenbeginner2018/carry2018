@@ -12,7 +12,7 @@ public class Reservation_List_Action extends Action {
 		//ListDaoが実装され次第、コメントアウト状態を解除すること
 
 		/*
-		ListDao listDao = new ListDao();
+		ListDAO listDao = new ListDAO();
 		ArrayList<Reservation_ListBean> rList = listDao.reservationList(request);
 		request.setAttribute("rList",rList);
 		*/
