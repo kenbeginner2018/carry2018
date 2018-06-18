@@ -41,7 +41,7 @@ public class LoginDAO {
 		 p_statement_Manager_Login = connection.prepareStatement(Manager_sql);
 	}
 
-	public boolean Userlogin(int reservNo, String telNo) throws Exception {
+	public boolean login(int reservNo, String telNo) throws Exception {
 
 		LoginBean lb = new LoginBean();
 
@@ -66,7 +66,7 @@ public class LoginDAO {
 		return false;
 	}
 
-	public boolean Managerlogin(int managerId, String password) throws Exception {
+	public boolean loginManager(int managerId, String password) throws Exception {
 
 		Manager_LoginBean mlb = new Manager_LoginBean();
 		try {
