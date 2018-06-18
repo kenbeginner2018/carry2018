@@ -9,8 +9,22 @@
 </head>
 <body>
 <form action="t-order" method="post">
-	<h1>予約確定しました</h1>
+
+	<center>
+		<h1>商品のご予約が確定致しました。</h1>
+
+				ご予約された商品は、劇場へ入場時  <br />
+				専用ゲートからお渡し致します。<br />
+				宜しくお願い致します。<br />
+<br />
+				ご利用ありがとうございました。<br />
+
+<br />
+<br />
+
+
 		<table summary="検索欄">
+
 			<tr>
 				<td>
 					<input type="submit" name="top" value="トップへ戻る" />
@@ -18,6 +32,7 @@
 				</td>
 			</tr>
 		</table>
+	</center>
 </form>
 </body>
 </html>

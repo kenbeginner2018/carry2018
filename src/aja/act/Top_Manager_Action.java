@@ -1,6 +1,10 @@
 package aja.act;
 
 import javax.servlet.http.HttpServletRequest;
+import javax.servlet.http.HttpSession;
+
+import aja.bean.Manager_LoginBean;
+import aja.dao.LoginDAO;
 
 public class Top_Manager_Action extends Action {
 
@@ -9,9 +13,6 @@ public class Top_Manager_Action extends Action {
 		//リクエスト処理
 		request.setCharacterEncoding("UTF-8");
 
-		//LoginDaoが実装でき次第、コメントアウトを解除すること
-
-		/*
 		HttpSession session = request.getSession(true);
 		Manager_LoginBean mLogin = (Manager_LoginBean) session.getAttribute("mLogin");
 		//ログインが出来ていない場合(mLogin == null)は、ログイン処理を行う
@@ -30,7 +31,7 @@ public class Top_Manager_Action extends Action {
 
 			//loginDaoを用いて入力値と一致するレコードがあるかを確認する
 			//loginManager()メソッドの返り値の型を確認すること
-			LoginDao loginDao = new LoginDao();
+			LoginDAO loginDao = new LoginDAO();
 			boolean checkLogin = loginDao.loginManager(managerId,password);
 
 			if(checkLogin) {
@@ -49,8 +50,6 @@ public class Top_Manager_Action extends Action {
 		}else {
 			return "/topManager.jsp";
 		}
-
-		*/
 
 		return "/topManager.jsp";
 	}

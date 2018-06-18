@@ -19,7 +19,7 @@ import aja.act.Action;
  * Servlet implementation class Control
  */
 @WebServlet("/t-order")
-public class Control extends HttpServlet {
+public class Manager_Control extends HttpServlet {
 	private static final long serialVersionUID = 1L;
 	private ServletConfig  config  = null;
 	private ServletContext context = null;
@@ -51,7 +51,7 @@ public class Control extends HttpServlet {
 
 		try {
 			String realPath = this.context.getRealPath("/");
-			String path = realPath + "/WEB-INF/action.properties";
+			String path = realPath + "/WEB-INF/manager_action.properties";
 
 			FileInputStream stream = new FileInputStream(path);
 			Properties props = new Properties();

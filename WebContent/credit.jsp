@@ -9,8 +9,27 @@
 </head>
 <body>
 <form action="t-order" method="post">
-	<h1>クレジット照合</h1>
+	<h1>クレジットカード情報</h1>
+		<strong>1.カード番号</strong>
 		<table summary="検索欄">
+		<tr>
+			<td><input type="text" size="5" name="number" />
+			<input type="text" size="5"name="number" />
+			<input type="text" size="5" name="number" /></td>
+		</tr>
+		</table>
+
+
+		<strong>2.カード名義人</strong>
+
+		<tr>
+			<td><input type="text" name="number" value=""/></td>
+		</tr>
+
+		<strong>3.有効期限</strong>
+		<tr>
+			<td><input type="text" name="number" value=""/></td>
+		</tr>
 			<tr>
 				<td>
 					<input type="submit" name="Items" value="確認" />
