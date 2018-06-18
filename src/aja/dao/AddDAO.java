@@ -22,29 +22,24 @@ public class AddDAO {
 	@SuppressWarnings("unchecked")
 	public void addOrder(HttpServletRequest request,Reservation_ListBean rList ) throws ClassNotFoundException, SQLException{
 
-		//Buy_Detailに追加処理
-
 		//Sessionオブジェクトの取得
 		HttpSession session = request.getSession(false);
 		//MySQLへ接続
-
 		String url = "jdbc:mysql://localhost:3306/t_order";
 		String user = "root";
 		String password = "root";
 		connection = DriverManager.getConnection(url, user, password);
 
-
+		//Buy_Detailに追加処理
 		try {
-	    /*
-			PrepareStatementの利用。
-			最初に枠となるSQLを設定する。
-	    */
+	    //PrepareStatementの利用。最初に枠となるSQLを設定する。
 	    // ?(INパラメータ)のところは、後から設定できる。
 		 String Buy_Detail_sql = "INSERT INTO t_order.Buy_Detail (reserveNo,itemName,price,count,subTotal) VALUES (?,?,?.?,?)";
 		 String Item_Reserver_sql = "INSERT INTO t_order.Item_Reserver (reserveNo,totalCount,totalPrice,deliveryFlag) VALUES (?,?,?,?)";
 
 		 //カートの中身をBuy_Detail表に登録するためのSQL
 		 p_statement_Buy_Detail = connection.prepareStatement(Buy_Detail_sql);
+		 //Item_Reserverの中身をItem_Reserver表に登録するためのSQL
 		 p_statement_Item_Reserver = connection.prepareStatement(Item_Reserver_sql);
 
 		 /*
@@ -67,19 +62,22 @@ public class AddDAO {
 			 p_statement_Buy_Detail.setInt(2, cart.get(i).getItemPrice());		//price
 			 p_statement_Buy_Detail.setInt(3,cart.get(i).getItemCount());	//count
 			 p_statement_Buy_Detail.setInt(4, cart.get(i).getSubTotal());	//subTotal
-			/*
- 				Itemオブジェクトの情報をorderItem表にインサート！
-			 */
+
+			 //Buy_Detail表にインサート！
 			 p_statement_Buy_Detail.executeUpdate();
 
 			 }
 
+
+			 // ?(INパラメータ)に、Item_Reserverオブジェクトの値を設定
+			 //Reservation_ListBeanから取得する。
 			 if(rList != null) {
 				 p_statement_Item_Reserver.setInt(0, rList.getReservNo());
 				 p_statement_Item_Reserver.setInt(1,rList.getTotalCount());
 				 p_statement_Item_Reserver.setInt(2,rList.getTotalPrice());
 				 p_statement_Item_Reserver.setInt(3, rList.getDeliveryFlag());
 
+				//Item_Reserver表にインサート！
 				 p_statement_Item_Reserver.executeUpdate();
 			 }
 		 }
