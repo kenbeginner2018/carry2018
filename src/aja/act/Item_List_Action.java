@@ -23,6 +23,7 @@ public class Item_List_Action extends Action {
 		//実装後にコメントアウトを外すこと
 
 
+
 		//リクエスト処理
 		request.setCharacterEncoding("UTF-8");
 
@@ -35,9 +36,13 @@ public class Item_List_Action extends Action {
 			session.setAttribute("showId",request.getParameter("showId"));
 		}
 
-		//カテゴリIDの実装(未)
-		int categoryId = Integer.parseInt(request.getParameter("category"));
-
+		//カテゴリIDの実装
+		//nullの場合は0を出す
+		if(request.getParameter("selectCategory") == null) {
+			int selectCategory = 0;
+		}else {
+			int selectCategory = Integer.parseInt(request.getParameter("selectCategory"));
+		}
 
 		//ログインページから遷移した場合
 		if(request.getParameter("reservNo") != null || request.getParameter("telNo") != null) {
@@ -93,7 +98,7 @@ public class Item_List_Action extends Action {
 			order.setReservNo(login.getReservNo());
 			order.setItemName(request.getParameter("itemName"));
 			order.setItemCount(Integer.parseInt(request.getParameter("itemCount")));
-//			order.setItemPrice(Integer.parseInt(request.getParameter("itemPrice")));
+			order.setItemPrice(Integer.parseInt(request.getParameter("itemPrice")));
 			order.setSubTotal(Integer.parseInt(request.getParameter("SubTotal")));
 			ArrayList<OrderBean> cart = (ArrayList<OrderBean>) session.getAttribute("cart");
 			cart.add(order);
