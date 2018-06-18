@@ -21,15 +21,31 @@
 
 
 		<strong>2.カード名義人</strong>
-
-		<tr>
-			<td><input type="text" name="number" value=""/></td>
+		<table>
+			<tr>
+			<td><input type="text" size="15" name="number" /></td>
 		</tr>
+		</table>
+
 
 		<strong>3.有効期限</strong>
-		<tr>
-			<td><input type="text" name="number" value=""/></td>
+		<table>
+			<tr>
+			<td><input type="text" size="5" name="number" />/
+			<input type="text" size="5" name="number" /></td>
 		</tr>
+		</table>
+
+
+		<strong>4.セキュリティコード</strong>
+		<table>
+			<tr>
+			<td><input type="text" size="5" name="number" /></td>
+		</tr>
+		</table>
+
+
+		<table>
 			<tr>
 				<td>
 					<input type="submit" name="Items" value="確認" />
