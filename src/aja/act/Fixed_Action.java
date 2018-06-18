@@ -38,9 +38,9 @@ public class Fixed_Action extends Action {
 		//addDao実装後importしたあと、コメントアウト状態を解除すること
 
 		/*
-		AddDao addDao = new AddDao();
+		AddDAO addDao = new AddDAO();
 		addDao.addOrder(request,rList);
-		UpdateDao updatedao = new Update();
+		UpdateDAO updatedao = new UpdateDAO();
 		update.updateItem(request);
 		*/
 
