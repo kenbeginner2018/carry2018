@@ -1,5 +1,5 @@
 package aja.dao;
 
-public class LoginDAO {
+public class Test {
 
 }
