@@ -51,6 +51,6 @@ public class Top_Manager_Action extends Action {
 			return "/topManager.jsp";
 		}
 
-		return "/topManager.jsp";
+//		return "/topManager.jsp";
 	}
 }

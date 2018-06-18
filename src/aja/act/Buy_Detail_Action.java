@@ -13,7 +13,7 @@ public class Buy_Detail_Action extends Action {
 		//ListDao実装後、コメントアウト状態を外すこと
 
 		/*
-		ListDao listDao = new ListDao();
+		ListDAO listDao = new ListDAO();
 		ArrayList<OrderBean> oList = listDao.orderList(request);
 		request.setAttribute("oList", oList);
 		*/

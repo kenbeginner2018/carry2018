@@ -41,7 +41,7 @@ public class Content_List_Action extends Action {
 
 	//クレジット番号の形式チェック(xxxx-xxxx-xxxx-xxxxの形式か否か)
 	private boolean checkCreditNo(String creditNo) {
-		String regex = "^[0-9]{3}$";
+		String regex = "^[0-9]{4}-[0-9]{4}-[0-9]{4}-[0-9]{4}$";
 		Pattern pattern = Pattern.compile(regex);
 		Matcher matcher = pattern.matcher(creditNo);
 		return matcher.matches();
@@ -49,7 +49,7 @@ public class Content_List_Action extends Action {
 
 	//セキュリティコードの形式チェック(3桁の整数か否か)
 	private boolean checkSecurityCode(String securityCode) {
-		String regex = "^[0-9]{4}-[0-9]{4}-[0-9]{4}-[0-9]{4}$";
+		String regex = "^[0-9]{3}$";
 		Pattern pattern = Pattern.compile(regex);
 		Matcher matcher = pattern.matcher(securityCode);
 		return matcher.matches();

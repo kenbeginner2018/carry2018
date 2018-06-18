@@ -13,9 +13,12 @@ public class Item_List_Action extends Action {
 		//動作のためにはListDaoとLoginDaoの実装が必要
 		//実装後にコメントアウトを外すこと
 
+<<<<<<< HEAD
 		/*
 
 
+=======
+>>>>>>> branch 'master' of https://github.com/kenbeginner2018/carry2018.git
 		//リクエスト処理
 		request.setCharacterEncoding("UTF-8");
 
@@ -28,9 +31,16 @@ public class Item_List_Action extends Action {
 			session.setAttribute("showId",request.getParameter("showId"));
 		}
 
+<<<<<<< HEAD
 		//カテゴリIDの実装
 		//nullの場合は0を出す
 		if(request.getParameter("selectCategory") == null) {
+=======
+		//カテゴリIDの実装(未)
+		//とりあえずhidden使わないパターンで実装
+		//明日のミーティングで確認する
+		if(request.getParameter("selectCategory") == null ) {
+>>>>>>> branch 'master' of https://github.com/kenbeginner2018/carry2018.git
 			int selectCategory = 0;
 		}else {
 			int selectCategory = Integer.parseInt(request.getParameter("selectCategory"));
@@ -38,9 +48,19 @@ public class Item_List_Action extends Action {
 
 		//ログインページから遷移した場合
 		if(request.getParameter("reservNo") != null || request.getParameter("telNo") != null) {
-			//変数上にreservNoとtelNoを取得
+			//ローカル変数上にreservNoとtelNoを取得
 			int reservNo = Integer.parseInt(request.getParameter("reservNo"));
 			String telNo = request.getParameter("telNo");
+
+			//未入力チェック
+			if(request.getAttribute("reservNo") == null || request.getAttribute("reservNo").equals("") ||
+					request.getAttribute("telNo") == null || request.getAttribute("telNo").equals("")) {
+				String errorMessage = "予約番号もしくは電話番号が入力されていません";
+				request.setAttribute("errorMessage",errorMessage);
+				//入力値保持のため、reservNoとtelNoをrequest再転送
+				request.setAttribute("reservNo", reservNo);
+				request.setAttribute("telNo", telNo);
+			}
 
 			if(!checkTelNo(telNo)) {
 				String errorMessage = "電話番号はxxx-xxxx-xxxxの形式で入力してください";
