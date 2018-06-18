@@ -89,7 +89,6 @@ public class Item_List_Action extends Action {
 	}
 
 
-
 	//電話番号の正規表現チェック(ハイフンが正しい位置に入力されているか否か)
 	private boolean checkTelNo(String telNo) {
 		String regex = "^[0-9]+-[0-9]+-[0-9]+$";
