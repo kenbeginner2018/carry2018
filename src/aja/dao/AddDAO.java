@@ -28,7 +28,7 @@ public class AddDAO {
 
 			 //PrepareStatementの利用。最初に枠となるSQLを設定する。
 		    // ?(INパラメータ)のところは、後から設定できる。
-			 String Buy_Detail_sql = "INSERT INTO t_order.Buy_Detail (reserveNo,itemName,price,count,subTotal) VALUES (?,?,?.?,?)";
+			 String Buy_Detail_sql = "INSERT INTO t_order.Buy_Detail (reserveNo,itemName,price,count,subTotal) VALUES (?,?,?,?,?)";
 			 String Item_Reserver_sql = "INSERT INTO t_order.Item_Reserver (reserveNo,totalCount,totalPrice,deliveryFlag) VALUES (?,?,?,?)";
 
 			 //カートの中身をBuy_Detail表に登録するためのSQL

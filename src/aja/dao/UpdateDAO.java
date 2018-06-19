@@ -26,7 +26,7 @@ public class UpdateDAO {
 
 			//PrepareStatementの利用。最初に枠となるSQLを設定する。
 			 // ?(INパラメータ)のところは、後から設定できる。
-			 String Item_Update_sql = "Update Item SET stock = stock - ? WHERE itemName= ?";
+			 String Item_Update_sql = "UPDATE Item SET stock = stock - ? WHERE itemName= '?'";
 
 			 //Item表の在庫数を更新するためのSQL
 			 p_statement_Item_Update = connection.prepareStatement(Item_Update_sql);
