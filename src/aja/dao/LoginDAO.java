@@ -22,7 +22,7 @@ public class LoginDAO {
 		/*
 		MySQLへ接続
 		 */
-		String url = "jdbc:mysql://localhost:3306/latte_station";
+		String url = "jdbc:mysql://localhost:3306/t_order";
 		String user = "root";
 		String password = "root";
 		connection = DriverManager.getConnection(url, user, password);
