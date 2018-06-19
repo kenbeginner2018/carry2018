@@ -169,4 +169,4 @@ alter table t_order.showd add showimage varchar(50);
 
 update t_order.showd set showimage = 'gaisenmon.jpg' where showId = 1;
 
-update t_order.showd set showimage = 'messaiah.jpg' where showId = 2;
+update t_order.showd set showimage = 'messiah.jpg' where showId = 2;
