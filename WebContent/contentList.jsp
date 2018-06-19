@@ -13,19 +13,30 @@
 
 
 	<center>
-		<table border="3" summary="注文内容表示">
-			<tr bgcolor="#CCFFFF">
-				<th>商品名</th><th>価格</th><th>数量</th><th>小計</th>
+		<table border="3" summary="注文内容表示" cellspacing="1">
+			<tr bgcolor="#b3b3b3" align="center">
+				<td colspan="2">商品名</td>
+				<td>価格</td>
+				<td>数量</td>
+				<td>小計</td>
 
 			</tr>
 
-			<tr><td><input type="image" src="img/1_bracelet.png" alt="グッズA" />
+			<tr align="center">
+				<td>
+					<input type="image" src="img/1_bracelet.png" alt="グッズA" /><br />
 				</td>
-				<td>商品名
+				<td>
+					ブレスレット/望海風斗
 				</td>
-				<td>価格
+				<td>
+					¥3,300
 				</td>
-				<td>数量
+				<td>
+					1
+				</td>
+				<td>
+					¥3,300
 				</td>
 			</tr>
 
@@ -48,7 +59,7 @@
 		<table summary="検索欄">
 			<tr>
 				<td>
-					<input type="submit" name="content" value="注文を確定する" />
+					<input type="submit" name="contents" value="注文を確定する" />
 					<input type="hidden" name="act" value="Fixed" />
 				</td>
 			</tr>
