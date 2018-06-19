@@ -13,12 +13,8 @@ public class Item_List_Action extends Action {
 		//動作のためにはListDaoとLoginDaoの実装が必要
 		//実装後にコメントアウトを外すこと
 
-<<<<<<< HEAD
 		/*
 
-
-=======
->>>>>>> branch 'master' of https://github.com/kenbeginner2018/carry2018.git
 		//リクエスト処理
 		request.setCharacterEncoding("UTF-8");
 
