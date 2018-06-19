@@ -167,7 +167,7 @@ public class ListDAO {
 				 items = new ArrayList<ItemBean>();
 				 while(rs_items.next()) {
 					 item = new ItemBean();
-					 item.setItemName(rs_items.getString("item_name"));
+					 item.setItemName(rs_items.getString("itemName"));
 					 item.setItemPrice(rs_items.getInt("price"));
 					 item.setItemImage(rs_items.getString("itemImage"));
 					 item.setItemDetail(rs_items.getString("itemDetail"));

@@ -30,12 +30,22 @@ public class Item_List_Action extends Action {
 		HttpSession session = request.getSession(true);
 		LoginBean login = (LoginBean) session.getAttribute("login");
 
+/*
 		//公演選択画面で選択された公演を保持
 		if(request.getParameter("showId") != null){
 			session.setAttribute("showId",request.getParameter("showId"));
 		}else {
 			return "/top.jsp";
 		}
+*/
+
+		session.setAttribute("showId",1);
+
+		//request.categoryがnullならば、categoryに0を代入してrequest転送
+		if(request.getParameter("category")==null) {
+			request.setAttribute("category", 0);
+		}
+
 
 		//ログインページから遷移した場合
 		if(request.getParameter("reservNo") != null || request.getParameter("telNo") != null) {
@@ -86,9 +96,10 @@ public class Item_List_Action extends Action {
 		}
 
 
+
 		//session.categoryが存在しない場合、カテゴリの取得を行う
 		ArrayList<CategoryBean> category = (ArrayList<CategoryBean>)session.getAttribute("category");
-		if(category != null) {
+		if(category == null) {
 			ListDAO listDao = new ListDAO();
 			category = listDao.category_List();
 			session.setAttribute("category", category);
@@ -96,7 +107,7 @@ public class Item_List_Action extends Action {
 
 
 		//itemCount!=0ならばカートに商品を追加
-		if(Integer.parseInt(request.getParameter("itemCount")) != 0) {
+		if(request.getParameter("itemCount") != null) {
 			OrderBean order = new OrderBean();
 			order.setReservNo(login.getReservNo());
 			order.setItemName(request.getParameter("itemName"));
