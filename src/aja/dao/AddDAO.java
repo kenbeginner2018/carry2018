@@ -3,6 +3,7 @@ package aja.dao;
 import java.sql.Connection;
 import java.sql.DriverManager;
 import java.sql.PreparedStatement;
+import java.sql.ResultSet;
 import java.sql.SQLException;
 import java.util.ArrayList;
 
@@ -16,6 +17,7 @@ import aja.bean.Reservation_ListBean;
 public class AddDAO {
 	 private Connection connection;
 	 private PreparedStatement p_statement_Buy_Detail;
+	 private PreparedStatement p_statement_ItemId_Search;
 	 private PreparedStatement p_statement_Item_Reserver;
 
 
@@ -28,11 +30,13 @@ public class AddDAO {
 
 			 //PrepareStatementの利用。最初に枠となるSQLを設定する。
 		    // ?(INパラメータ)のところは、後から設定できる。
-			 String Buy_Detail_sql = "INSERT INTO t_order.Buy_Detail (reserveNo,itemName,price,count,subTotal) VALUES (?,?,?.?,?)";
-			 String Item_Reserver_sql = "INSERT INTO t_order.Item_Reserver (reserveNo,totalCount,totalPrice,deliveryFlag) VALUES (?,?,?,?)";
+			 String Buy_Detail_sql = "INSERT INTO t_order.buy_detail (reserveNo,itemId,count,subTotal) VALUES (?,?,?.?)";
+			 String ItemId_Search_sql = "SELECT * FROM t_order.item WHERE item.itemName = ' ? '";
+			 String Item_Reserver_sql = "INSERT INTO t_order.item_reserver (reserveNo,totalCount,totalPrice,deliveryFlag) VALUES (?,?,?,?)";
 
 			 //カートの中身をBuy_Detail表に登録するためのSQL
 			 p_statement_Buy_Detail = connection.prepareStatement(Buy_Detail_sql);
+			 p_statement_ItemId_Search = connection.prepareStatement(ItemId_Search_sql);
 			 //Item_Reserverの中身をItem_Reserver表に登録するためのSQL
 			 p_statement_Item_Reserver = connection.prepareStatement(Item_Reserver_sql);
 	 }
@@ -57,18 +61,26 @@ public class AddDAO {
 
 			 for (int i=0; i<cart.size(); i++) {
 
-			 // ?(INパラメータ)に、Buy_Detailオブジェクトの値を設定
-			 //cartから取得する。
+				//ResultSet型の変数をnullで初期化する
+				ResultSet rs_items = null;
+				String itemName = cart.get(i).getItemName();
+				p_statement_ItemId_Search.setString(1,itemName);
+				rs_items = p_statement_ItemId_Search.executeQuery();
 
-			 p_statement_Buy_Detail.setInt(1,cart.get(i).getReservNo());    //ReservNo
-			 p_statement_Buy_Detail.setString(2,cart.get(i).getItemName());    //ItemName
-			 p_statement_Buy_Detail.setInt(3, cart.get(i).getItemPrice());		//price
-			 p_statement_Buy_Detail.setInt(4,cart.get(i).getItemCount());	//count
-			 p_statement_Buy_Detail.setInt(5, cart.get(i).getSubTotal());	//subTotal
+				while(rs_items.next()) {
+					int itemId = rs_items.getInt("itemId");
 
-			 //Buy_Detail表にインサート！
-			 p_statement_Buy_Detail.executeUpdate();
+					// ?(INパラメータ)に、Buy_Detailオブジェクトの値を設定
+					//cartから取得する。
 
+					p_statement_Buy_Detail.setInt(1,cart.get(i).getReservNo());    //ReservNo
+					p_statement_Buy_Detail.setInt(2,itemId);					    //ItemId
+					p_statement_Buy_Detail.setInt(4,cart.get(i).getItemCount());	//count
+					p_statement_Buy_Detail.setInt(5, cart.get(i).getSubTotal());	//subTotal
+
+					 //Buy_Detail表にインサート！
+					 p_statement_Buy_Detail.executeUpdate();
+				}
 			 }
 
 
