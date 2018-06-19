@@ -12,6 +12,7 @@ public class Content_List_Action extends Action {
 		//16桁のcreditNoを生成する。
 		String creditNo = (request.getParameter("creditNo.1-4")) + "-" + (request.getParameter("creditNo.5-8")) + "-" +
 				(request.getParameter("creditNo.9-12")) + "-" + (request.getParameter("creditNo.13-16"));
+		String name = request.getParameter("name");
 		String securityCode = request.getParameter("securityCode");
 
 		//creditNo,securityCodeの空入力チェック および 正規表現チェック
@@ -21,6 +22,9 @@ public class Content_List_Action extends Action {
 
 		if(creditNo == null || creditNo.equals("")) {
 			request.setAttribute("errorMessage", "クレジット番号が入力されていません");
+			return "/credit.jsp";
+		}else if(name == null || name.equals("")){
+			request.setAttribute("errorMessage", "名前が入力されていません");
 			return "/credit.jsp";
 		}else if(securityCode == null || securityCode.equals("")) {
 			request.setAttribute("errorMessage", "セキュリティコードが入力されていません");
