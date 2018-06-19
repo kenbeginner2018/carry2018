@@ -44,16 +44,18 @@ public class ListDAO {
 		 String item_Detail_List_sql = "SELECT * FROM t_order.category,t_order.item WHERE showId = ? AND item.categoryId = category.categoryId AND item.itemName = ' ? '";
 		 String reservation_List_noDelivaryFlag_sql ="SELECT * FROM t_order.ticket_purchaser,t_order.item_reserver WHERE ticket_purchaser.reserveNo = item_reserver.reserveNo AND showDay = '?'";
 		 String reservation_List_sql ="SELECT * FROM t_order.ticket_purchaser,t_order.item_reserver WHERE ticket_purchaser.reserveNo = item_reserver.reserveNo AND showDay = ' ? 'AND deliveryFlag = ?";
-		 String order_List_sql = " ";
+		 String order_List_sql = "SELECT * FROM t_order.item_reserver,t_order.buy_detail,t_order.item WHERE buy_detail.reserveNo = item_reserver.reserveNo AND buy_detail.itemId = item.itemId AND buy_detail.reserveNo = ? ";
 
 		//SQLを保持するPreparedStatementを生成
 		p_statement_Show_List = connection.prepareStatement(show_List_sql);
 		p_statement_Category_List = connection.prepareStatement(category_List_sql);
 		p_statement_item_List_noCategoryId = connection.prepareStatement(item_List_noCategoryId_sql);
 		p_statement_item_List = connection.prepareStatement(item_List_sql);
+		p_statement_item_Detail_List = connection.prepareStatement(item_Detail_List_sql);
 		p_statement_reservation_List_noDeliveryFlag = connection.prepareStatement(reservation_List_noDelivaryFlag_sql);
 		p_statement_reservation_List = connection.prepareStatement(reservation_List_sql);
-		p_statement_item_Detail_List = connection.prepareStatement(item_Detail_List_sql);
+		p_statement_order_List = connection.prepareStatement(order_List_sql);
+
 
 	}
 	public ArrayList<ShowBean>show_List()throws SQLException{
@@ -301,7 +303,7 @@ public class ListDAO {
 		}
 			return reservationLists;
 	}
-	public ArrayList<OrderBean>order_List()throws SQLException{
+	public ArrayList<OrderBean>order_List(HttpServletRequest request)throws SQLException{
 
 		//ResultSet型の変数をnullで初期化する
 		ResultSet rs_orderLists = null;
@@ -310,31 +312,37 @@ public class ListDAO {
 		ArrayList<OrderBean> orderLists = null;
 
 		try {
-			//SQLの発行をし、抽出結果が格納されたResultオブジェクトを取得
-			 rs_orderLists = p_statement_reservation_List.executeQuery();
 
-			//ArrayListを生成し、代入する。
-			reservationLists = new ArrayList<Reservation_ListBean>();
-			while(rs_reservationLists.next()) {
-				reservation = new Reservation_ListBean();
-				reservation.setReservNo(rs_reservationLists.getInt("reserveNo"));
-				reservation.setTotalCount(rs_reservationLists.getInt("totalCount"));
-				reservation.setTotalPrice(rs_reservationLists.getInt("totalPrice"));
-				reservationLists.add(reservation);
+			if((Integer)request.getAttribute("reserveNo") != null) {
+
+				p_statement_order_List.setInt(1, (Integer)request.getAttribute("reserveNo"));
+				//SQLの発行をし、抽出結果が格納されたResultオブジェクトを取得
+				rs_orderLists = p_statement_order_List.executeQuery();
 			}
-			if(rs_reservationLists != null) {
-				rs_reservationLists.close();
+			//ArrayListを生成し、代入する。
+			orderLists = new ArrayList<OrderBean>();
+			while(rs_orderLists.next()) {
+				order = new OrderBean();
+				order.setReservNo(rs_orderLists.getInt("reserveNo"));
+				order.setItemName(rs_orderLists.getString("itemName"));
+				order.setItemCount(rs_orderLists.getInt("count"));
+				order.setSubTotal(rs_orderLists.getInt("subTotal"));
+
+				orderLists.add(order);
+			}
+			if(rs_orderLists != null) {
+				rs_orderLists.close();
 			}
 		}
 		finally {
-			if(p_statement_reservation_List != null) {
-					p_statement_reservation_List.close();
+			if(p_statement_order_List != null) {
+					p_statement_order_List.close();
 			}
 
 			if(connection != null) {
 				connection.close();
 			}
 		}
-			return reservationLists;
+			return orderLists;
 	}
 }
