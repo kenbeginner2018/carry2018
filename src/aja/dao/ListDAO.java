@@ -12,6 +12,7 @@ import javax.servlet.http.HttpSession;
 
 import aja.bean.CategoryBean;
 import aja.bean.ItemBean;
+import aja.bean.Reservation_ListBean;
 import aja.bean.ShowBean;
 
 public class ListDAO {
@@ -22,6 +23,8 @@ public class ListDAO {
 	private PreparedStatement p_statement_item_List_noCategoryId;
 	private PreparedStatement p_statement_item_List;
 	private PreparedStatement p_statement_item_Detail_List;
+	private PreparedStatement p_statement_reservation_List;
+	private PreparedStatement p_statement_order_List;
 
 	public ListDAO()throws ClassNotFoundException, SQLException {
 		//MySQLへ接続
@@ -37,6 +40,8 @@ public class ListDAO {
 		 String item_List_noCategoryId_sql = "SELECT * FROM t_order.category,t_order.item WHERE showId = ? AND item.categoryId = category.categoryId ";
 		 String item_List_sql = "SELECT * FROM t_order.category,t_order.item WHERE showId = ? AND item.categoryId = category.categoryId AND category.categoryId = ? ";
 		 String item_Detail_List_sql = "SELECT * FROM t_order.category,t_order.item WHERE showId = ? AND item.categoryId = category.categoryId AND item.itemName = ' ? '";
+		 String reservation_List_noDelivaryFlag_sql ="SELECT * FROM t_order.item_reserver,t_order.buy_detail,t_order.item WHERE item_reserver.reserveNo = buy_detail.reserveNo AND item.itemId = buy_detail.itemId AND item_reserver.reserveNo = ? ";
+		 String reservation_List_sql ="SELECT * FROM t_order.item_reserver,t_order.buy_detail,t_order.item WHERE item_reserver.reserveNo = buy_detail.reserveNo AND item.itemId = buy_detail.itemId AND item_reserver.reserveNo = ? AND item_reserver.deliveryFlag = ? ";
 
 		//SQLを保持するPreparedStatementを生成
 		p_statement_Show_List = connection.prepareStatement(show_List_sql);
@@ -44,6 +49,7 @@ public class ListDAO {
 		p_statement_item_List_noCategoryId = connection.prepareStatement(item_List_noCategoryId_sql);
 		p_statement_item_List = connection.prepareStatement(item_List_sql);
 		p_statement_item_Detail_List = connection.prepareStatement(item_Detail_List_sql);
+		p_statement_reservation_List = connection.prepareStatement(reservation_List_sql);
 	}
 	public ArrayList<ShowBean>show_List()throws SQLException{
 
@@ -63,6 +69,7 @@ public class ListDAO {
 				show = new ShowBean();
 				show.setShowId(rs_shows.getInt("showId"));
 				show.setShowName(rs_shows.getString("showName"));
+				show.setShowimage(rs_shows.getString("showimage"));
 				shows.add(show);
 			}
 			if(rs_shows != null) {
@@ -235,5 +242,78 @@ public class ListDAO {
 			}
 		}
 		return itemDetails;
+	}
+
+	public ArrayList<Reservation_ListBean>reservation_List()throws SQLException{
+
+		//ResultSet型の変数をnullで初期化する
+		ResultSet rs_reservationLists = null;
+
+		Reservation_ListBean reservation = null;
+		ArrayList<Reservation_ListBean> reservationLists = null;
+
+		try {
+			//SQLの発行をし、抽出結果が格納されたResultオブジェクトを取得
+			 rs_reservationLists = p_statement_reservation_List.executeQuery();
+
+			//ArrayListを生成し、代入する。
+			reservationLists = new ArrayList<Reservation_ListBean>();
+			while(rs_reservationLists.next()) {
+				reservation = new Reservation_ListBean();
+				reservation.setReservNo(rs_reservationLists.getInt("reserveNo"));
+				reservation.setTotalCount(rs_reservationLists.getInt("totalCount"));
+				reservation.setTotalPrice(rs_reservationLists.getInt("totalPrice"));
+				reservationLists.add(reservation);
+			}
+			if(rs_reservationLists != null) {
+				rs_reservationLists.close();
+			}
+		}
+		finally {
+			if(p_statement_reservation_List != null) {
+					p_statement_reservation_List.close();
+			}
+
+			if(connection != null) {
+				connection.close();
+			}
+		}
+			return reservationLists;
+	}
+	public ArrayList<Reservation_ListBean>order_List()throws SQLException{
+
+		//ResultSet型の変数をnullで初期化する
+		ResultSet rs_reservationLists = null;
+
+		Reservation_ListBean reservation = null;
+		ArrayList<Reservation_ListBean> reservationLists = null;
+
+		try {
+			//SQLの発行をし、抽出結果が格納されたResultオブジェクトを取得
+			 rs_reservationLists = p_statement_reservation_List.executeQuery();
+
+			//ArrayListを生成し、代入する。
+			reservationLists = new ArrayList<Reservation_ListBean>();
+			while(rs_reservationLists.next()) {
+				reservation = new Reservation_ListBean();
+				reservation.setReservNo(rs_reservationLists.getInt("reserveNo"));
+				reservation.setTotalCount(rs_reservationLists.getInt("totalCount"));
+				reservation.setTotalPrice(rs_reservationLists.getInt("totalPrice"));
+				reservationLists.add(reservation);
+			}
+			if(rs_reservationLists != null) {
+				rs_reservationLists.close();
+			}
+		}
+		finally {
+			if(p_statement_reservation_List != null) {
+					p_statement_reservation_List.close();
+			}
+
+			if(connection != null) {
+				connection.close();
+			}
+		}
+			return reservationLists;
 	}
 }
