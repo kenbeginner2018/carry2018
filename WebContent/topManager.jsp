@@ -17,7 +17,7 @@
 				<table summary="検索欄">
 						<tr>
 						<td align="center">
-							<input type="submit" name="ItemList" value="商品一覧" />
+							<input type="submit" name="Items" value="商品一覧" />
 							<input type="hidden" name="act" value="ItemList" />
 						</td>
 					</tr>
@@ -27,7 +27,7 @@
 				<table summary="検索欄">
 						<tr>
 						<td align="center">
-							<input type="submit" name="ReservationList" value="予約者一覧" />
+							<input type="submit" name="Reservation" value="予約者一覧" />
 							<input type="hidden" name="act" value="ReservationList" />
 						</td>
 					</tr>
@@ -37,7 +37,7 @@
 				<table summary="検索欄">
 						<tr>
 						<td align="center">
-							<input type="submit" name="ShowList" value="公演一覧" />
+							<input type="submit" name="Show" value="公演一覧" />
 							<input type="hidden" name="act" value="ShowList" />
 						</td>
 					</tr>
@@ -47,7 +47,7 @@
 				<table summary="検索欄">
 						<tr>
 						<td align="center">
-							<input type="submit" name="Select" value="ログイン" />
+							<input type="submit" name="login" value="ログイン" />
 							<input type="hidden" name="act" value="LoginManager" />
 						</td>
 					</tr>

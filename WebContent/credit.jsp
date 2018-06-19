@@ -10,36 +10,35 @@
 <body>
 <form action="t-order" method="post">
 	<h1>クレジットカード情報</h1>
-		<strong>1.カード番号</strong>
-		<table summary="検索欄">
-		<tr>
-			<td><input type="text" size="5" name="number" />
-				<td><input type="hidden" name="act" value=" " /></td>
-			<input type="text" size="5"name="number" />
-				<td><input type="hidden" name="act" value="reserveNo" /></td>
-			<input type="text" size="5" name="number" /></td>
-			<td><input type="hidden" name="act" value="reserveNo" /></td>
-		</tr>
-		</table>
+		<strong>1.カード番号</strong><br />
+
+
+			<input type="text" size="4" name="creditNo1-4" />
+				<input type="hidden" name="act" value=" " />
+			<input type="text" size="4"name="creditNo5-8" />
+				<input type="hidden" name="act" value=" " />
+			<input type="text" size="4"name="creditNo9-12" />
+				<input type="hidden" name="act" value=" " />
+			<input type="text" size="4" name="creditNo13-16" />
+			<input type="hidden" name="act" value=" " />
+		<br />
+
 
 
 		<strong>2.カード名義人</strong>
-		<table>
-			<tr>
-			<td><input type="text" size="15" name="number" /></td>
-			<td><input type="hidden" name="act" value=" " /></td>
-		</tr>
-		</table>
+<br />
+			<input type="text" size="15" name="name" />
+			<input type="hidden" name="act" value=" " />
+
+		<br />
 
 
-		<strong>4.セキュリティコード</strong>
-		<table>
-			<tr>
-			<td><input type="text" size="5" name="number" /></td>
-			<td><input type="hidden" name="act" value=" " /></td>
-		</tr>
-		</table>
+		<strong>3.セキュリティコード</strong>
+<br />
+			<input type="text" size="5" name="securityCode" />
+			<input type="hidden" name="act" value=" " />
 
+	<br />
 
 		<table>
 			<tr>
