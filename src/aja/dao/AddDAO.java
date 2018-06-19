@@ -83,6 +83,7 @@ public class AddDAO {
 		 }
 		 }
 
+		//finally
 		 finally {
 			 if (p_statement_Buy_Detail != null) {
 				 p_statement_Buy_Detail.close();
