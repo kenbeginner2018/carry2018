@@ -15,7 +15,7 @@
 				<table summary="検索欄">
 						<tr>
 						<td align="center">
-							<input type="submit" name="Select" value="公演選択" />
+							<input type="submit" name="Shows" value="公演選択" />
 							<input type="hidden" name="act" value="Select" />
 						</td>
 					</tr>
@@ -25,7 +25,7 @@
 				<table summary="検索欄">
 						<tr>
 						<td align="center">
-							<input type="submit" name="Select" value="キャンセル" />
+							<input type="submit" name="Cancel" value="キャンセル" />
 							<input type="hidden" name="act" value="Cancel" />
 						</td>
 					</tr>
@@ -45,14 +45,26 @@
 				<table summary="検索欄">
 						<tr>
 						<td align="center">
-							<input type="submit" name="Select" value="ログイン" />
+							<input type="submit" name="Login" value="ログイン" />
 							<input type="hidden" name="act" value="Login" />
+						</td>
+					</tr>
+				</table>
+</form>
+
+<form action="t-order" method="post">
+				<table summary="検索欄">
+						<tr>
+						<td align="center">
+							<input type="submit" name="Login" value="管理者トップ" />
+							<input type="hidden" name="act" value="TopManager" />
 						</td>
 					</tr>
 				</table>
 </form>
 </center>
 <hr/>
+<h5>
 ・住所
 〒665-8558　兵庫県宝塚市栄町1-1-57<br/>
 ・TEL　宝塚歌劇インフォメーションセンター［宝塚大劇場］<br/>
@@ -62,6 +74,6 @@
 10:00〜18:00（水曜定休）<br/>
 ※１日1公演の日と2公演の日により変更される<br/>
 
-
+</h5>
 </body>
 </html>
