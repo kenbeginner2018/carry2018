@@ -21,6 +21,7 @@ public class ListDAO {
 	private PreparedStatement p_statement_Category_List;
 	private PreparedStatement p_statement_item_List_noCategoryId;
 	private PreparedStatement p_statement_item_List;
+	private PreparedStatement p_statement_item_Detail_List;
 
 	public ListDAO()throws ClassNotFoundException, SQLException {
 		//MySQLへ接続
@@ -35,12 +36,14 @@ public class ListDAO {
 		 String category_List_sql = "SELECT * FROM t_order.category";
 		 String item_List_noCategoryId_sql = "SELECT * FROM t_order.category,t_order.item WHERE showId = ? AND item.categoryId = category.categoryId ";
 		 String item_List_sql = "SELECT * FROM t_order.category,t_order.item WHERE showId = ? AND item.categoryId = category.categoryId AND category.categoryId = ? ";
+		 String item_Detail_List_sql = "SELECT * FROM t_order.category,t_order.item WHERE showId = ? AND item.categoryId = category.categoryId AND item.itemName = ' ? '";
 
 		//SQLを保持するPreparedStatementを生成
 		p_statement_Show_List = connection.prepareStatement(show_List_sql);
 		p_statement_Category_List = connection.prepareStatement(category_List_sql);
 		p_statement_item_List_noCategoryId = connection.prepareStatement(item_List_noCategoryId_sql);
 		p_statement_item_List = connection.prepareStatement(item_List_sql);
+		p_statement_item_Detail_List = connection.prepareStatement(item_Detail_List_sql);
 	}
 	public ArrayList<ShowBean>show_List()throws SQLException{
 
@@ -114,7 +117,7 @@ public class ListDAO {
 			return categorys;
 	}
 
-	public ArrayList<ItemBean> search_table(HttpServletRequest request) throws SQLException{
+	public ArrayList<ItemBean> item_List(HttpServletRequest request) throws SQLException{
 
 		//Sessionオブジェクトの取得
 		HttpSession session = request.getSession(false);
@@ -176,5 +179,61 @@ public class ListDAO {
 			}
 		}
 		return items;
+	}
+
+	public ArrayList<ItemBean> item_Detail_List(HttpServletRequest request) throws SQLException{
+
+		//Sessionオブジェクトの取得
+		HttpSession session = request.getSession(false);
+
+		//ResultSet型の変数をnullで初期化する
+		ResultSet rs_itemDetails = null;
+
+		ItemBean itemDetail = null;
+		ArrayList<ItemBean> itemDetails = null;
+
+		try {
+
+			 if(session != null) {
+				 int showId = (Integer)session.getAttribute("showId");
+				 //もしitemName != null だったら以下の処理を行う
+				 if ((String)request.getAttribute("itemName") != null) {
+
+					 //フィールド変数 p_statement_item_Detail_Listの設定
+					 p_statement_item_Detail_List.setInt(1,showId);
+					 p_statement_item_Detail_List.setString(2, (String)request.getAttribute("itemName"));
+
+					 //SQLの発行をし、抽出結果が格納されたResultオブジェクトを取得
+					 rs_itemDetails = p_statement_item_Detail_List.executeQuery();
+				 }
+
+				 //ArrayListを生成し、代入する。
+				 itemDetails = new ArrayList<ItemBean>();
+				 while(rs_itemDetails.next()) {
+					 itemDetail = new ItemBean();
+					 itemDetail.setItemName(rs_itemDetails.getString("item_name"));
+					 itemDetail.setItemPrice(rs_itemDetails.getInt("price"));
+					 itemDetail.setItemImage(rs_itemDetails.getString("itemImage"));
+					 itemDetail.setItemDetail(rs_itemDetails.getString("itemDetail"));
+					 itemDetail.setItemStock(rs_itemDetails.getInt("stock"));
+					 itemDetail.setCategoryName(rs_itemDetails.getString("categoryName"));
+
+					 itemDetails.add(itemDetail);
+				 }
+				 if(rs_itemDetails != null) {
+					 rs_itemDetails.close();
+				 }
+			 }
+		}
+		finally {
+			if(p_statement_item_Detail_List != null) {
+				p_statement_item_Detail_List.close();
+			}
+
+			if(connection != null) {
+				connection.close();
+			}
+		}
+		return itemDetails;
 	}
 }
