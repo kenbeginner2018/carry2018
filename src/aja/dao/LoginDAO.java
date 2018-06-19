@@ -32,8 +32,8 @@ public class LoginDAO {
 		最初に枠となるSQLを設定する。
 		 */
 		// ?(INパラメータ)のところは、後から設定できる。
-		String Ticket_Pruche_sql = "SELECT * FROM Ticket_Prucher WHERE reservNo=? AND  telNo=?";
-		String Manager_sql = "SELECT * FROM Ticket_Prucher WHERE managerId=? AND  password=?";
+		String Ticket_Pruche_sql = "SELECT * FROM ticket_purchaser WHERE reserveNo=? AND  telNo='?'";
+		String Manager_sql = "SELECT * FROM t_order.manager WHERE managerId=? AND  password='?'";
 
 		//ユーザーログインの予約番号と電話番号で検索するためのSQL
 		 p_statement_User_Login = connection.prepareStatement(Ticket_Pruche_sql);
