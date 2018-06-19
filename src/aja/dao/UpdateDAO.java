@@ -26,7 +26,7 @@ public class UpdateDAO {
 
 			//PrepareStatementの利用。最初に枠となるSQLを設定する。
 			 // ?(INパラメータ)のところは、後から設定できる。
-			 String Item_Update_sql = "UPDATE Item SET stock = stock - ? WHERE itemName= '?'";
+			 String Item_Update_sql = "Update Item SET stock = stock - ? WHERE itemName= ?";
 
 			 //Item表の在庫数を更新するためのSQL
 			 p_statement_Item_Update = connection.prepareStatement(Item_Update_sql);
@@ -54,8 +54,8 @@ public class UpdateDAO {
 
 				 // ?(INパラメータ)に、Buy_Detailオブジェクトの値を設定
 				 //cartから取得する。
-				 p_statement_Item_Update.setInt(0,cart.get(i).getItemCount());	//count
-				 p_statement_Item_Update.setString(1,cart.get(i).getItemName());    //ItemName
+				 p_statement_Item_Update.setInt(1,cart.get(i).getItemCount());	//count
+				 p_statement_Item_Update.setString(2,cart.get(i).getItemName());    //ItemName
 
 				//Item表にインサート！
 				 p_statement_Item_Update.executeUpdate();
