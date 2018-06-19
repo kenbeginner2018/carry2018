@@ -14,8 +14,11 @@
 		<table summary="検索欄">
 		<tr>
 			<td><input type="text" size="5" name="number" />
+				<td><input type="hidden" name="act" value=" " /></td>
 			<input type="text" size="5"name="number" />
+				<td><input type="hidden" name="act" value="reserveNo" /></td>
 			<input type="text" size="5" name="number" /></td>
+			<td><input type="hidden" name="act" value="reserveNo" /></td>
 		</tr>
 		</table>
 
@@ -24,6 +27,7 @@
 		<table>
 			<tr>
 			<td><input type="text" size="15" name="number" /></td>
+			<td><input type="hidden" name="act" value=" " /></td>
 		</tr>
 		</table>
 
@@ -32,6 +36,7 @@
 		<table>
 			<tr>
 			<td><input type="text" size="5" name="number" /></td>
+			<td><input type="hidden" name="act" value=" " /></td>
 		</tr>
 		</table>
 

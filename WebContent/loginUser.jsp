@@ -10,6 +10,29 @@
 <body>
 <form action="t-order" method="post">
 	<h1>チケット照会</h1>
+
+
+	<strong>予約番号（チケット番号）</strong>
+		<table>
+			<tr>
+			<td><input type="text" size="15" name="number" /></td>
+			<td><input type="hidden" name="act" value="reserveNo" /></td>
+		</tr>
+		</table>
+
+
+	<strong>電話番号</strong>
+		<table>
+			<tr>
+			<td><input type="text" size="15" name="number" /></td>
+			<td><input type="hidden" name="act" value="telNo" /></td>
+		</tr>
+		</table>
+
+
+
+
+
 		<table summary="検索欄">
 			<tr>
 				<td>

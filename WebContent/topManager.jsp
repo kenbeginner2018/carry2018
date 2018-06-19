@@ -7,17 +7,52 @@
 <meta http-equiv="Content-Type" content="text/html; charset=UTF-8" />
 <title>管理者トップ</title>
 </head>
-<body>
+	<body>
+
+
+<center>
+
 <form action="t-order" method="post">
-<h1>管理者トップ</h1>
+<div align="center"><h1>TOP</h1></div>
 				<table summary="検索欄">
 						<tr>
-						<td>
-							<input type="submit" name="Select" value="予約者確認" />
+						<td align="center">
+							<input type="submit" name="ItemList" value="商品一覧" />
+							<input type="hidden" name="act" value="ItemList" />
+						</td>
+					</tr>
+				</table>
+</form>
+<form action="t-order" method="post">
+				<table summary="検索欄">
+						<tr>
+						<td align="center">
+							<input type="submit" name="ReservationList" value="予約者一覧" />
 							<input type="hidden" name="act" value="ReservationList" />
 						</td>
 					</tr>
 				</table>
 </form>
+<form action="t-order" method="post">
+				<table summary="検索欄">
+						<tr>
+						<td align="center">
+							<input type="submit" name="ShowList" value="公演一覧" />
+							<input type="hidden" name="act" value="ShowList" />
+						</td>
+					</tr>
+				</table>
+	</form>
+		<form action="t-order" method="post">
+				<table summary="検索欄">
+						<tr>
+						<td align="center">
+							<input type="submit" name="Select" value="ログイン" />
+							<input type="hidden" name="act" value="LoginManager" />
+						</td>
+					</tr>
+				</table>
+</form>
+</center>
 </body>
 </html>
