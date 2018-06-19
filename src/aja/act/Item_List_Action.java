@@ -1,9 +1,18 @@
 package aja.act;
 
+import java.util.ArrayList;
 import java.util.regex.Matcher;
 import java.util.regex.Pattern;
 
 import javax.servlet.http.HttpServletRequest;
+import javax.servlet.http.HttpSession;
+
+import aja.bean.CategoryBean;
+import aja.bean.ItemBean;
+import aja.bean.LoginBean;
+import aja.bean.OrderBean;
+import aja.dao.ListDAO;
+import aja.dao.LoginDAO;
 
 public class Item_List_Action extends Action {
 
@@ -13,7 +22,6 @@ public class Item_List_Action extends Action {
 		//動作のためにはListDaoとLoginDaoの実装が必要
 		//実装後にコメントアウトを外すこと
 
-		/*
 
 		//リクエスト処理
 		request.setCharacterEncoding("UTF-8");
@@ -25,15 +33,8 @@ public class Item_List_Action extends Action {
 		//公演選択画面で選択された公演を保持
 		if(request.getParameter("showId") != null){
 			session.setAttribute("showId",request.getParameter("showId"));
-		}
-
-		//カテゴリIDの実装(未)
-		//とりあえずhidden使わないパターンで実装
-		//明日のミーティングで確認する
-		if(request.getParameter("selectCategory") == null ) {
-			int selectCategory = 0;
 		}else {
-			int selectCategory = Integer.parseInt(request.getParameter("selectCategory"));
+			return "/top.jsp";
 		}
 
 		//ログインページから遷移した場合
@@ -89,7 +90,7 @@ public class Item_List_Action extends Action {
 		ArrayList<CategoryBean> category = (ArrayList<CategoryBean>)session.getAttribute("category");
 		if(category != null) {
 			ListDAO listDao = new ListDAO();
-			category = listDao.CategoryList();
+			category = listDao.category_List();
 			session.setAttribute("category", category);
 		}
 
@@ -106,8 +107,6 @@ public class Item_List_Action extends Action {
 			cart.add(order);
 			session.setAttribute("cart", cart);
 		}
-
-		*/
 
 		return "/itemList.jsp";
 	}
