@@ -8,26 +8,49 @@
 <title>予約者一覧</title>
 </head>
 <body>
-<form action="t-order" method="post">
-<h1>予約者一覧</h1>
-				<table summary="検索欄">
-						<tr>
-						<td>
-							<input type="submit" name="Select" value="予約者番号" />
-							<input type="hidden" name="act" value="BuyDetail" />
-						</td>
-					</tr>
-				</table>
+<h1>予約者検索画面</h1>
+<form action=" " method="post">
+	<p>検索したい公演日を入力してください</p>
+	<p>
+		<input type="text" name="" value="" />
+		<input type="hidden" name="" value="showDaySerth" />
+		<input type="submit"  value="検索" />
+	</p>
 </form>
-<form action="t-order" method="post">
-		<table summary="検索欄">
+
+<%--		<c:if test="${not empty requestScope.message}">
+		<p class="message">${requestScope.message}</p>
+	</c:if>
+
+	<c:if test="${not empty sessionScope.     }">
+--%>
+		<h2>検索結果</h2>
+		<table border="1" summary="検索結果をまとめた表">
 			<tr>
+				<th>予約番号</th>
+				<th>商品総数</th>
+				<th>合計金額</th>
+				<th>&nbsp;</th>
+			</tr>
+<%--
+		<c:forEarth var=" " items="${requestScope. List}">
+			<tr>
+				<td><c:out value="${   .reserveNo}" /></td>
+				<td><c:out value="${   .count}" /></td>
+				<td><c:out value="${   .totalcount}" /></td>
 				<td>
-					<input type="submit" name="Items" value="戻る" />
-					<input type="hidden" name="act" value="TopManager" />
+					<form action="delete" method="get">
+						<input type="hedden" neme=" " value="${  .reserveNo}" />
+--%>
+					<input type="submit" value="削除" />
+					</form>
 				</td>
 			</tr>
-		</table>
-	</form>
+		<%--</c:forEath>--%>
+	</table>
+	<%--</c:if>--%>
+
+
+
 </body>
 </html>

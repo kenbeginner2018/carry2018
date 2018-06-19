@@ -28,7 +28,7 @@ public class AddDAO {
 
 			 //PrepareStatementの利用。最初に枠となるSQLを設定する。
 		    // ?(INパラメータ)のところは、後から設定できる。
-			 String Buy_Detail_sql = "INSERT INTO t_order.Buy_Detail (reserveNo,itemName,price,count,subTotal) VALUES (?,?,?,?,?)";
+			 String Buy_Detail_sql = "INSERT INTO t_order.Buy_Detail (reserveNo,itemName,price,count,subTotal) VALUES (?,?,?.?,?)";
 			 String Item_Reserver_sql = "INSERT INTO t_order.Item_Reserver (reserveNo,totalCount,totalPrice,deliveryFlag) VALUES (?,?,?,?)";
 
 			 //カートの中身をBuy_Detail表に登録するためのSQL
@@ -60,11 +60,11 @@ public class AddDAO {
 			 // ?(INパラメータ)に、Buy_Detailオブジェクトの値を設定
 			 //cartから取得する。
 
-			 p_statement_Buy_Detail.setInt(0,cart.get(i).getReservNo());    //ReservNo
-			 p_statement_Buy_Detail.setString(1,cart.get(i).getItemName());    //ItemName
-			 p_statement_Buy_Detail.setInt(2, cart.get(i).getItemPrice());		//price
-			 p_statement_Buy_Detail.setInt(3,cart.get(i).getItemCount());	//count
-			 p_statement_Buy_Detail.setInt(4, cart.get(i).getSubTotal());	//subTotal
+			 p_statement_Buy_Detail.setInt(1,cart.get(i).getReservNo());    //ReservNo
+			 p_statement_Buy_Detail.setString(2,cart.get(i).getItemName());    //ItemName
+			 p_statement_Buy_Detail.setInt(3, cart.get(i).getItemPrice());		//price
+			 p_statement_Buy_Detail.setInt(4,cart.get(i).getItemCount());	//count
+			 p_statement_Buy_Detail.setInt(5, cart.get(i).getSubTotal());	//subTotal
 
 			 //Buy_Detail表にインサート！
 			 p_statement_Buy_Detail.executeUpdate();
@@ -75,10 +75,10 @@ public class AddDAO {
 			 // ?(INパラメータ)に、Item_Reserverオブジェクトの値を設定
 			 //Reservation_ListBeanから取得する。
 			 if(rList != null) {
-				 p_statement_Item_Reserver.setInt(0, rList.getReservNo());
-				 p_statement_Item_Reserver.setInt(1,rList.getTotalCount());
-				 p_statement_Item_Reserver.setInt(2,rList.getTotalPrice());
-				 p_statement_Item_Reserver.setInt(3, rList.getDeliveryFlag());
+				 p_statement_Item_Reserver.setInt(1, rList.getReservNo());
+				 p_statement_Item_Reserver.setInt(2,rList.getTotalCount());
+				 p_statement_Item_Reserver.setInt(3,rList.getTotalPrice());
+				 p_statement_Item_Reserver.setInt(4, rList.getDeliveryFlag());
 
 				//Item_Reserver表にインサート！
 				 p_statement_Item_Reserver.executeUpdate();
