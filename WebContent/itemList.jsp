@@ -6,11 +6,12 @@
 
 <head>
 <meta http-equiv="Content-Type" content="text/html; charset=UTF-8" />
-<title>商品一覧</title>
+
 </head>
 
-
+<title>商品一覧</title>
 <body>
+<div class= "本文" style="float: left;" width="70%">
 <form action="t-order" method="post">
 	<h1>商品一覧</h1>
 		<table border="1" summary="カテゴリー検索" align="center">
@@ -96,5 +97,45 @@
 			</tr>
 		</table>
 	</form>
+</div>
+<div class= "サイド" style="float: right;border-left:#000000 solid 7px;height:600px;">
+<h1 align="center">カート一覧</h1>
+<table border="4"  rules="rows">
+	<tr>
+		<td>
+		　
+		</td>
+		<td>
+		金額
+		</td>
+		<td>
+		数量
+		</td>
+		<td>
+		　
+		</td>
+	</tr>
+	<tr>
+		<td>
+		ブレスレット/望海風斗
+		</td>
+		<td>
+		¥3,300
+		</td>
+		<td>
+		<select name="kosuu">
+					<option value="1" selected="selected">1</option>
+					<option value="2">2</option>
+					<option value="3">3</option>
+					<option value="4">4</option>
+					<option value="5">5</option>
+					</select>
+		</td>
+		<td>
+		<input type="submit" value="削除"/>
+		</td>
+	</tr>
+</table>
+</div>
 </body>
 </html>
