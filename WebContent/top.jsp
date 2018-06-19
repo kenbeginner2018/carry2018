@@ -57,7 +57,7 @@
 						<tr>
 						<td align="center">
 							<input type="submit" name="Login" value="管理者トップ" />
-							<input type="hidden" name="act" value="TopManager" />
+							<input type="hidden" name="act" value="LoginManager" />
 						</td>
 					</tr>
 				</table>
