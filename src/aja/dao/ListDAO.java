@@ -12,6 +12,7 @@ import javax.servlet.http.HttpSession;
 
 import aja.bean.CategoryBean;
 import aja.bean.ItemBean;
+import aja.bean.OrderBean;
 import aja.bean.Reservation_ListBean;
 import aja.bean.ShowBean;
 
@@ -23,6 +24,7 @@ public class ListDAO {
 	private PreparedStatement p_statement_item_List_noCategoryId;
 	private PreparedStatement p_statement_item_List;
 	private PreparedStatement p_statement_item_Detail_List;
+	private PreparedStatement p_statement_reservation_List_noDeliveryFlag;
 	private PreparedStatement p_statement_reservation_List;
 	private PreparedStatement p_statement_order_List;
 
@@ -35,21 +37,24 @@ public class ListDAO {
 
 		//PrepareStatementの利用。最初に枠となるSQLを設定する。
 	    // ?(INパラメータ)のところは、後から設定できる。
-		 String show_List_sql = "SELECT * FROM t_order.show";
+		 String show_List_sql = "SELECT * FROM t_order.showd";
 		 String category_List_sql = "SELECT * FROM t_order.category";
 		 String item_List_noCategoryId_sql = "SELECT * FROM t_order.category,t_order.item WHERE showId = ? AND item.categoryId = category.categoryId ";
 		 String item_List_sql = "SELECT * FROM t_order.category,t_order.item WHERE showId = ? AND item.categoryId = category.categoryId AND category.categoryId = ? ";
 		 String item_Detail_List_sql = "SELECT * FROM t_order.category,t_order.item WHERE showId = ? AND item.categoryId = category.categoryId AND item.itemName = ' ? '";
-		 String reservation_List_noDelivaryFlag_sql ="SELECT * FROM t_order.item_reserver,t_order.buy_detail,t_order.item WHERE item_reserver.reserveNo = buy_detail.reserveNo AND item.itemId = buy_detail.itemId AND item_reserver.reserveNo = ? ";
-		 String reservation_List_sql ="SELECT * FROM t_order.item_reserver,t_order.buy_detail,t_order.item WHERE item_reserver.reserveNo = buy_detail.reserveNo AND item.itemId = buy_detail.itemId AND item_reserver.reserveNo = ? AND item_reserver.deliveryFlag = ? ";
+		 String reservation_List_noDelivaryFlag_sql ="SELECT * FROM t_order.ticket_purchaser,t_order.item_reserver WHERE ticket_purchaser.reserveNo = item_reserver.reserveNo AND showDay = '?'";
+		 String reservation_List_sql ="SELECT * FROM t_order.ticket_purchaser,t_order.item_reserver WHERE ticket_purchaser.reserveNo = item_reserver.reserveNo AND showDay = ' ? 'AND deliveryFlag = ?";
+		 String order_List_sql = " ";
 
 		//SQLを保持するPreparedStatementを生成
 		p_statement_Show_List = connection.prepareStatement(show_List_sql);
 		p_statement_Category_List = connection.prepareStatement(category_List_sql);
 		p_statement_item_List_noCategoryId = connection.prepareStatement(item_List_noCategoryId_sql);
 		p_statement_item_List = connection.prepareStatement(item_List_sql);
-		p_statement_item_Detail_List = connection.prepareStatement(item_Detail_List_sql);
+		p_statement_reservation_List_noDeliveryFlag = connection.prepareStatement(reservation_List_noDelivaryFlag_sql);
 		p_statement_reservation_List = connection.prepareStatement(reservation_List_sql);
+		p_statement_item_Detail_List = connection.prepareStatement(item_Detail_List_sql);
+
 	}
 	public ArrayList<ShowBean>show_List()throws SQLException{
 
@@ -244,7 +249,7 @@ public class ListDAO {
 		return itemDetails;
 	}
 
-	public ArrayList<Reservation_ListBean>reservation_List()throws SQLException{
+	public ArrayList<Reservation_ListBean>reservation_List(HttpServletRequest request)throws SQLException{
 
 		//ResultSet型の変数をnullで初期化する
 		ResultSet rs_reservationLists = null;
@@ -253,8 +258,22 @@ public class ListDAO {
 		ArrayList<Reservation_ListBean> reservationLists = null;
 
 		try {
-			//SQLの発行をし、抽出結果が格納されたResultオブジェクトを取得
-			 rs_reservationLists = p_statement_reservation_List.executeQuery();
+
+			if ((String)request.getAttribute("showYear") != null && (String)request.getAttribute("showMonth") != null && (String)request.getAttribute("showDay") != null) {
+
+				if((Integer)request.getAttribute("deliveryFlag") != null) {
+					 p_statement_reservation_List_noDeliveryFlag.setString(1,(String)request.getAttribute("showYear")+"-"+(String)request.getAttribute("showMonth")+"-"+(String)request.getAttribute("showDay"));
+
+					 //SQLの発行をし、抽出結果が格納されたResultオブジェクトを取得
+					 rs_reservationLists = p_statement_reservation_List_noDeliveryFlag.executeQuery();
+				}
+				else {
+					p_statement_reservation_List.setString(1,(String)request.getAttribute("showYear")+"-"+(String)request.getAttribute("showMonth")+"-"+(String)request.getAttribute("showDay"));
+					p_statement_reservation_List.setInt(2, (Integer)request.getAttribute("deliveryFlag"));
+					//SQLの発行をし、抽出結果が格納されたResultオブジェクトを取得
+					rs_reservationLists = p_statement_reservation_List.executeQuery();
+				}
+			}
 
 			//ArrayListを生成し、代入する。
 			reservationLists = new ArrayList<Reservation_ListBean>();
@@ -270,27 +289,29 @@ public class ListDAO {
 			}
 		}
 		finally {
-			if(p_statement_reservation_List != null) {
+			if(p_statement_reservation_List_noDeliveryFlag != null) {
 					p_statement_reservation_List.close();
 			}
-
+			if(p_statement_reservation_List != null) {
+				p_statement_reservation_List.close();
+			}
 			if(connection != null) {
 				connection.close();
 			}
 		}
 			return reservationLists;
 	}
-	public ArrayList<Reservation_ListBean>order_List()throws SQLException{
+	public ArrayList<OrderBean>order_List()throws SQLException{
 
 		//ResultSet型の変数をnullで初期化する
-		ResultSet rs_reservationLists = null;
+		ResultSet rs_orderLists = null;
 
-		Reservation_ListBean reservation = null;
-		ArrayList<Reservation_ListBean> reservationLists = null;
+		OrderBean order = null;
+		ArrayList<OrderBean> orderLists = null;
 
 		try {
 			//SQLの発行をし、抽出結果が格納されたResultオブジェクトを取得
-			 rs_reservationLists = p_statement_reservation_List.executeQuery();
+			 rs_orderLists = p_statement_reservation_List.executeQuery();
 
 			//ArrayListを生成し、代入する。
 			reservationLists = new ArrayList<Reservation_ListBean>();
