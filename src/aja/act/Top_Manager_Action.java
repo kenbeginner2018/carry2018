@@ -18,16 +18,17 @@ public class Top_Manager_Action extends Action {
 		//ログインが出来ていない場合(mLogin == null)は、ログイン処理を行う
 		//ログインしている場合(mLogin != null)は、何も行わずにtopManager.jspに遷移する
 		if(mLogin == null) {
-			int managerId = Integer.parseInt(request.getParameter("managerId"));
-			String password = request.getParameter("password");
 
 			//managerIdもしくはpasswordが未入力の場合、エラーメッセージをrequest転送しloginManager.jspへ
 			if(request.getParameter("managerId") == null || request.getParameter("managerId").equals("") ||
-					password == null || password.equals("")) {
+					request.getParameter("password") == null || request.getParameter("password").equals("")) {
 				String errorMessage = "IDもしくはパスワードが入力されていません";
 				request.setAttribute("errorMessage", errorMessage);
 				return "/loginManager.jsp";
 			}
+
+			int managerId = Integer.parseInt(request.getParameter("managerId"));
+			String password = request.getParameter("password");
 
 			//loginDaoを用いて入力値と一致するレコードがあるかを確認する
 			//loginManager()メソッドの返り値の型を確認すること
