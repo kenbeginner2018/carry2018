@@ -34,7 +34,6 @@ public class Content_List_Action extends Action {
 			return "/credit.jsp";
 		}
 
-
 		return "/contentList.jsp";
 	}
 
