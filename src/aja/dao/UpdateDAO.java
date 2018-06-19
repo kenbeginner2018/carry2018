@@ -15,25 +15,32 @@ public class UpdateDAO {
 
 	 private Connection connection;
 	 private PreparedStatement p_statement_Item_Update;
-	 @SuppressWarnings("unchecked")
-		public void updateItem(HttpServletRequest request) throws ClassNotFoundException, SQLException{
 
-		//Sessionオブジェクトの取得
-			HttpSession session = request.getSession(false);
-			//MySQLへ接続
+	 public UpdateDAO()throws ClassNotFoundException, SQLException {
+
+		//MySQLへ接続
 			String url = "jdbc:mysql://localhost:3306/t_order";
 			String user = "root";
 			String password = "root";
 			connection = DriverManager.getConnection(url, user, password);
 
-		 //Itemの在庫数を更新
-		 try {
-			 //PrepareStatementの利用。最初に枠となるSQLを設定する。
+			//PrepareStatementの利用。最初に枠となるSQLを設定する。
 			 // ?(INパラメータ)のところは、後から設定できる。
 			 String Item_Update_sql = "Update Item SET stock = stock - ? WHERE itemName= ?";
 
 			 //Item表の在庫数を更新するためのSQL
 			 p_statement_Item_Update = connection.prepareStatement(Item_Update_sql);
+
+	 }
+	 @SuppressWarnings("unchecked")
+		public void updateItem(HttpServletRequest request) throws SQLException{
+
+		//Sessionオブジェクトの取得
+			HttpSession session = request.getSession(false);
+
+		 //Itemの在庫数を更新
+		 try {
+
 
 			 //カート情報をItem_Reserver表に反映
 
