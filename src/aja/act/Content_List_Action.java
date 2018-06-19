@@ -10,15 +10,12 @@ public class Content_List_Action extends Action {
 	@Override
 	public String execute(HttpServletRequest request) throws Exception {
 		//16桁のcreditNoを生成する。
-		String creditNo = (request.getParameter("creditNo.1-4")) + "-" + (request.getParameter("creditNo.5-8")) + "-" +
-				(request.getParameter("creditNo.9-12")) + "-" + (request.getParameter("creditNo.13-16"));
+		String creditNo = (request.getParameter("creditNo1-4")) + "-" + (request.getParameter("creditNo5-8")) + "-" +
+				(request.getParameter("creditNo9-12")) + "-" + (request.getParameter("creditNo13-16"));
 		String name = request.getParameter("name");
 		String securityCode = request.getParameter("securityCode");
 
 		//creditNo,securityCodeの空入力チェック および 正規表現チェック
-		//credit.jsp実装後、コメントアウトを外すこと
-
-		/*
 
 		if(creditNo == null || creditNo.equals("")) {
 			request.setAttribute("errorMessage", "クレジット番号が入力されていません");
@@ -36,9 +33,6 @@ public class Content_List_Action extends Action {
 			request.setAttribute("errorMessage", "セキュリティコードを正しく入力してください");
 			return "/credit.jsp";
 		}
-
-		*/
-
 
 		return "/contentList.jsp";
 	}
