@@ -11,7 +11,7 @@ public class Select_Show_Action extends Action {
 		//ListDao実装後importしたあと、コメントアウト状態を解除すること
 
 		/*
-		ListDao listDao = new ListDao();
+		ListDAO listDao = new ListDAO();
 		ArrayList<ShowBean> show = listDao.showList();
 		request.setAttribute("show",show);
 		*/

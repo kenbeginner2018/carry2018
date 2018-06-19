@@ -31,16 +31,10 @@ public class Item_List_Action extends Action {
 			session.setAttribute("showId",request.getParameter("showId"));
 		}
 
-<<<<<<< HEAD
-		//カテゴリIDの実装
-		//nullの場合は0を出す
-		if(request.getParameter("selectCategory") == null) {
-=======
 		//カテゴリIDの実装(未)
 		//とりあえずhidden使わないパターンで実装
 		//明日のミーティングで確認する
 		if(request.getParameter("selectCategory") == null ) {
->>>>>>> branch 'master' of https://github.com/kenbeginner2018/carry2018.git
 			int selectCategory = 0;
 		}else {
 			int selectCategory = Integer.parseInt(request.getParameter("selectCategory"));

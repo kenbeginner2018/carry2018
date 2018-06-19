@@ -13,11 +13,7 @@ public class Item_Detail_List_Action extends Action {
 		//ListDao実装後importしたあと、コメントアウト状態を解除すること
 
 		/*
-<<<<<<< HEAD
-		ListDao listDao = new ListDao();
-=======
 		ListDAO listDao = new ListDAO();
->>>>>>> branch 'master' of https://github.com/kenbeginner2018/carry2018.git
 		ItemBean detail = listDao.itemDetailList(request);
 		request.setAttribute("detail",detail);
 		*/
