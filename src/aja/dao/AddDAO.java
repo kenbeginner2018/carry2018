@@ -19,28 +19,31 @@ public class AddDAO {
 	 private PreparedStatement p_statement_Item_Reserver;
 
 
+	 public AddDAO()throws ClassNotFoundException, SQLException {
+			//MySQLへ接続
+			String url = "jdbc:mysql://localhost:3306/t_order";
+			String user = "root";
+			String password = "root";
+			connection = DriverManager.getConnection(url, user, password);
+
+			 //PrepareStatementの利用。最初に枠となるSQLを設定する。
+		    // ?(INパラメータ)のところは、後から設定できる。
+			 String Buy_Detail_sql = "INSERT INTO t_order.Buy_Detail (reserveNo,itemName,price,count,subTotal) VALUES (?,?,?.?,?)";
+			 String Item_Reserver_sql = "INSERT INTO t_order.Item_Reserver (reserveNo,totalCount,totalPrice,deliveryFlag) VALUES (?,?,?,?)";
+
+			 //カートの中身をBuy_Detail表に登録するためのSQL
+			 p_statement_Buy_Detail = connection.prepareStatement(Buy_Detail_sql);
+			 //Item_Reserverの中身をItem_Reserver表に登録するためのSQL
+			 p_statement_Item_Reserver = connection.prepareStatement(Item_Reserver_sql);
+	 }
 	@SuppressWarnings("unchecked")
-	public void addOrder(HttpServletRequest request,Reservation_ListBean rList ) throws ClassNotFoundException, SQLException{
+	public void addOrder(HttpServletRequest request,Reservation_ListBean rList ) throws SQLException{
 
 		//Sessionオブジェクトの取得
 		HttpSession session = request.getSession(false);
-		//MySQLへ接続
-		String url = "jdbc:mysql://localhost:3306/t_order";
-		String user = "root";
-		String password = "root";
-		connection = DriverManager.getConnection(url, user, password);
 
 		//Buy_Detailに追加処理
 		try {
-	    //PrepareStatementの利用。最初に枠となるSQLを設定する。
-	    // ?(INパラメータ)のところは、後から設定できる。
-		 String Buy_Detail_sql = "INSERT INTO t_order.Buy_Detail (reserveNo,itemName,price,count,subTotal) VALUES (?,?,?.?,?)";
-		 String Item_Reserver_sql = "INSERT INTO t_order.Item_Reserver (reserveNo,totalCount,totalPrice,deliveryFlag) VALUES (?,?,?,?)";
-
-		 //カートの中身をBuy_Detail表に登録するためのSQL
-		 p_statement_Buy_Detail = connection.prepareStatement(Buy_Detail_sql);
-		 //Item_Reserverの中身をItem_Reserver表に登録するためのSQL
-		 p_statement_Item_Reserver = connection.prepareStatement(Item_Reserver_sql);
 
 		 /*
 	       カート情報をBuy_Detail表に登録
