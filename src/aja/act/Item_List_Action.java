@@ -13,12 +13,8 @@ public class Item_List_Action extends Action {
 		//動作のためにはListDaoとLoginDaoの実装が必要
 		//実装後にコメントアウトを外すこと
 
-<<<<<<< HEAD
 		/*
 
-
-=======
->>>>>>> branch 'master' of https://github.com/kenbeginner2018/carry2018.git
 		//リクエスト処理
 		request.setCharacterEncoding("UTF-8");
 
@@ -29,15 +25,8 @@ public class Item_List_Action extends Action {
 		//公演選択画面で選択された公演を保持
 		if(request.getParameter("showId") != null){
 			session.setAttribute("showId",request.getParameter("showId"));
-		}
-
-		//カテゴリIDの実装(未)
-		//とりあえずhidden使わないパターンで実装
-		//明日のミーティングで確認する
-		if(request.getParameter("selectCategory") == null ) {
-			int selectCategory = 0;
 		}else {
-			int selectCategory = Integer.parseInt(request.getParameter("selectCategory"));
+			return "/top.jsp";
 		}
 
 		//ログインページから遷移した場合
@@ -93,7 +82,7 @@ public class Item_List_Action extends Action {
 		ArrayList<CategoryBean> category = (ArrayList<CategoryBean>)session.getAttribute("category");
 		if(category != null) {
 			ListDAO listDao = new ListDAO();
-			category = listDao.CategoryList();
+			category = listDao.category_List();
 			session.setAttribute("category", category);
 		}
 
