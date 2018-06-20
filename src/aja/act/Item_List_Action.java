@@ -30,7 +30,7 @@ public class Item_List_Action extends Action {
 		//ログイン情報の取得
 		HttpSession session = request.getSession(true);
 		LoginBean login = (LoginBean) session.getAttribute("login");
-		
+
 
 		//公演選択画面で選択された公演を保持
 		//不正アクセス判定
@@ -89,24 +89,23 @@ public class Item_List_Action extends Action {
 			session.setAttribute("login",login);
 		}else {			//ログインページ以外から遷移した場合
 			ListDAO listDao = new ListDAO();
-			
+
 			//select.jspから遷移のとき
 			if(request.getParameter("categoryId") == null){
-				
+
 				//全件表示に設定
 				request.setAttribute("categoryId", 0);
-				
+
 			}
 			else {
 				int categoryId = Integer.parseInt(request.getParameter("categoryId"));
-				
+
 				request.setAttribute("categoryId", categoryId);
 			}
-			
+
 			ArrayList<ItemBean> items = listDao.item_List(request);
 			session.setAttribute("items",items);
 		}
-
 
 		//session.categoryが存在しない場合、カテゴリの取得を行う
 		//ArrayList<CategoryBean> category = (ArrayList<CategoryBean>)session.getAttribute("category");

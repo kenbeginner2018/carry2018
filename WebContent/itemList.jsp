@@ -23,8 +23,8 @@
 					<select name="category">
 					<option value=0 selected="selected">全件表示</option>
 					<c:forEach var="category" items="${sessionScope.category}" >
-					<option value=${category.categoryId}>${category.categoryName}</option>
-					<input type="hidden" name="categoryId" value = ${category.categoryId} />
+					<option value="${category.categoryId}">${category.categoryName}</option>
+
 					</c:forEach>
 					</select>
 				</td>

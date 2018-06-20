@@ -56,7 +56,6 @@ public class ListDAO {
 		p_statement_reservation_List = connection.prepareStatement(reservation_List_sql);
 		p_statement_order_List = connection.prepareStatement(order_List_sql);
 
-
 	}
 	public ArrayList<ShowBean>show_List()throws SQLException{
 
