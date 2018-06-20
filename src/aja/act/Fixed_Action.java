@@ -46,6 +46,8 @@ public class Fixed_Action extends Action {
 		UpdateDAO updateDao = new UpdateDAO();
 		updateDao.updateItem(request);
 
+		//予約の追加が終了したので、cartを解放
+		session.setAttribute("cart", null);
 
 		return "/fixed.jsp";
 	}
