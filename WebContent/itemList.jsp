@@ -15,20 +15,26 @@
 <div class= "本文" style="float: left;" width="70%">
 <form action="t-order" method="post">
 	<h1>商品一覧</h1>
-	<%=session.getAttribute("showId") %>
+
 		<table border="1" summary="カテゴリー検索" align="center">
 			<tr>
 				<th>カテゴリー</th>
 				<td>
 					<select name="category">
-					<option value="組トップグッズ" selected="selected">組トップグッズ</option>
-					<option value="公演グッズ">公演グッズ</option>
-					<option value="雑誌">雑誌</option>
-					<option value="写真">写真</option>
-					<option value="雑貨">雑貨</option>
+					<option value=0 selected="selected">全件表示</option>
+					<c:forEach var="category" items="${sessionScope.category}" >
+					<option value=${category.categoryId}>${category.categoryName}</option>
+					<input type="hidden" name="categoryId" value = ${category.categoryId} />
+					</c:forEach>
 					</select>
 				</td>
+				<td>
+					<input type="submit" name="btn" value="検索" />
+
+					<input type="hidden" name="act" value="ItemList" />
+				</td>
 			</tr>
+
 		</table>
 	</form>
 	<form action="t-order" method="post">
@@ -47,7 +53,7 @@
 					}
 				%>
 						<td align="center" width="200">
-							<input type="image" src="img/${item.itemImage}" alt="グッズA" />
+							<input type="image" src="img/${item.itemImage}" alt="${ item.itemName}" />
 							<input type="hidden" name="act" value="ItemDetailList" /><br/>
 							${item.itemName}<br/>
 							￥${item.itemPrice}

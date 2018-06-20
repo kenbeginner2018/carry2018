@@ -30,12 +30,18 @@ public class Item_List_Action extends Action {
 		//ログイン情報の取得
 		HttpSession session = request.getSession(true);
 		LoginBean login = (LoginBean) session.getAttribute("login");
+		
 
 		//公演選択画面で選択された公演を保持
-		if(request.getParameter("showId") != null){
+		//不正アクセス判定
+		if(request.getParameter("showId") != null ){
 			int showId = Integer.parseInt(request.getParameter("showId"));
 			session.setAttribute("showId",showId);
-		}else {
+		}
+		else if(session.getAttribute("showId") != null) {
+
+		}
+		else {
 			return "/top.jsp";
 		}
 
@@ -83,9 +89,20 @@ public class Item_List_Action extends Action {
 			session.setAttribute("login",login);
 		}else {			//ログインページ以外から遷移した場合
 			ListDAO listDao = new ListDAO();
-			if(request.getAttribute("category") == null){
-				request.setAttribute("category", 0);
+			
+			//select.jspから遷移のとき
+			if(request.getParameter("categoryId") == null){
+				
+				//全件表示に設定
+				request.setAttribute("categoryId", 0);
+				
 			}
+			else {
+				int categoryId = Integer.parseInt(request.getParameter("categoryId"));
+				
+				request.setAttribute("categoryId", categoryId);
+			}
+			
 			ArrayList<ItemBean> items = listDao.item_List(request);
 			session.setAttribute("items",items);
 		}

@@ -147,7 +147,7 @@ public class ListDAO {
 			 if(session != null) {
 				 int showId = (Integer)session.getAttribute("showId");
 				 //もしcategoryId = 0だったら以下の処理を行う
-				 if ((Integer)request.getAttribute("category") == 0) {
+				 if ((Integer)request.getAttribute("categoryId") == 0) {
 					 //フィールド変数 p_statement_item_List_noCategoryIdの設定
 					 p_statement_item_List_noCategoryId.setInt(1,showId);
 
@@ -157,7 +157,7 @@ public class ListDAO {
 				 else {
 				//フィールド変数 p_statement_item_Listの設定
 				p_statement_item_List.setInt(1, showId);
-				p_statement_item_List.setInt(2,(Integer)request.getAttribute("categoryId"));
+				p_statement_item_List.setInt(2,Integer.parseInt((String)request.getAttribute("categoryId")));
 
 				 //SQLの発行をし、抽出結果が格納されたResultオブジェクトを取得
 				 rs_items = p_statement_item_List.executeQuery();

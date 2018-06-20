@@ -34,7 +34,7 @@
 					<input type="image" src= "<%=imgsrc %>" alt="グッズ<%=i %>" width="150" height="200" />
 				</td>
 				<td align="center" width="300" >
-					<font size="6">"<%=show.getShowName() %></font>
+					<font size="6"><%=show.getShowName() %></font>
 					<input type="hidden" name="showId" value=<%=show.getShowId() %> />
 					<input type="hidden" name="act" value="ItemList" />
 				</td>
