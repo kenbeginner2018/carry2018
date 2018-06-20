@@ -156,7 +156,7 @@ public class ListDAO {
 				 else {
 				//フィールド変数 p_statement_item_Listの設定
 				p_statement_item_List.setInt(1, showId);
-				p_statement_item_List.setInt(2,Integer.parseInt((String)request.getAttribute("categoryId")));
+				p_statement_item_List.setInt(2,(Integer)request.getAttribute("categoryId"));
 
 				 //SQLの発行をし、抽出結果が格納されたResultオブジェクトを取得
 				 rs_items = p_statement_item_List.executeQuery();

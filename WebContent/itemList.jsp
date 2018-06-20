@@ -20,7 +20,7 @@
 			<tr>
 				<th>カテゴリー</th>
 				<td>
-					<select name="category">
+					<select name="categoryId">
 					<option value=0 selected="selected">全件表示</option>
 					<c:forEach var="category" items="${sessionScope.category}" >
 					<option value="${category.categoryId}">${category.categoryName}</option>
