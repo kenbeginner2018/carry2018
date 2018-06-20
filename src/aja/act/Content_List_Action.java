@@ -7,6 +7,7 @@ import java.util.regex.Pattern;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpSession;
 
+import aja.bean.LoginBean;
 import aja.bean.OrderBean;
 
 public class Content_List_Action extends Action {
@@ -55,19 +56,24 @@ public class Content_List_Action extends Action {
 		ArrayList<OrderBean> cart = new ArrayList<OrderBean>();
 
 		OrderBean addItem = new OrderBean();
-		addItem.setReservNo(4568958);
-		addItem.setItemName("本1");
-		addItem.setItemPrice(500);
-		addItem.setItemCount(5);
-		addItem.setSubTotal(2500);
+		addItem.setReservNo(1111111);
+		addItem.setItemName("ブレスレット");
+		addItem.setItemPrice(3300);
+		addItem.setItemCount(1);
+		addItem.setSubTotal(3300);
 		cart.add(addItem);
 		addItem = new OrderBean();
-		addItem.setReservNo(4568958);
-		addItem.setItemName("写真");
-		addItem.setItemPrice(100);
-		addItem.setItemCount(5);
-		addItem.setSubTotal(500);
+		addItem.setReservNo(1111111);
+		addItem.setItemName("オードトワレ");
+		addItem.setItemPrice(4600);
+		addItem.setItemCount(2);
+		addItem.setSubTotal(9200);
 		cart.add(addItem);
+
+		LoginBean login = new LoginBean();
+		login.setReservNo(1111111);
+		login.setTelNo("test");
+		session.setAttribute("login",login);
 
 		session.setAttribute("cart",cart);
 

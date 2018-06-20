@@ -8,6 +8,8 @@ import javax.servlet.http.HttpSession;
 import aja.bean.LoginBean;
 import aja.bean.OrderBean;
 import aja.bean.Reservation_ListBean;
+import aja.dao.AddDAO;
+import aja.dao.UpdateDAO;
 
 public class Fixed_Action extends Action {
 
@@ -16,15 +18,17 @@ public class Fixed_Action extends Action {
 
 		HttpSession session = request.getSession(true);
 
-		ArrayList<OrderBean> order = (ArrayList<OrderBean>) session.getAttribute("order");
+		ArrayList<OrderBean> cart = (ArrayList<OrderBean>) session.getAttribute("cart");
 		LoginBean login = (LoginBean) session.getAttribute("login");
+
+
 
 		//order要素のItemCountと,ItemPriceの総計を算出する
 		int totalCount = 0;
 		int totalPrice = 0;
-		for(OrderBean addOrder: order) {
+		for(OrderBean addOrder: cart) {
 			totalCount += addOrder.getItemCount();
-			totalPrice += addOrder.getItemPrice();
+			totalPrice += addOrder.getSubTotal();
 		}
 
 		//Item_Reserverに登録するデータを設定
@@ -35,14 +39,13 @@ public class Fixed_Action extends Action {
 		rList.setDeliveryFlag(0);
 
 		//addDaoのaddOrder()を利用して、Buy_Detail,Item_Reserverにレコードを追加
-		//addDao実装後importしたあと、コメントアウト状態を解除すること
 
-		/*
+
 		AddDAO addDao = new AddDAO();
 		addDao.addOrder(request,rList);
-		UpdateDAO updatedao = new UpdateDAO();
-		update.updateItem(request);
-		*/
+		UpdateDAO updateDao = new UpdateDAO();
+		updateDao.updateItem(request);
+
 
 		return "/fixed.jsp";
 	}

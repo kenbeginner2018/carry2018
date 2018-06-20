@@ -19,6 +19,10 @@ public class AddDAO {
 	 private PreparedStatement p_statement_Buy_Detail;
 	 private PreparedStatement p_statement_ItemId_Search;
 	 private PreparedStatement p_statement_Item_Reserver;
+	 private PreparedStatement p_statement_Del_Buy_Detail;
+	 private PreparedStatement p_statement_Del_Item_Reserver;
+	 private PreparedStatement p_statement_Sel_Buy_Detail;
+	 private PreparedStatement p_statement_Sel_Item_Reserver;
 
 
 	 public AddDAO()throws ClassNotFoundException, SQLException {
@@ -30,15 +34,23 @@ public class AddDAO {
 
 			 //PrepareStatementの利用。最初に枠となるSQLを設定する。
 		    // ?(INパラメータ)のところは、後から設定できる。
-			 String Buy_Detail_sql = "INSERT INTO t_order.buy_detail (reserveNo,itemId,count,subTotal) VALUES (?,?,?.?)";
-			 String ItemId_Search_sql = "SELECT * FROM t_order.item WHERE item.itemName = ' ? '";
+			 String Buy_Detail_sql = "INSERT INTO t_order.buy_detail (reserveNo,itemId,count,subTotal) VALUES (?,?,?,?)";
+			 String ItemId_Search_sql = "SELECT * FROM t_order.item WHERE item.itemName =  ? ";
 			 String Item_Reserver_sql = "INSERT INTO t_order.item_reserver (reserveNo,totalCount,totalPrice,deliveryFlag) VALUES (?,?,?,?)";
+			 String Del_Item_Reserver_sql = "DELETE FROM t_order.item_reserver WHERE reserveNo= ? ";
+			 String Del_Buy_Detail_sql = "DELETE FROM t_order.buy_detail WHERE reserveNo= ? AND itemId = ? ";
+			 String Sel_Item_Reserver_sql = "SELECT * FROM t_order.item_reserver WHERE reserveNo= ? ";
+			 String Sel_Buy_Detail_sql = "SELECT * FROM t_order.buy_detail WHERE reserveNo= ? AND itemId = ? ";
 
 			 //カートの中身をBuy_Detail表に登録するためのSQL
 			 p_statement_Buy_Detail = connection.prepareStatement(Buy_Detail_sql);
 			 p_statement_ItemId_Search = connection.prepareStatement(ItemId_Search_sql);
+			 p_statement_Del_Buy_Detail = connection.prepareStatement(Del_Buy_Detail_sql);
+			 p_statement_Sel_Buy_Detail = connection.prepareStatement(Sel_Buy_Detail_sql);
 			 //Item_Reserverの中身をItem_Reserver表に登録するためのSQL
 			 p_statement_Item_Reserver = connection.prepareStatement(Item_Reserver_sql);
+			 p_statement_Del_Item_Reserver = connection.prepareStatement(Del_Item_Reserver_sql);
+			 p_statement_Sel_Item_Reserver = connection.prepareStatement(Sel_Item_Reserver_sql);
 	 }
 	@SuppressWarnings("unchecked")
 	public void addOrder(HttpServletRequest request,Reservation_ListBean rList ) throws SQLException{
@@ -70,13 +82,33 @@ public class AddDAO {
 				while(rs_items.next()) {
 					int itemId = rs_items.getInt("itemId");
 
+					//ResultSet型の変数をnullで初期化する
+					ResultSet rs = null;
+					p_statement_Sel_Buy_Detail.setInt(1,cart.get(i).getReservNo());
+					p_statement_Sel_Buy_Detail.setInt(2,itemId);
+					rs = p_statement_Sel_Buy_Detail.executeQuery();
+
+					int itemCount;
+					int subTotal;
+
+					if (rs.next()) {
+						//reservNo,itemIdが一致するレコードがすでにある場合、今回の注文内容を追加する
+						itemCount = rs.getInt("count") + cart.get(i).getItemCount();
+						subTotal = rs.getInt("subTotal") + cart.get(i).getSubTotal();
+						p_statement_Del_Buy_Detail.setInt(1,cart.get(i).getReservNo());
+						p_statement_Del_Buy_Detail.setInt(2,itemId);
+						p_statement_Del_Buy_Detail.executeUpdate();
+					} else {
+						itemCount = cart.get(i).getItemCount();
+						subTotal = cart.get(i).getSubTotal();
+					}
+
 					// ?(INパラメータ)に、Buy_Detailオブジェクトの値を設定
 					//cartから取得する。
-
-					p_statement_Buy_Detail.setInt(1,cart.get(i).getReservNo());    //ReservNo
-					p_statement_Buy_Detail.setInt(2,itemId);					    //ItemId
-					p_statement_Buy_Detail.setInt(4,cart.get(i).getItemCount());	//count
-					p_statement_Buy_Detail.setInt(5, cart.get(i).getSubTotal());	//subTotal
+					p_statement_Buy_Detail.setInt(1, cart.get(i).getReservNo());    //ReservNo
+					p_statement_Buy_Detail.setInt(2, itemId);					    //ItemId
+					p_statement_Buy_Detail.setInt(3, itemCount);	//count
+					p_statement_Buy_Detail.setInt(4, subTotal);	//subTotal
 
 					 //Buy_Detail表にインサート！
 					 p_statement_Buy_Detail.executeUpdate();
@@ -87,13 +119,33 @@ public class AddDAO {
 			 // ?(INパラメータ)に、Item_Reserverオブジェクトの値を設定
 			 //Reservation_ListBeanから取得する。
 			 if(rList != null) {
-				 p_statement_Item_Reserver.setInt(1, rList.getReservNo());
-				 p_statement_Item_Reserver.setInt(2,rList.getTotalCount());
-				 p_statement_Item_Reserver.setInt(3,rList.getTotalPrice());
-				 p_statement_Item_Reserver.setInt(4, rList.getDeliveryFlag());
+
+				//ResultSet型の変数をnullで初期化する
+				ResultSet rs = null;
+				p_statement_Sel_Item_Reserver.setInt(1,rList.getReservNo());
+				rs = p_statement_Sel_Item_Reserver.executeQuery();
+
+				int totalCount;
+				int totalPrice;
+
+				if (rs.next()) {
+					//reservNoがすでにある場合、今回の注文内容を追加する
+					totalCount = rs.getInt("totalCount") + rList.getTotalCount();
+					totalPrice = rs.getInt("totalPrice") + rList.getTotalPrice();
+					p_statement_Del_Item_Reserver.setInt(1,rList.getReservNo());
+					p_statement_Del_Item_Reserver.executeUpdate();
+				} else {
+					totalCount = rList.getTotalCount();
+					totalPrice = rList.getTotalPrice();
+				}
+
+				p_statement_Item_Reserver.setInt(1, rList.getReservNo());
+				p_statement_Item_Reserver.setInt(2, totalCount);
+				p_statement_Item_Reserver.setInt(3, totalPrice);
+				p_statement_Item_Reserver.setInt(4, rList.getDeliveryFlag());
 
 				//Item_Reserver表にインサート！
-				 p_statement_Item_Reserver.executeUpdate();
+				p_statement_Item_Reserver.executeUpdate();
 			 }
 		 }
 		 }
