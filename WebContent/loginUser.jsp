@@ -13,31 +13,19 @@
 
 
 	<strong>予約番号（チケット番号）</strong>
-		<table>
-			<tr>
-			<td><input type="text" size="15" name="number" /></td>
-			<td><input type="hidden" name="act" value="reserveNo" /></td>
-		</tr>
-		</table>
+			<input type="text" size="15" name="reservNo" />
+			
 
 
 	<strong>電話番号</strong>
-		<table>
-			<tr>
-			<td><input type="text" size="15" name="number" /></td>
-			<td><input type="hidden" name="act" value="telNo" /></td>
-		</tr>
-		</table>
-
-
-
-
+		<input type="text" size="15" name="telNo" />
+		
 
 		<table summary="検索欄">
 			<tr>
 				<td>
 					<input type="submit" name="Items" value="紹介" />
-					<input type="hidden" name="act" value="Credit" />
+					<input type="hidden" name="act" value="ItemList" />
 				</td>
 			</tr>
 		</table>

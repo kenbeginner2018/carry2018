@@ -20,12 +20,13 @@
 
 	<h1>公演選択</h1>
 
-	<form action="t-order" method="post">
+
 		<table summary="検索欄">
 		<%
 			for(int i = 0; i<shows.size(); i++){
 				ShowBean show = (ShowBean)shows.get(i);
 		%>
+		<form action="t-order" method="post">
 			<tr>
 				<td align="center">
 					<%
@@ -39,11 +40,12 @@
 					<input type="hidden" name="act" value="ItemList" />
 				</td>
 			</tr>
+		</form>
 		<%
 			}
 		%>
 				</table>
-</form>
+
 
 
 	<form action="t-order" method="post">

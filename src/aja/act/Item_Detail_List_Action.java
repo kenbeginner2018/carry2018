@@ -1,6 +1,11 @@
 package aja.act;
 
+import java.util.ArrayList;
+
 import javax.servlet.http.HttpServletRequest;
+
+import aja.bean.ItemBean;
+import aja.dao.ListDAO;
 
 public class Item_Detail_List_Action extends Action {
 
@@ -11,12 +16,14 @@ public class Item_Detail_List_Action extends Action {
 
 		//ListDaoのsitemDetailList()を利用してグッズの詳細情報を取得
 		//ListDao実装後importしたあと、コメントアウト状態を解除すること
-
-		/*
+		
+		if (request.getParameter("itemName") != null) {
+			request.setAttribute("itemName", request.getParameter("itemName"));
+		}
 		ListDAO listDao = new ListDAO();
-		ItemBean detail = listDao.itemDetailList(request);
+		ArrayList<ItemBean> detail = listDao.item_Detail_List(request);
 		request.setAttribute("detail",detail);
-		*/
+		
 
 		return "/itemDetailList.jsp";
 	}

@@ -13,9 +13,10 @@ public class Login_User_Action extends Action {
 		HttpSession session = request.getSession(true);
 		LoginBean login = (LoginBean) session.getAttribute("login");
 
-		//itemName,itemCountをsessionで再度転送する
-		request.setAttribute("itemName", request.getAttribute("itemName"));
-		request.setAttribute("itemCount", request.getAttribute("itemCount"));
+		//itemName,itemCountをrequestで再度転送する
+		request.setAttribute("itemName", request.getParameter("itemName"));
+		request.setAttribute("itemCount", request.getParameter("itemCount"));
+		request.setAttribute("itemPrice", request.getParameter("itemPrice"));
 
 		//loginがsessionに存在すれば、loginページをスキップしてitemList.jspへ遷移
 

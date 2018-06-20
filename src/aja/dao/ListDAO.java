@@ -41,7 +41,7 @@ public class ListDAO {
 		 String category_List_sql = "SELECT * FROM t_order.category";
 		 String item_List_noCategoryId_sql = "SELECT * FROM t_order.category,t_order.item WHERE showId = ? AND item.categoryId = category.categoryId ";
 		 String item_List_sql = "SELECT * FROM t_order.category,t_order.item WHERE showId = ? AND item.categoryId = category.categoryId AND category.categoryId = ? ";
-		 String item_Detail_List_sql = "SELECT * FROM t_order.category,t_order.item WHERE showId = ? AND item.categoryId = category.categoryId AND item.itemName = ' ? '";
+		 String item_Detail_List_sql = "SELECT * FROM t_order.category,t_order.item WHERE showId = ? AND item.categoryId = category.categoryId AND item.itemName =  ? ";
 		 String reservation_List_noDelivaryFlag_sql ="SELECT * FROM t_order.ticket_purchaser,t_order.item_reserver WHERE ticket_purchaser.reserveNo = item_reserver.reserveNo AND showDay = ?";
 		 String reservation_List_sql ="SELECT * FROM t_order.ticket_purchaser,t_order.item_reserver WHERE ticket_purchaser.reserveNo = item_reserver.reserveNo AND showDay =  ? AND deliveryFlag = ?";
 		 String order_List_sql = "SELECT * FROM t_order.item_reserver,t_order.buy_detail,t_order.item WHERE buy_detail.reserveNo = item_reserver.reserveNo AND buy_detail.itemId = item.itemId AND buy_detail.reserveNo = ? ";
@@ -210,11 +210,14 @@ public class ListDAO {
 			 if(session != null) {
 				 int showId = (Integer)session.getAttribute("showId");
 				 //もしitemName != null だったら以下の処理を行う
-				 if ((String)request.getAttribute("itemName") != null) {
+
+
+				 if (request.getAttribute("itemName") != null) {
+					 String itemName = (String)request.getAttribute("itemName");
 
 					 //フィールド変数 p_statement_item_Detail_Listの設定
 					 p_statement_item_Detail_List.setInt(1,showId);
-					 p_statement_item_Detail_List.setString(2, (String)request.getAttribute("itemName"));
+					 p_statement_item_Detail_List.setString(2, itemName);
 
 					 //SQLの発行をし、抽出結果が格納されたResultオブジェクトを取得
 					 rs_itemDetails = p_statement_item_Detail_List.executeQuery();
@@ -224,7 +227,7 @@ public class ListDAO {
 				 itemDetails = new ArrayList<ItemBean>();
 				 while(rs_itemDetails.next()) {
 					 itemDetail = new ItemBean();
-					 itemDetail.setItemName(rs_itemDetails.getString("item_name"));
+					 itemDetail.setItemName(rs_itemDetails.getString("itemName"));
 					 itemDetail.setItemPrice(rs_itemDetails.getInt("price"));
 					 itemDetail.setItemImage(rs_itemDetails.getString("itemImage"));
 					 itemDetail.setItemDetail(rs_itemDetails.getString("itemDetail"));

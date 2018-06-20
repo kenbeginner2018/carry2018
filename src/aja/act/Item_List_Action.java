@@ -52,13 +52,11 @@ public class Item_List_Action extends Action {
 			String telNo = request.getParameter("telNo");
 
 			//未入力チェック
-			if(request.getAttribute("reservNo") == null || request.getAttribute("reservNo").equals("") ||
-					request.getAttribute("telNo") == null || request.getAttribute("telNo").equals("")) {
+			if(request.getParameter("reservNo") == null || request.getParameter("reservNo").equals("") ||
+					request.getParameter("telNo") == null || request.getParameter("telNo").equals("")) {
 				String errorMessage = "予約番号もしくは電話番号が入力されていません";
 				request.setAttribute("errorMessage",errorMessage);
-				//入力値保持のため、reservNoとtelNoをrequest再転送
-				request.setAttribute("reservNo", reservNo);
-				request.setAttribute("telNo", telNo);
+
 			}
 
 			if(!checkTelNo(telNo)) {
@@ -73,7 +71,7 @@ public class Item_List_Action extends Action {
 			//LoginDaoを用いて、reservNoとtelNoを含むレコードがあるかを探す
 			//該当するレコードがなければエラーを返す
 			LoginDAO loginDao = new LoginDAO();
-			if(!loginDao.login(reservNo,telNo)) {
+			if(loginDao.login(reservNo,telNo)) {
 				String errorMessage = "予約番号もしくは電話番号が間違っています";
 				request.setAttribute("errorMessage",errorMessage);
 				//入力値保持のため、reservNoとtelNoをrequest再転送
@@ -119,18 +117,48 @@ public class Item_List_Action extends Action {
 
 		//itemCount!=0ならばカートに商品を追加
 
-		if(request.getParameter("itemCount") != null) {
-			if(Integer.parseInt(request.getParameter("itemCount")) != 0 ) {
+		if(request.getAttribute("itemCount") != null) {
+			//if(Integer.parseInt(request.getParameter("itemCount")) != 0 ) {
+			OrderBean order = new OrderBean();
+			order.setReservNo(login.getReservNo());
+			order.setItemName((String)request.getAttribute("itemName"));
+			order.setItemCount(Integer.parseInt((String)request.getAttribute("itemCount")));
+			//order.setItemCount(1);
+			order.setItemPrice(Integer.parseInt((String)request.getAttribute("itemPrice")));
+			order.setSubTotal((Integer.parseInt((String)request.getAttribute("itemCount")))*(Integer.parseInt((String)request.getAttribute("itemPrice"))));
+			
+			if(session.getAttribute("cart") != null) {
+				ArrayList<OrderBean> cart = (ArrayList<OrderBean>) session.getAttribute("cart");
+				cart.add(order);
+				session.setAttribute("cart", cart);
+			}
+			else {
+				ArrayList<OrderBean> cart = new ArrayList<>();
+				cart.add(order);
+				session.setAttribute("cart", cart);
+			}
+			//}
+		}
+		else if(request.getParameter("itemCount") != null) {
+			//if(Integer.parseInt(request.getParameter("itemCount")) != 0 ) {
 			OrderBean order = new OrderBean();
 			order.setReservNo(login.getReservNo());
 			order.setItemName(request.getParameter("itemName"));
 			order.setItemCount(Integer.parseInt(request.getParameter("itemCount")));
+			//order.setItemCount(1);
 			order.setItemPrice(Integer.parseInt(request.getParameter("itemPrice")));
-			order.setSubTotal(Integer.parseInt(request.getParameter("SubTotal")));
-			ArrayList<OrderBean> cart = (ArrayList<OrderBean>) session.getAttribute("cart");
-			cart.add(order);
-			session.setAttribute("cart", cart);
+			order.setSubTotal((Integer.parseInt(request.getParameter("itemCount")))*(Integer.parseInt(request.getParameter("itemPrice"))));
+			if(session.getAttribute("cart") != null) {
+				ArrayList<OrderBean> cart = (ArrayList<OrderBean>) session.getAttribute("cart");
+				cart.add(order);
+				session.setAttribute("cart", cart);
 			}
+			else {
+				ArrayList<OrderBean> cart = new ArrayList<>();
+				cart.add(order);
+				session.setAttribute("cart", cart);
+			}
+			//}
 		}
 
 
