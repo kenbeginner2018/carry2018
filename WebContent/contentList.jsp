@@ -1,6 +1,7 @@
 <?xml version="1.0" encoding="UTF-8" ?>
 <%@ page language="java" contentType="text/html; charset=UTF-8"
     pageEncoding="UTF-8"%>
+<%@ taglib prefix="c" uri="http://java.sun.com/jsp/jstl/core" %>
 <!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
 <html xmlns="http://www.w3.org/1999/xhtml">
 <head>
@@ -15,38 +16,31 @@
 	<center>
 		<table border="3" summary="注文内容表示" cellspacing="1">
 			<tr bgcolor="#b3b3b3" align="center">
-				<td colspan="2">商品名</td>
-				<td>価格</td>
-				<td>数量</td>
-				<td>小計</td>
+				<th>商品名</th>
+				<th>単価</th>
+				<th>数量</th>
+				<th>小計</th>
 
 			</tr>
 
 			<tr align="center">
-				<td>
-					<input type="image" src="img/1_bracelet.png" alt="グッズA" /><br />
-				</td>
-				<td>
-					ブレスレット/望海風斗
-				</td>
-				<td>
-					¥3,300
-				</td>
-				<td>
-					1
-				</td>
-				<td>
-					¥3,300
-				</td>
+				<c:forEach var="cart" items="${sessionScope.cart}">
+					<tr>
+						<td><c:out value="${cart.itemName}" /></td>
+						<td><c:out value="${cart.itemPrice}" /></td>
+						<td><c:out value="${cart.itemCount}" /></td>
+						<td><c:out value="${cart.subTotal}" /></td>
+					</tr>
+				</c:forEach>
 			</tr>
 
 
-					<tr>
-					<td>支払い方法：クレジット一括</td>
-					</tr>
-				<tr><td>合計金額 円
-					</td>
-				</tr>
+			<tr>
+				<td colspan="4">支払い方法：クレジット一括</td>
+			</tr>
+			<tr>
+				<td colspan="4">合計金額 ${requestScope.totalPrice}円</td>
+			</tr>
 
 
 

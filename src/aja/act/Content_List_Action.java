@@ -1,16 +1,24 @@
 package aja.act;
 
+import java.util.ArrayList;
 import java.util.regex.Matcher;
 import java.util.regex.Pattern;
 
 import javax.servlet.http.HttpServletRequest;
+import javax.servlet.http.HttpSession;
+
+import aja.bean.OrderBean;
 
 public class Content_List_Action extends Action {
 
 	@Override
 	public String execute(HttpServletRequest request) throws Exception {
-		//16桁のcreditNoを生成する。
+	//session.cart実装をスムーズに行うため、いったんクレカの処理を止めています。
+	//実装終了後、コメントアウトを解除してください
 
+	/*
+
+		//16桁のcreditNoを生成する。
 
 		String creditNo = (request.getParameter("creditNo1-4")) + "-" + (request.getParameter("creditNo5-8")) + "-" +
 				(request.getParameter("creditNo9-12")) + "-" + (request.getParameter("creditNo13-16"));
@@ -39,6 +47,39 @@ public class Content_List_Action extends Action {
 			return "/credit.jsp";
 		}
 
+	*/
+
+		//以下、session.cartをでっちあげます。
+		//テスト終了後、削除してください
+		HttpSession session = request.getSession(true);
+		ArrayList<OrderBean> cart = new ArrayList<OrderBean>();
+
+		OrderBean addItem = new OrderBean();
+		addItem.setReservNo(4568958);
+		addItem.setItemName("本1");
+		addItem.setItemPrice(500);
+		addItem.setItemCount(5);
+		addItem.setSubTotal(2500);
+		cart.add(addItem);
+		addItem = new OrderBean();
+		addItem.setReservNo(4568958);
+		addItem.setItemName("写真");
+		addItem.setItemPrice(100);
+		addItem.setItemCount(5);
+		addItem.setSubTotal(500);
+		cart.add(addItem);
+
+		session.setAttribute("cart",cart);
+
+
+		//お買い上げ総額計算用
+		cart = (ArrayList<OrderBean>) session.getAttribute("cart");
+		int totalPrice = 0;
+		for(OrderBean oBean : cart) {
+			totalPrice += oBean.getSubTotal();
+		}
+
+		request.setAttribute("totalPrice", totalPrice);
 
 		return "/contentList.jsp";
 	}
