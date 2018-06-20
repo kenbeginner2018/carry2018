@@ -1,6 +1,7 @@
 <?xml version="1.0" encoding="UTF-8" ?>
 <%@ page language="java" contentType="text/html; charset=UTF-8"
     pageEncoding="UTF-8"%>
+<%@ taglib prefix="c" uri="http://java.sun.com/jsp/jstl/core" %>
 <!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
 <html xmlns="http://www.w3.org/1999/xhtml">
 <head>
@@ -16,7 +17,8 @@
 		<table border="3" summary="注文内容表示">
 			<tr bgcolor="#CCFFFF">
 				<td colspan="3">
-					予約番号
+					予約番号:
+					<c:out value="${requestScope.reserveNo}" />
 				</td>
 			</tr>
 			<tr>
@@ -31,18 +33,27 @@
 				</td>
 
 			</tr>
+
+
+
+		<c:forEach var="oList" items="${requestScope.oList}">
 			<tr>
+				<td><c:out value="${oList.itemName}" /></td>
+				<td><c:out value="${oList.itemCount}" /></td>
+				<td><c:out value="${oList.subTotal}" /></td>
+			</tr>
+		</c:forEach>
+
+			<tr>
+
+
+	<!--  合計金額については実装方法思いつかず。-->
+	<!--  前画面からrequestで持ってくるのが最善か？-->
+
 				<td>
-				</td>
-				<td>
-				</td>
-				<td>
+				合計金額 円
 				</td>
 			</tr>
-					<tr>
-					<td>合計金額 円
-					</td>
-				</tr>
 
 		</table>
 
@@ -66,5 +77,19 @@
 		</table>
 	</center>
 	</form>
+
+
+	<!-- テスト用：動作確認後削除すること -->
+	<form action="t-order" method="post">
+		<table summary="検索欄">
+			<tr>
+				<td align="center">
+					<input type="submit" name="Shows" value="テスト用" />
+					<input type="hidden" name="act" value="BuyDetail" />
+				</td>
+			</tr>
+		</table>
+	</form>
+
 </body>
 </html>

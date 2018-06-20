@@ -38,5 +38,11 @@
 			</tr>
 		</table>
 	</form>
+
+	<div>
+		<c:if test="${requestScope.errorMessage != null}">
+			<%=request.getAttribute("errorMessage") %>
+		</c:if>
+	</div>
 </body>
 </html>

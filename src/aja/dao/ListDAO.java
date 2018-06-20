@@ -313,7 +313,7 @@ public class ListDAO {
 
 		try {
 
-			if((Integer)request.getAttribute("reserveNo") != null) {
+			if(request.getAttribute("reserveNo") != null) {
 
 				p_statement_order_List.setInt(1, Integer.parseInt((String)request.getAttribute("reserveNo")));
 				//SQLの発行をし、抽出結果が格納されたResultオブジェクトを取得

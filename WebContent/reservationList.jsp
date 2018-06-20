@@ -1,6 +1,7 @@
 <?xml version="1.0" encoding="UTF-8" ?>
 <%@ page language="java" contentType="text/html; charset=UTF-8"
     pageEncoding="UTF-8"%>
+<%@ taglib prefix="c" uri="http://java.sun.com/jsp/jstl/core" %>
 <!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
 <html xmlns="http://www.w3.org/1999/xhtml">
 <head>
@@ -109,32 +110,30 @@
 				<td>商品総数</td>
 				<td>合計金額</td>
 			</tr>
-			<tr>
-				<td></td>
-				<td></td>
-				<td></td>
-			</tr>
-			<tr>
-				<td></td>
-				<td></td>
-				<td></td>
-			</tr>
-			</table><br/>
-<%--
-		<c:forEarth var=" " items="${requestScope. List}">
-			<tr>
-				<td><c:out value="${   .reserveNo}" /></td>
-				<td><c:out value="${   .count}" /></td>
-				<td><c:out value="${   .totalcount}" /></td>
-				<td>
-					<form action="delete" method="get">
-						<input type="hedden" neme=" " value="${  .reserveNo}" />
---%>
-					<input type="submit" value="戻る" />
+			<c:forEach var="rList" items="${requestScope.rList}">
+				<tr>
+					<td><c:out value="${rList.reservNo}" /></td>
+					<td><c:out value="${rList.totalCount}" /></td>
+					<td><c:out value="${rList.totalPrice}" /></td>
+					<td>
+					<form>
+						<input type="submit" name="reservNo" value="詳細確認" />
+						<input type="hidden" name="act" value="BuyDetail" />
 					</form>
-				</td>
-			</tr>
-		<%--</c:forEath>--%>
+					</td>
+				</tr>
+			</c:forEach>
+		</table><br/>
+
+		<%
+//					<form action="delete" method="get">
+//						<input type="hidden" name=" " value="${rList.reserveNo}" />
+//
+//					<input type="submit" value="戻る" />
+//					</form>
+//				</td>
+//			</tr>
+			%>
 	<%--</c:if>--%>
 
 
