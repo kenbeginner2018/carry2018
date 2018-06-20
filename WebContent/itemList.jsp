@@ -32,51 +32,36 @@
 		</table>
 	</form>
 	<form action="t-order" method="post">
-		<table border="3" width="600" height="100">
-			<tr>
-				<td align="center">
-					<input type="image" src="img/1_bracelet.png" alt="グッズA" />
-					<input type="hidden" name="act" value="ItemDetailList" /><br/>
-					ブレスレット/望海風斗<br/>
-					¥3,300
-				</td>
-				<td align="center">
-					<input type="image" src="img/1_eaudetoilette.png" alt="グッズB" />
-					<input type="hidden" name="act" value="ItemDetailList" /><br/>
-					オードトワレ/望海風斗<br/>
-					¥4,600
-				</td>
-				<td align="center">
-					<input type="image" src="img/2_charm.png" alt="グッズC" />
-					<input type="hidden" name="act" value="ItemDetailList" /><br/>
-					チャーム／雪組「凱旋門」<br/>
-					「Gato Bonito!!」<br/>
-					¥800
-				</td>
-			</tr>
-			<tr>
-				<td align="center">
-					<input type="image" src="img/2_bag.png" alt="グッズD" />
-					<input type="hidden" name="act" value="ItemDetailList" /><br/>
-					観劇バッグ／雪組「凱旋門」<br/>
-					「Gato Bonito!!」<br/>
-					¥3,300
-				</td>
-				<td align="center">
-					<input type="image" src="img/3_program.png" alt="グッズE" />
-					<input type="hidden" name="act" value="ItemDetailList" /><br/>
-					宝塚大劇場公演プログラム<br/>
-					「凱旋門」「Gato Bonito!!」<br/>
-					＜雪組＞<br/>
-					¥1,000
-				</td>
-				<td align="center">
-					<input type="image" src="img/3_magazine.png" alt="グッズF" />
-					<input type="hidden" name="act" value="ItemDetailList" /><br/>
-					歌劇6月号（2018年）<br />
-					¥720<br/>
-				</td>
-			</tr>
+	<%
+		//表作成用変数
+		int i = 0;
+	%>
+		<table border="3" height="100">
+			<c:forEach var="item" items="${sessionScope.items}" >
+
+				<%
+					if(i == 0){
+				%>
+					<tr>
+				<%
+					}
+				%>
+						<td align="center" width="200">
+							<input type="image" src="img/${item.itemImage}" alt="グッズA" />
+							<input type="hidden" name="act" value="ItemDetailList" /><br/>
+							${item.itemName}<br/>
+							￥${item.itemPrice}
+						</td>
+				<%
+					i++;
+					if(i == 3){
+				%>
+					</tr>
+				<%
+					i = 0;
+					}
+				%>
+			</c:forEach>
 		</table>
 	</form>
 	<form action="t-order" method="post">
@@ -84,7 +69,7 @@
 			<tr>
 				<td>
 					<input type="submit" name="Items" value="買い物終了" />
-					<input type="hidden" name="act" value="LoginUser" />
+					<input type="hidden" name="act" value="Credit" />
 				</td>
 			</tr>
 		</table>
