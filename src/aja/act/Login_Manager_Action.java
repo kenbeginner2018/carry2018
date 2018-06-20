@@ -7,6 +7,7 @@ import aja.bean.Manager_LoginBean;
 
 public class Login_Manager_Action extends Action {
 
+
 	@Override
 	public String execute(HttpServletRequest request) throws Exception {
 		HttpSession session = request.getSession(true);
