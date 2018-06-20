@@ -7,7 +7,6 @@ import java.sql.ResultSet;
 import java.sql.SQLException;
 
 import aja.bean.LoginBean;
-import aja.bean.Manager_LoginBean;
 
 public class LoginDAO {
 	private Connection connection;
@@ -32,8 +31,8 @@ public class LoginDAO {
 		最初に枠となるSQLを設定する。
 		 */
 		// ?(INパラメータ)のところは、後から設定できる。
-		String Ticket_Pruche_sql = "SELECT * FROM ticket_purchaser WHERE reserveNo=? AND  telNo='?'";
-		String Manager_sql = "SELECT * FROM t_order.manager WHERE managerId=? AND  password='?'";
+		String Ticket_Pruche_sql = "SELECT * FROM ticket_purchaser WHERE reserveNo=? AND  telNo=?";
+		String Manager_sql = "SELECT * FROM t_order.manager WHERE managerId=? AND  password=?";
 
 		//ユーザーログインの予約番号と電話番号で検索するためのSQL
 		 p_statement_User_Login = connection.prepareStatement(Ticket_Pruche_sql);
@@ -68,16 +67,17 @@ public class LoginDAO {
 
 	public boolean loginManager(int managerId, String password) throws Exception {
 
-		Manager_LoginBean mlb = new Manager_LoginBean();
+//		Manager_LoginBean mlb = new Manager_LoginBean();
+
 		try {
 
 			p_statement_Manager_Login.setInt(1, managerId);
 			p_statement_Manager_Login.setString(2, password);
-			p_statement_Manager_Login.executeUpdate();
+			rs = p_statement_Manager_Login.executeQuery();
 
 			// DBから取得したデータをmlbオブジェクトに格納
-			mlb.setManagerId(rs.getInt("managerId"));
-			mlb.setPassword(rs.getString("password"));
+//			mlb.setManagerId(rs.getInt("managerId"));
+//			mlb.setPassword(rs.getString("password"));
 
 			if (rs.next()) {
 				return true;
