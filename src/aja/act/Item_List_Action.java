@@ -19,6 +19,7 @@ public class Item_List_Action extends Action {
 	@Override
 	public String execute(HttpServletRequest request) throws Exception {
 
+		//ListDAO listDao = new ListDAO();
 		//動作のためにはListDaoとLoginDaoの実装が必要
 		//実装後にコメントアウトを外すこと
 
@@ -30,22 +31,13 @@ public class Item_List_Action extends Action {
 		HttpSession session = request.getSession(true);
 		LoginBean login = (LoginBean) session.getAttribute("login");
 
-/*
 		//公演選択画面で選択された公演を保持
 		if(request.getParameter("showId") != null){
-			session.setAttribute("showId",request.getParameter("showId"));
+			int showId = Integer.parseInt(request.getParameter("showId"));
+			session.setAttribute("showId",showId);
 		}else {
 			return "/top.jsp";
 		}
-*/
-
-		session.setAttribute("showId",1);
-
-		//request.categoryがnullならば、categoryに0を代入してrequest転送
-		if(request.getParameter("category")==null) {
-			request.setAttribute("category", 0);
-		}
-
 
 		//ログインページから遷移した場合
 		if(request.getParameter("reservNo") != null || request.getParameter("telNo") != null) {
@@ -91,15 +83,18 @@ public class Item_List_Action extends Action {
 			session.setAttribute("login",login);
 		}else {			//ログインページ以外から遷移した場合
 			ListDAO listDao = new ListDAO();
+			if(request.getAttribute("category") == null){
+				request.setAttribute("category", 0);
+			}
 			ArrayList<ItemBean> items = listDao.item_List(request);
 			session.setAttribute("items",items);
 		}
 
 
-
 		//session.categoryが存在しない場合、カテゴリの取得を行う
-		ArrayList<CategoryBean> category = (ArrayList<CategoryBean>)session.getAttribute("category");
-		if(category == null) {
+		//ArrayList<CategoryBean> category = (ArrayList<CategoryBean>)session.getAttribute("category");
+		if(session.getAttribute("category") == null) {
+			ArrayList<CategoryBean> category = new ArrayList<>();
 			ListDAO listDao = new ListDAO();
 			category = listDao.category_List();
 			session.setAttribute("category", category);
@@ -107,7 +102,9 @@ public class Item_List_Action extends Action {
 
 
 		//itemCount!=0ならばカートに商品を追加
+
 		if(request.getParameter("itemCount") != null) {
+			if(Integer.parseInt(request.getParameter("itemCount")) != 0 ) {
 			OrderBean order = new OrderBean();
 			order.setReservNo(login.getReservNo());
 			order.setItemName(request.getParameter("itemName"));
@@ -117,6 +114,7 @@ public class Item_List_Action extends Action {
 			ArrayList<OrderBean> cart = (ArrayList<OrderBean>) session.getAttribute("cart");
 			cart.add(order);
 			session.setAttribute("cart", cart);
+			}
 		}
 
 
