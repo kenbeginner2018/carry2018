@@ -42,8 +42,8 @@ public class ListDAO {
 		 String item_List_noCategoryId_sql = "SELECT * FROM t_order.category,t_order.item WHERE showId = ? AND item.categoryId = category.categoryId ";
 		 String item_List_sql = "SELECT * FROM t_order.category,t_order.item WHERE showId = ? AND item.categoryId = category.categoryId AND category.categoryId = ? ";
 		 String item_Detail_List_sql = "SELECT * FROM t_order.category,t_order.item WHERE showId = ? AND item.categoryId = category.categoryId AND item.itemName = ' ? '";
-		 String reservation_List_noDelivaryFlag_sql ="SELECT * FROM t_order.ticket_purchaser,t_order.item_reserver WHERE ticket_purchaser.reserveNo = item_reserver.reserveNo AND showDay = '?'";
-		 String reservation_List_sql ="SELECT * FROM t_order.ticket_purchaser,t_order.item_reserver WHERE ticket_purchaser.reserveNo = item_reserver.reserveNo AND showDay = ' ? 'AND deliveryFlag = ?";
+		 String reservation_List_noDelivaryFlag_sql ="SELECT * FROM t_order.ticket_purchaser,t_order.item_reserver WHERE ticket_purchaser.reserveNo = item_reserver.reserveNo AND showDay = ?";
+		 String reservation_List_sql ="SELECT * FROM t_order.ticket_purchaser,t_order.item_reserver WHERE ticket_purchaser.reserveNo = item_reserver.reserveNo AND showDay =  ? AND deliveryFlag = ?";
 		 String order_List_sql = "SELECT * FROM t_order.item_reserver,t_order.buy_detail,t_order.item WHERE buy_detail.reserveNo = item_reserver.reserveNo AND buy_detail.itemId = item.itemId AND buy_detail.reserveNo = ? ";
 
 		//SQLを保持するPreparedStatementを生成
@@ -260,10 +260,12 @@ public class ListDAO {
 
 		try {
 
-			if ((String)request.getAttribute("showYear") != null && (String)request.getAttribute("showMonth") != null && (String)request.getAttribute("showDay") != null) {
+			if ((String)request.getParameter("showYear") != null && (String)request.getParameter("showMonth") != null && (String)request.getParameter("showDay") != null) {
 
-				if((Integer)request.getAttribute("deliveryFlag") != null) {
-					 p_statement_reservation_List_noDeliveryFlag.setString(1,(String)request.getAttribute("showYear")+"-"+(String)request.getAttribute("showMonth")+"-"+(String)request.getAttribute("showDay"));
+				if(request.getAttribute("deliveryFlag") == null) {
+
+
+					 p_statement_reservation_List_noDeliveryFlag.setString(1,request.getParameter("showYear")+"-"+request.getParameter("showMonth")+"-"+request.getParameter("showDay"));
 
 					 //SQLの発行をし、抽出結果が格納されたResultオブジェクトを取得
 					 rs_reservationLists = p_statement_reservation_List_noDeliveryFlag.executeQuery();
@@ -314,7 +316,7 @@ public class ListDAO {
 
 			if(request.getAttribute("reserveNo") != null) {
 
-				p_statement_order_List.setInt(1, Integer.parseInt((String)request.getAttribute("reserveNo")));
+				p_statement_order_List.setInt(1, Integer.parseInt(request.getParameter("reserveNo")));
 				//SQLの発行をし、抽出結果が格納されたResultオブジェクトを取得
 				rs_orderLists = p_statement_order_List.executeQuery();
 			}

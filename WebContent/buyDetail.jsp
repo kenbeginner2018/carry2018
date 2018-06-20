@@ -50,8 +50,8 @@
 	<!--  合計金額については実装方法思いつかず。-->
 	<!--  前画面からrequestで持ってくるのが最善か？-->
 
-				<td>
-				合計金額 円
+				<td align="right" colspan="3">
+					<strong>合計金額 ${requestScope.totalPrice}円</strong>
 				</td>
 			</tr>
 
@@ -76,19 +76,6 @@
 			</tr>
 		</table>
 	</center>
-	</form>
-
-
-	<!-- テスト用：動作確認後削除すること -->
-	<form action="t-order" method="post">
-		<table summary="検索欄">
-			<tr>
-				<td align="center">
-					<input type="submit" name="Shows" value="テスト用" />
-					<input type="hidden" name="act" value="BuyDetail" />
-				</td>
-			</tr>
-		</table>
 	</form>
 
 </body>

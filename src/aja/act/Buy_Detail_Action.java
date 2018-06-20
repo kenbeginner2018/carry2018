@@ -13,11 +13,11 @@ public class Buy_Detail_Action extends Action {
 	public String execute(HttpServletRequest request) throws Exception {
 
 		//次画面でも用いるため、再度request転送
-		request.setAttribute("reserveNo","5465756");
+		request.setAttribute("reserveNo",request.getParameter("reserveNo"));
+		request.setAttribute("totalPrice", request.getParameter("totalPrice"));
 
 		//reservNoをキーとしてListDaoのorderList()メソッドにより対応した顧客の購入情報を取得する
 		//ListDao実装後、コメントアウト状態を外すこと
-
 
 		ListDAO listDao = new ListDAO();
 		ArrayList<OrderBean> oList = listDao.order_List(request);
