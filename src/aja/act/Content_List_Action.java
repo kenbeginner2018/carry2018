@@ -43,6 +43,9 @@ public class Content_List_Action extends Action {
 		}else if(!checkCreditNo(creditNo)) {
 			request.setAttribute("errorMessage", "クレジット番号を正しく入力してください");
 			return "/credit.jsp";
+		}else if(!checkName(name)) {
+			request.setAttribute("errorMessage", "名前は以下の形式で入力してください<br />(例)TANAKA TARO");
+			return "/credit.jsp";
 		}else if(!checkSecurityCode(securityCode)) {
 			request.setAttribute("errorMessage", "セキュリティコードを正しく入力してください");
 			return "/credit.jsp";
@@ -97,6 +100,15 @@ public class Content_List_Action extends Action {
 		Matcher matcher = pattern.matcher(creditNo);
 		return matcher.matches();
 	}
+
+	//カード名義人の形式チェック(大文字アルファベットのみの形式か否か)
+	private boolean checkName(String name) {
+		String regex = "^[A-Z]+ [A-Z]+$";
+		Pattern pattern = Pattern.compile(regex);
+		Matcher matcher = pattern.matcher(name);
+		return matcher.matches();
+	}
+
 
 	//セキュリティコードの形式チェック(3桁の整数か否か)
 	private boolean checkSecurityCode(String securityCode) {
