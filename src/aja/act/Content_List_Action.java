@@ -19,8 +19,6 @@ public class Content_List_Action extends Action {
 	//session.cart実装をスムーズに行うため、いったんクレカの処理を止めています。
 	//実装終了後、コメントアウトを解除してください
 
-	/*
-
 		//16桁のcreditNoを生成する。
 
 		String creditNo = (request.getParameter("creditNo1-4")) + "-" + (request.getParameter("creditNo5-8")) + "-" +
@@ -49,8 +47,6 @@ public class Content_List_Action extends Action {
 			request.setAttribute("errorMessage", "セキュリティコードを正しく入力してください");
 			return "/credit.jsp";
 		}
-
-	*/
 
 	/*
 		//以下、session.cartをでっちあげます。
