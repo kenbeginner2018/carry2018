@@ -47,9 +47,6 @@
 			<tr>
 
 
-	<!--  合計金額については実装方法思いつかず。-->
-	<!--  前画面からrequestで持ってくるのが最善か？-->
-
 				<td align="right" colspan="3">
 					<strong>合計金額 ${requestScope.totalPrice}円</strong>
 				</td>
