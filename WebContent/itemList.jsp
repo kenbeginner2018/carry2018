@@ -96,6 +96,7 @@
 </div>
 <div class= "サイド" style="float: right;border-left:#000000 solid 7px;height:600px;">
 <h1 align="center">カート一覧</h1>
+
 <table border="4"  rules="rows">
 	<tr>
 		<td>
@@ -113,7 +114,7 @@
 	</tr>
 	<% int l = 0; %>
 	<c:forEach var="cart" items="${sessionScope.cart}" >
-			<form action="t-order" method="post">
+			<form name="itemCount" action="t-order" method="post">
 					<tr>
 						<td>
 							${cart.itemName}
@@ -122,25 +123,62 @@
 						<td>
 							¥${cart.itemPrice}
 						</td>
-						<td>
-							${cart.itemCount}
-						</td>
+							<td>
+								<select name="change">
+
+									<%int num =%>${cart.itemCount}<%; %>
+									<%int num_d = 1;
+										for(num_d = 1; num_d<=5; num_d++){
+											if(num_d==num){%>
+												<option value=<%=num_d %> selected="selected"><%=num_d %></option>
+											<% }
+											else{
+										%>
+											<option value=<%=num_d %>><%=num_d %></option>
+										<%
+											}
+										%>
+									<%
+										}
+									%>
+								</select>
+								<input type="hidden" name="update" value="update" />
+								<input  type="hidden"name="act" value="ItemList" />
+								<input type="hidden" name="updateNo" value = <%=l%> />
+								<input type="submit" value="更新"/>
+							</td>
+
 						<td>
 							<input type="hidden" name="delete" value="delete" />
 							<input  type="hidden"name="act" value="ItemList" />
-							<input type="hidden" name="deleteNo" value = <%=l %> />
+							<input type="hidden" name="deleteNo" value = <%=l%> />
 							<input type="submit" value="削除"/>
 						</td>
 					</tr>
 			</form>
 			<%
-			l++;
-			%>
+			 l += 1;
+			 %>
+
 		</c:forEach>
 
 
 </table>
 </div>
+<script>
+	function itemCountChange(){
 
+		obj = document.itemCount.change;
+
+		index = obj.selectedIndex;
+
+		if(index !=0){
+			href = obj.options[index].value;
+			location.href = href;
+
+		}
+
+	}
+</script>
 </body>
 </html>
