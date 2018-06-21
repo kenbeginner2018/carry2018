@@ -61,6 +61,8 @@
 	</p>
 </form>
 
+<c:if  test="${requestScope.rList.size() != 0}">
+
 	<c:if  test="${requestScope.rList != null}">
 
 		<h2>検索結果</h2>
@@ -88,9 +90,17 @@
 		</table><br/>
 	</c:if>
 
+</c:if>
+
+<c:if  test="${requestScope.rList.size() == 0}">
+	<div>
+		<strong>指定された日時の予約はありません</strong>
+	</div>
+</c:if>
+
 	<div>
 		<c:if test="${requestScope.errorMessage != null}">
-			<%=request.getAttribute("errorMessage") %>
+			<strong><%=request.getAttribute("errorMessage") %></strong>
 		</c:if>
 	</div>
 

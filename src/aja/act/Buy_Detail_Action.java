@@ -23,7 +23,6 @@ public class Buy_Detail_Action extends Action {
 		ArrayList<OrderBean> oList = listDao.order_List(request);
 		request.setAttribute("oList", oList);
 
-
 		return "/buyDetail.jsp";
 	}
 }
