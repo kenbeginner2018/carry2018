@@ -46,8 +46,8 @@ public class Fixed_Action extends Action {
 		UpdateDAO updateDao = new UpdateDAO();
 		updateDao.updateItem(request);
 
-		//予約の追加が終了したので、cartを解放
-		session.setAttribute("cart", null);
+		//予約の追加が終了したので、session(カート内情報とログイン情報)を削除
+		session.invalidate();
 
 		return "/fixed.jsp";
 	}
