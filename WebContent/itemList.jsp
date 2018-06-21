@@ -57,7 +57,9 @@
 							<input type="image" src="img/${item.itemImage}" alt="${ item.itemName}" />
 							<input type="hidden" name="act" value="ItemDetailList" /><br/>
 							${item.itemName}<br/>
-							￥${item.itemPrice}
+							￥${item.itemPrice}<br/>
+							在庫：${item.itemStock}
+
 							<input type="hidden" name="itemName" value="${item.itemName}" />
 						</td>
 				<%
@@ -107,8 +109,7 @@
 		<td>
 		数量
 		</td>
-		<td>
-		</td>
+
 		<td>
 		</td>
 		<td>
@@ -126,16 +127,18 @@
 						<td>
 							¥${cart.itemPrice}円
 						</td>
-						<td>
-							${cart.itemCount}
-						</td>
+
 						<td>
 							<select name="itemcount">
-							<option value="1" selected="selected">1</option>
-							<option value="2">2</option>
-							<option value="3">3</option>
-							<option value="4">4</option>
-							<option value="5">5</option>
+							<% int count = 1; %>
+							<c:forEach var="u" begin="1" end="${cart.itemCount + 5}" step="1">
+
+								<c:if test="${cart.itemCount == u }">
+									<option value=<%=count %> selected="selected">${u}</option>
+								</c:if>
+								<option value=<%=count %>>${u}</option>
+								<% count++; %>
+							</c:forEach>
 							</select>
 						</td>
 						<td>

@@ -142,6 +142,8 @@ public class Item_List_Action extends Action {
 		String btn = request.getParameter("btn");
 		if( btn != null) {
 			if(btn.equals("更新")) {
+				//TODO
+				System.out.println(request.getParameter("itemcount"));
 				int i = Integer.parseInt(request.getParameter("updateNo"));
 				ArrayList<OrderBean> cart = (ArrayList<OrderBean>) session.getAttribute("cart");
 				OrderBean get_cart = new OrderBean();
