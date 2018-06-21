@@ -4,7 +4,9 @@ import java.util.ArrayList;
 import java.util.Calendar;
 
 import javax.servlet.http.HttpServletRequest;
+import javax.servlet.http.HttpSession;
 
+import aja.bean.Manager_LoginBean;
 import aja.bean.Reservation_ListBean;
 import aja.dao.ListDAO;
 
@@ -13,7 +15,12 @@ public class Reservation_List_Action extends Action {
 	@Override
 	public String execute(HttpServletRequest request) throws Exception {
 
-		System.out.println("test");
+		HttpSession session = request.getSession(true);
+		Manager_LoginBean mLogin = (Manager_LoginBean) session.getAttribute("mLogin");
+		//マネージャーとしてログインしていない場合、マネージャー向けログインページへ遷移
+		if(mLogin == null) {
+			return "/loginManager.jsp";
+		}
 
 		//日付指定用：yearの上限設定
 		Calendar calendar = Calendar.getInstance();

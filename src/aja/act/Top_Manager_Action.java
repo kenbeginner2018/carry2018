@@ -13,6 +13,7 @@ public class Top_Manager_Action extends Action {
 
 	@Override
 	public String execute(HttpServletRequest request) throws Exception {
+
 		//リクエスト処理
 		request.setCharacterEncoding("UTF-8");
 
@@ -20,6 +21,7 @@ public class Top_Manager_Action extends Action {
 		Manager_LoginBean mLogin = (Manager_LoginBean) session.getAttribute("mLogin");
 		//ログインが出来ていない場合(mLogin == null)は、ログイン処理を行う
 		//ログインしている場合(mLogin != null)は、何も行わずにtopManager.jspに遷移する
+
 		if(mLogin == null) {
 
 			//managerIdもしくはpasswordが未入力の場合、エラーメッセージをrequest転送しloginManager.jspへ

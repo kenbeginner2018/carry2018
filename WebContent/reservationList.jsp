@@ -21,7 +21,7 @@
 			int year = (Integer)request.getAttribute("listYear");
 			for(int i = year - 3 ; i <= year + 3 ; i++ ){
 		%>
-			<option value="<%=i %>"><%=i %></option>
+	  		<option value="<%=i %>"><%=i %></option>
 		<%
 			}
 		%>
@@ -61,9 +61,8 @@
 	</p>
 </form>
 
-<c:if  test="${requestScope.rList.size() != 0}">
-
-	<c:if  test="${requestScope.rList != null}">
+<c:if  test="${requestScope.rList != null}">
+	<c:if  test="${requestScope.rList.size() != 0}">
 
 		<h2>検索結果</h2>
 		<table border="1" summary="検索結果をまとめた表">
@@ -90,14 +89,13 @@
 		</table><br/>
 	</c:if>
 
-</c:if>
+	<c:if  test="${requestScope.rList.size() == 0}">
+		<div>
+			<strong>指定された日時の予約はありません</strong>
+		</div>
+	</c:if>
 
-<c:if  test="${requestScope.rList.size() == 0}">
-	<div>
-		<strong>指定された日時の予約はありません</strong>
-	</div>
 </c:if>
-
 	<div>
 		<c:if test="${requestScope.errorMessage != null}">
 			<strong><%=request.getAttribute("errorMessage") %></strong>
