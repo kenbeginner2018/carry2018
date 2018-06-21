@@ -56,22 +56,22 @@ public class Item_List_Action extends Action {
 					request.getParameter("telNo") == null || request.getParameter("telNo").equals("")) {
 				String errorMessage = "予約番号もしくは電話番号が入力されていません";
 				request.setAttribute("errorMessage",errorMessage);
-
 			}
 
 			if(!checkTelNo(telNo)) {
 				String errorMessage = "電話番号はxxx-xxxx-xxxxの形式で入力してください";
 				request.setAttribute("errorMessage",errorMessage);
 				//入力値保持のため、reservNoとtelNoをrequest再転送
-				request.setAttribute("reservNo", reservNo);
-				request.setAttribute("telNo", telNo);
+				//request.setAttribute("reservNo", reservNo);
+				//request.setAttribute("telNo", telNo);
 				return "/loginUser.jsp";
 			}
 
 			//LoginDaoを用いて、reservNoとtelNoを含むレコードがあるかを探す
 			//該当するレコードがなければエラーを返す
 			LoginDAO loginDao = new LoginDAO();
-			if(loginDao.login(reservNo,telNo)) {
+
+			if(!loginDao.login(request)) {
 				String errorMessage = "予約番号もしくは電話番号が間違っています";
 				request.setAttribute("errorMessage",errorMessage);
 				//入力値保持のため、reservNoとtelNoをrequest再転送

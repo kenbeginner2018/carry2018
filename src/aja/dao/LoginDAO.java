@@ -6,7 +6,7 @@ import java.sql.PreparedStatement;
 import java.sql.ResultSet;
 import java.sql.SQLException;
 
-import aja.bean.LoginBean;
+import javax.servlet.http.HttpServletRequest;
 
 public class LoginDAO {
 	private Connection connection;
@@ -31,8 +31,8 @@ public class LoginDAO {
 		最初に枠となるSQLを設定する。
 		 */
 		// ?(INパラメータ)のところは、後から設定できる。
-		String Ticket_Pruche_sql = "SELECT * FROM ticket_purchaser WHERE reserveNo=? AND  telNo=?";
-		String Manager_sql = "SELECT * FROM t_order.manager WHERE managerId=? AND  password=?";
+		String Ticket_Pruche_sql = "SELECT * FROM t_order.ticket_purchaser WHERE ticket_purchaser.reserveNo=? AND  ticket_purchaser.telNo=?";
+		String Manager_sql = "SELECT * FROM t_ordermanager WHERE managerId=? AND  password=?";
 
 		//ユーザーログインの予約番号と電話番号で検索するためのSQL
 		 p_statement_User_Login = connection.prepareStatement(Ticket_Pruche_sql);
@@ -40,29 +40,36 @@ public class LoginDAO {
 		 p_statement_Manager_Login = connection.prepareStatement(Manager_sql);
 	}
 
-	public boolean login(int reservNo, String telNo) throws Exception {
+	public boolean login(HttpServletRequest request) throws SQLException {
 
-		LoginBean lb = new LoginBean();
+		//LoginBean lb = new LoginBean();
 
 		try {
 
-			 p_statement_User_Login.setInt(1, reservNo);
-			 p_statement_User_Login.setString(2, telNo);
-			 p_statement_User_Login.executeUpdate();
+			p_statement_User_Login.setInt(1, Integer.parseInt(request.getParameter("reservNo")));
+			p_statement_User_Login.setString(2, request.getParameter("telNo"));
+			rs = p_statement_User_Login.executeQuery();
 
-			// DBから取得したデータをlbオブジェクトに格納
-			lb.setReservNo(rs.getInt("ReservNo"));
-			lb.setTelNo(rs.getString("TelNo"));
+			//if (rs.next()) {
+				// DBから取得したデータをlbオブジェクトに格納
+				//lb.setReservNo(rs.getInt("ReserveNo"));
+				//lb.setTelNo(rs.getString("TelNo"));
+				//return true;
+			//} else {
+				//return false;
 
-			if (rs.next()) {
-				return true;
-			} else {
-
-			}
-		} catch (Exception e) {
-
+			//}
+			 return rs.next();
 		}
-		return false;
+		 finally {
+			 if ( p_statement_User_Login != null) {
+				 p_statement_User_Login.close();
+			 }
+			 if (connection != null) {
+				 connection.close();
+			 }
+		 }
+
 	}
 
 	public boolean loginManager(int managerId, String password) throws Exception {
