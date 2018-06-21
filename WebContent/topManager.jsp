@@ -13,7 +13,7 @@
 <center>
 
 <form action="t-order" method="post">
-<div align="center"><h1>TOP</h1></div>
+<div align="center"><h1>管理者TOP</h1></div>
 				<table summary="検索欄">
 						<tr>
 						<td align="center">
@@ -43,16 +43,7 @@
 					</tr>
 				</table>
 	</form>
-		<form action="t-order" method="post">
-				<table summary="検索欄">
-						<tr>
-						<td align="center">
-							<input type="submit" name="login" value="ログイン" />
-							<input type="hidden" name="act" value="LoginManager" />
-						</td>
-					</tr>
-				</table>
-</form>
+
 </center>
 </body>
 </html>
