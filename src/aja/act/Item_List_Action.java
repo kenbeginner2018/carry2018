@@ -118,32 +118,49 @@ public class Item_List_Action extends Action {
 		//itemCount!=0ならばカートに商品を追加
 
 		else if(request.getParameter("itemCount") != null) {
-			//if(Integer.parseInt(request.getParameter("itemCount")) != 0 ) {
+
+			boolean check = false;
 			OrderBean order = new OrderBean();
 			order.setReservNo(login.getReservNo());
 			order.setItemName(request.getParameter("itemName"));
 			order.setItemCount(Integer.parseInt(request.getParameter("itemCount")));
-			//order.setItemCount(1);
 			order.setItemPrice(Integer.parseInt(request.getParameter("itemPrice")));
 			order.setSubTotal((Integer.parseInt(request.getParameter("itemCount")))*(Integer.parseInt(request.getParameter("itemPrice"))));
+
 			if(session.getAttribute("cart") != null) {
 				ArrayList<OrderBean> cart = (ArrayList<OrderBean>) session.getAttribute("cart");
-				cart.add(order);
-				session.setAttribute("cart", cart);
+
+				for(int i = 0;i<cart.size();i++) {
+					if(cart.get(i).getItemName().equals(order.getItemName())) {
+
+						OrderBean insert_cart = new OrderBean();
+						insert_cart.setItemName(order.getItemName());
+						insert_cart.setItemPrice(order.getItemPrice());
+						insert_cart.setReservNo(order.getReservNo());
+						insert_cart.setItemCount(cart.get(i).getItemCount()+order.getItemCount());
+						insert_cart.setSubTotal(cart.get(i).getItemPrice() * insert_cart.getItemCount());
+
+						cart.set(i, insert_cart);
+						session.setAttribute("cart", cart);
+						check = true;
+						break;
+					}
+				}
+				if(!check) {
+						cart.add(order);
+						session.setAttribute("cart",cart);
+				}
 			}
 			else {
 				ArrayList<OrderBean> cart = new ArrayList<>();
 				cart.add(order);
-				session.setAttribute("cart", cart);
+				session.setAttribute("cart",cart);
 			}
-			//}
 		}
 
 		String btn = request.getParameter("btn");
 		if( btn != null) {
 			if(btn.equals("更新")) {
-				//TODO
-				System.out.println(request.getParameter("itemcount"));
 				int i = Integer.parseInt(request.getParameter("updateNo"));
 				ArrayList<OrderBean> cart = (ArrayList<OrderBean>) session.getAttribute("cart");
 				OrderBean get_cart = new OrderBean();
