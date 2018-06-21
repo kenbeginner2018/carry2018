@@ -37,10 +37,10 @@ public class ListDAO {
 
 		//PrepareStatementの利用。最初に枠となるSQLを設定する。
 	    // ?(INパラメータ)のところは、後から設定できる。
-		 String show_List_sql = "SELECT * FROM t_order.showd";
+		 String show_List_sql = "SELECT * FROM t_order.showd WHERE showFlag = 1";
 		 String category_List_sql = "SELECT * FROM t_order.category";
-		 String item_List_noCategoryId_sql = "SELECT * FROM t_order.category,t_order.item WHERE showId = ? AND item.categoryId = category.categoryId ";
-		 String item_List_sql = "SELECT * FROM t_order.category,t_order.item WHERE showId = ? AND item.categoryId = category.categoryId AND category.categoryId = ? ";
+		 String item_List_noCategoryId_sql = "SELECT * FROM t_order.category,t_order.item WHERE showId = ? AND item.categoryId = category.categoryId AND itemFlag= 1 ";
+		 String item_List_sql = "SELECT * FROM t_order.category,t_order.item WHERE showId =? AND item.categoryId = category.categoryId AND category.categoryId = ? AND itemFlag= 1 ";
 		 String item_Detail_List_sql = "SELECT * FROM t_order.category,t_order.item WHERE showId = ? AND item.categoryId = category.categoryId AND item.itemName =  ? ";
 		 String reservation_List_noDelivaryFlag_sql ="SELECT * FROM t_order.ticket_purchaser,t_order.item_reserver WHERE ticket_purchaser.reserveNo = item_reserver.reserveNo AND showDay = ?";
 		 String reservation_List_sql ="SELECT * FROM t_order.ticket_purchaser,t_order.item_reserver WHERE ticket_purchaser.reserveNo = item_reserver.reserveNo AND showDay =  ? AND deliveryFlag = ?";
