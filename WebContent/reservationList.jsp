@@ -88,10 +88,17 @@
 		</table><br/>
 	</c:if>
 
-		<div>
+	<div>
 		<c:if test="${requestScope.errorMessage != null}">
 			<%=request.getAttribute("errorMessage") %>
 		</c:if>
+	</div>
+
+	<div>
+		<form>
+			<input type="submit" name="reservNo" value="戻る" />
+			<input type="hidden" name="act" value="TopManager" />
+		</form>
 	</div>
 
 

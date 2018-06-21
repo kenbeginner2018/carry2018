@@ -7,13 +7,15 @@ import java.util.regex.Pattern;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpSession;
 
-import aja.bean.LoginBean;
 import aja.bean.OrderBean;
 
 public class Content_List_Action extends Action {
 
 	@Override
 	public String execute(HttpServletRequest request) throws Exception {
+		HttpSession session = request.getSession(true);
+		ArrayList<OrderBean> cart = (ArrayList<OrderBean>) session.getAttribute("cart");
+
 	//session.cart実装をスムーズに行うため、いったんクレカの処理を止めています。
 	//実装終了後、コメントアウトを解除してください
 
@@ -50,6 +52,7 @@ public class Content_List_Action extends Action {
 
 	*/
 
+	/*
 		//以下、session.cartをでっちあげます。
 		//テスト終了後、削除してください
 		HttpSession session = request.getSession(true);
@@ -77,6 +80,7 @@ public class Content_List_Action extends Action {
 
 		session.setAttribute("cart",cart);
 
+	*/
 
 		//お買い上げ総額計算用
 		cart = (ArrayList<OrderBean>) session.getAttribute("cart");
