@@ -117,28 +117,6 @@ public class Item_List_Action extends Action {
 
 		//itemCount!=0ならばカートに商品を追加
 
-		if(request.getAttribute("itemCount") != null) {
-			//if(Integer.parseInt(request.getParameter("itemCount")) != 0 ) {
-			OrderBean order = new OrderBean();
-			order.setReservNo(login.getReservNo());
-			order.setItemName((String)request.getAttribute("itemName"));
-			order.setItemCount(Integer.parseInt((String)request.getAttribute("itemCount")));
-			//order.setItemCount(1);
-			order.setItemPrice(Integer.parseInt((String)request.getAttribute("itemPrice")));
-			order.setSubTotal((Integer.parseInt((String)request.getAttribute("itemCount")))*(Integer.parseInt((String)request.getAttribute("itemPrice"))));
-			
-			if(session.getAttribute("cart") != null) {
-				ArrayList<OrderBean> cart = (ArrayList<OrderBean>) session.getAttribute("cart");
-				cart.add(order);
-				session.setAttribute("cart", cart);
-			}
-			else {
-				ArrayList<OrderBean> cart = new ArrayList<>();
-				cart.add(order);
-				session.setAttribute("cart", cart);
-			}
-			//}
-		}
 		else if(request.getParameter("itemCount") != null) {
 			//if(Integer.parseInt(request.getParameter("itemCount")) != 0 ) {
 			OrderBean order = new OrderBean();
@@ -159,6 +137,11 @@ public class Item_List_Action extends Action {
 				session.setAttribute("cart", cart);
 			}
 			//}
+		}
+		if(request.getParameter("delete") != null){
+			int i = Integer.parseInt((String)request.getParameter("deleteNo"));
+			ArrayList<OrderBean> cart = (ArrayList<OrderBean>) session.getAttribute("cart");
+			cart.remove(i);
 		}
 
 

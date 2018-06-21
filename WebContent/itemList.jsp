@@ -111,6 +111,7 @@
 
 		</td>
 	</tr>
+	<% int l = 0; %>
 	<c:forEach var="cart" items="${sessionScope.cart}" >
 			<form action="t-order" method="post">
 					<tr>
@@ -125,10 +126,16 @@
 							${cart.itemCount}
 						</td>
 						<td>
+							<input type="hidden" name="delete" value="delete" />
+							<input  type="hidden"name="act" value="ItemList" />
+							<input type="hidden" name="deleteNo" value = <%=l %> />
 							<input type="submit" value="削除"/>
 						</td>
 					</tr>
 			</form>
+			<%
+			l++;
+			%>
 		</c:forEach>
 
 
