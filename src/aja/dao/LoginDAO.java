@@ -32,7 +32,7 @@ public class LoginDAO {
 		 */
 		// ?(INパラメータ)のところは、後から設定できる。
 		String Ticket_Pruche_sql = "SELECT * FROM t_order.ticket_purchaser WHERE ticket_purchaser.reserveNo=? AND  ticket_purchaser.telNo=?";
-		String Manager_sql = "SELECT * FROM t_ordermanager WHERE managerId=? AND  password=?";
+		String Manager_sql = "SELECT * FROM t_order.manager WHERE managerId=? AND  password=?";
 
 		//ユーザーログインの予約番号と電話番号で検索するためのSQL
 		 p_statement_User_Login = connection.prepareStatement(Ticket_Pruche_sql);
@@ -86,15 +86,20 @@ public class LoginDAO {
 //			mlb.setManagerId(rs.getInt("managerId"));
 //			mlb.setPassword(rs.getString("password"));
 
-			if (rs.next()) {
-				return true;
-			} else {
-
-			}
-		} catch (Exception e) {
-
-		}
-		return false;
+//			if (rs.next()) {
+//				return true;
+//			} else {
+//
+//			}
+			return rs.next();
+		}finally {
+			 if ( p_statement_Manager_Login != null) {
+				 p_statement_Manager_Login.close();
+			 }
+			 if (connection != null) {
+				 connection.close();
+			 }
+		 }
 	}
 
 }
