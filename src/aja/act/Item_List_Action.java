@@ -138,11 +138,33 @@ public class Item_List_Action extends Action {
 			}
 			//}
 		}
-		if(request.getParameter("delete") != null){
-			int i = Integer.parseInt((String)request.getParameter("deleteNo"));
-			ArrayList<OrderBean> cart = (ArrayList<OrderBean>) session.getAttribute("cart");
-			cart.remove(i);
+
+		String btn = request.getParameter("btn");
+		if( btn != null) {
+			if(btn.equals("更新")) {
+				int i = Integer.parseInt(request.getParameter("updateNo"));
+				ArrayList<OrderBean> cart = (ArrayList<OrderBean>) session.getAttribute("cart");
+				OrderBean get_cart = new OrderBean();
+				get_cart.setItemName(cart.get(i).getItemName());
+				get_cart.setItemPrice(cart.get(i).getItemPrice());
+				get_cart.setReservNo(cart.get(i).getReservNo());
+				get_cart.setItemCount(Integer.parseInt(request.getParameter("itemcount")));
+				get_cart.setSubTotal(cart.get(i).getItemPrice() * Integer.parseInt(request.getParameter("itemcount")));
+
+				cart.set(i, get_cart);
+				session.setAttribute("cart", cart);
+			}
+
+			else if(btn.equals("削除") && btn != null){
+				int i = Integer.parseInt((String)request.getParameter("deleteNo"));
+				ArrayList<OrderBean> cart = (ArrayList<OrderBean>) session.getAttribute("cart");
+				cart.remove(i);
+				session.setAttribute("cart", cart);
+			}
+
 		}
+
+
 
 
 		return "/itemList.jsp";
