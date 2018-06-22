@@ -57,6 +57,7 @@
 							<c:choose>
 								<c:when test = "${item.itemStock == 0}">
   									<font color="#ff0000">売り切れ</font>
+
 								</c:when>
 								<c:otherwise>
  									在庫：${item.itemStock}

@@ -90,6 +90,7 @@
 					<td>
 						<input type="submit" name="Items" value="戻る" />
 						<input type="hidden" name="act" value="ItemList" />
+
 					</td>
 				</tr>
 			</table>
