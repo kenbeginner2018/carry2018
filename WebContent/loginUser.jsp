@@ -20,7 +20,7 @@
 					<input type="hidden" name="itemCount" value=${requestScope.itemCount} />
 					<input type="hidden" name="itemPrice" value=${requestScope.itemPrice} />
 					<input type="hidden" name="itemName" value=${requestScope.itemName} />
-					<input type="submit" name="Items" value="紹介" />
+					<input type="submit" name="Items" value="照会" />
 					<input type="hidden" name="act" value="ItemList" />
 				</td>
 			</tr>
