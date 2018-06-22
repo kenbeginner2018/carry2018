@@ -19,12 +19,12 @@ public class Top_Manager_Action extends Action {
 
 		HttpSession session = request.getSession(true);
 		Manager_LoginBean mLogin = (Manager_LoginBean) session.getAttribute("mLogin");
-		//ログインが出来ていない場合(mLogin == null)は、ログイン処理を行う
-		//ログインしている場合(mLogin != null)は、何も行わずにtopManager.jspに遷移する
 
+		//ログインが出来ていない場合(mLogin == null)は、ログイン処理を行う
 		if(mLogin == null) {
 
-			//managerIdもしくはpasswordが未入力の場合、エラーメッセージをrequest転送しloginManager.jspへ
+			//managerIdもしくはpasswordのから入力と不正アクセスチェック
+			//エラーメッセージをrequest転送しloginManager.jspへ
 			if(request.getParameter("managerId") == null || request.getParameter("managerId").equals("") ||
 					request.getParameter("password") == null || request.getParameter("password").equals("")) {
 				String errorMessage = "IDもしくはパスワードが入力されていません";
@@ -32,8 +32,8 @@ public class Top_Manager_Action extends Action {
 				return "/loginManager.jsp";
 			}
 
-			//managerIdが正しい形式で入力されているか
-			//されていなければエラーメッセージをrequest転送しloginManagerへ遷移
+			//managerIdが正規チェック
+			//合っていなければ、エラーメッセージをrequest転送しloginManagerへ遷移
 			if(!checkManagerId(request.getParameter("managerId"))) {
 				String errorMessage = "IDもしくはパスワードを間違えています。";
 				request.setAttribute("errorMessage", errorMessage);
@@ -48,24 +48,27 @@ public class Top_Manager_Action extends Action {
 			LoginDAO loginDao = new LoginDAO();
 			boolean checkLogin = loginDao.loginManager(managerId,password);
 
+			//一致するレコードがあった場合以下の処理を行う
 			if(checkLogin) {
-				//一致するレコードがあった場合、mLoginをsessionに登録してtopManager.jspへ遷移
+				//mLoginをsessionに登録してtopManager.jspへ遷移
 				Manager_LoginBean mLoginBean = new Manager_LoginBean();
 				mLoginBean.setManagerId(managerId);
 				mLoginBean.setPassword(password);
 				session.setAttribute("mLogin", mLoginBean);
 				return "/topManager.jsp";
-			}else {
-				//一致するレコードがなければ、エラーメッセージをrequest転送しloginManager.jspへ遷移
+			}
+			//一致するレコードがなければ以下の処理を行う
+			else {
+				//エラーメッセージをrequest転送しloginManager.jspへ遷移
 				String errorMessage = "IDもしくはパスワードを間違えています。";
 				request.setAttribute("errorMessage", errorMessage);
 				return "/loginManager.jsp";
 			}
-		}else {
+		}
+		//ログインしている場合(mLogin != null)は、topManager.jspに遷移する
+		else {
 			return "/topManager.jsp";
 		}
-
-//		return "/topManager.jsp";
 	}
 
 	//マネージャーIDの形式チェック(1-9の数字のみの形式か否か)
