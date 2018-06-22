@@ -16,12 +16,13 @@
 
 	<div class= "本文" style="float: left;" width="70%">
 		<div style="float:right;" width="70%":>
-	<form action="t-order" method="post">
+			<c:if test = "${sessionScope.login !=null }">
+				<form action="t-order" method="post">
 
 					<input type="submit" name="btn" value="ログアウト" />
 					<input type="hidden" name="act" value="LogOut" />
-	</form>
-
+				</form>
+			</c:if>
 		</div>
 		<form action="t-order" method="post">
 			<h1>商品一覧</h1>
