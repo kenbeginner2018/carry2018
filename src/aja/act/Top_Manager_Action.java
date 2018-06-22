@@ -14,6 +14,8 @@ public class Top_Manager_Action extends Action {
 	@Override
 	public String execute(HttpServletRequest request) throws Exception {
 
+
+
 		//リクエスト処理
 		request.setCharacterEncoding("UTF-8");
 
