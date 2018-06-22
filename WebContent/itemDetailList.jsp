@@ -53,7 +53,7 @@
 						<% if(stock != 0){ %>
 						<select name="itemCount">
 							<%
-									for(int u = 1; u<stock;u++){
+									for(int u = 1; u<= stock;u++){
 							%>
 										<option value=<%=u %>><%=u %></option>
 							<%
