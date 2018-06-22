@@ -57,6 +57,12 @@ public class ListDAO {
 		p_statement_order_List = connection.prepareStatement(order_List_sql);
 
 	}
+
+	/**
+	 * エンドユーザーに表示する公演を検索
+	 * @return	表示する公演
+	 * @throws SQLException
+	 */
 	public ArrayList<ShowBean>show_List()throws SQLException{
 
 		//ResultSet型の変数をnullで初期化する
@@ -94,6 +100,11 @@ public class ListDAO {
 			return shows;
 	}
 
+	/**
+	 * 商品カテゴリーを検索
+	 * @return	商品のカテゴリー
+	 * @throws SQLException
+	 */
 	public ArrayList<CategoryBean> category_List()throws SQLException{
 
 		//ResultSet型の変数をnullで初期化する
@@ -130,6 +141,12 @@ public class ListDAO {
 			return categorys;
 	}
 
+	/**
+	 * エンドユーザーに表示する選択された公演の商品を取得
+	 * @param request
+	 * @return	表示する商品
+	 * @throws SQLException
+	 */
 	public ArrayList<ItemBean> item_List(HttpServletRequest request) throws SQLException{
 
 		//Sessionオブジェクトの取得
@@ -144,20 +161,22 @@ public class ListDAO {
 		try {
 
 			 if(session != null) {
+
+				 //選択された公演Idを取得
 				 int showId = (Integer)session.getAttribute("showId");
 				 //もしcategoryId = 0だったら以下の処理を行う
 				 if ((Integer)request.getAttribute("categoryId") == 0) {
 					 //フィールド変数 p_statement_item_List_noCategoryIdの設定
 					 p_statement_item_List_noCategoryId.setInt(1,showId);
-
 					 //SQLの発行をし、抽出結果が格納されたResultオブジェクトを取得
 					 rs_items = p_statement_item_List_noCategoryId.executeQuery();
 				 }
+
+				 //カテゴリー検索が行われていた場合以下の処理
 				 else {
 				//フィールド変数 p_statement_item_Listの設定
 				p_statement_item_List.setInt(1, showId);
 				p_statement_item_List.setInt(2,(Integer)request.getAttribute("categoryId"));
-
 				 //SQLの発行をし、抽出結果が格納されたResultオブジェクトを取得
 				 rs_items = p_statement_item_List.executeQuery();
 				 }
@@ -194,6 +213,12 @@ public class ListDAO {
 		return items;
 	}
 
+	/**
+	 * 選択された商品の詳細を取得
+	 * @param request	商品の詳細
+	 * @return
+	 * @throws SQLException
+	 */
 	public ArrayList<ItemBean> item_Detail_List(HttpServletRequest request) throws SQLException{
 
 		//Sessionオブジェクトの取得
@@ -206,13 +231,14 @@ public class ListDAO {
 		ArrayList<ItemBean> itemDetails = null;
 
 		try {
-
 			 if(session != null) {
+
+				 //現在選択している公演Idを取得
 				 int showId = (Integer)session.getAttribute("showId");
+
 				 //もしitemName != null だったら以下の処理を行う
-
-
 				 if (request.getAttribute("itemName") != null) {
+					 //選択された商品名を取得
 					 String itemName = (String)request.getAttribute("itemName");
 
 					 //フィールド変数 p_statement_item_Detail_Listの設定
@@ -253,6 +279,12 @@ public class ListDAO {
 		return itemDetails;
 	}
 
+	/**
+	 * 予約状況を取得
+	 * @param request
+	 * @return		予約者一覧
+	 * @throws SQLException
+	 */
 	public ArrayList<Reservation_ListBean>reservation_List(HttpServletRequest request)throws SQLException{
 
 		//ResultSet型の変数をnullで初期化する
@@ -262,17 +294,18 @@ public class ListDAO {
 		ArrayList<Reservation_ListBean> reservationLists = null;
 
 		try {
-
+			//管理者に入力された公演日のチェック
 			if ((String)request.getParameter("showYear") != null && (String)request.getParameter("showMonth") != null && (String)request.getParameter("showDay") != null) {
 
+				//フラグ検索をされていなかったら以下の処理を行う
 				if(request.getAttribute("deliveryFlag") == null) {
-
 
 					 p_statement_reservation_List_noDeliveryFlag.setString(1,request.getParameter("showYear")+"-"+request.getParameter("showMonth")+"-"+request.getParameter("showDay"));
 
 					 //SQLの発行をし、抽出結果が格納されたResultオブジェクトを取得
 					 rs_reservationLists = p_statement_reservation_List_noDeliveryFlag.executeQuery();
 				}
+				//フラグ検索をしていたら以下の処理を行う
 				else {
 					p_statement_reservation_List.setString(1,(String)request.getAttribute("showYear")+"-"+(String)request.getAttribute("showMonth")+"-"+(String)request.getAttribute("showDay"));
 					p_statement_reservation_List.setInt(2, (Integer)request.getAttribute("deliveryFlag"));
@@ -307,6 +340,13 @@ public class ListDAO {
 		}
 			return reservationLists;
 	}
+
+	/**
+	 * 予約者ごとの注文内容を取得
+	 * @param request
+	 * @return
+	 * @throws SQLException
+	 */
 	public ArrayList<OrderBean>order_List(HttpServletRequest request)throws SQLException{
 
 		//ResultSet型の変数をnullで初期化する
@@ -317,6 +357,7 @@ public class ListDAO {
 
 		try {
 
+			//検索したい予約者番号の判定
 			if(request.getAttribute("reserveNo") != null) {
 
 				p_statement_order_List.setInt(1, Integer.parseInt(request.getParameter("reserveNo")));

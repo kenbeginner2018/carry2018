@@ -8,19 +8,12 @@
 <title>チケット照会</title>
 </head>
 <body>
-<form action="t-order" method="post">
-	<h1>チケット照会</h1>
-
-
-	<strong>予約番号（チケット番号）</strong>
-			<input type="text" size="15" name="reservNo" />
-			
-
-
-	<strong>電話番号</strong>
+	<form action="t-order" method="post">
+		<h1>チケット照会</h1>
+		<strong>予約番号（チケット番号）</strong>
+		<input type="text" size="15" name="reservNo" />
+		<strong>電話番号</strong>
 		<input type="text" size="15" name="telNo" />
-		
-
 		<table summary="検索欄">
 			<tr>
 				<td>
@@ -32,8 +25,8 @@
 				</td>
 			</tr>
 		</table>
-</form>
-<form action="t-order" method="post">
+	</form>
+	<form action="t-order" method="post">
 		<table summary="検索欄">
 			<tr>
 				<td>

@@ -33,6 +33,11 @@ public class UpdateDAO {
 
 	 }
 	 @SuppressWarnings("unchecked")
+	 /**
+	  * 注文に応じて、在庫を更新する
+	  * @param request
+	  * @throws SQLException
+	  */
 		public void updateItem(HttpServletRequest request) throws SQLException{
 
 		//Sessionオブジェクトの取得
@@ -40,8 +45,6 @@ public class UpdateDAO {
 
 		 //Itemの在庫数を更新
 		 try {
-
-
 			 //カート情報をItem_Reserver表に反映
 
 			 ArrayList<OrderBean> cart = new ArrayList<>();
@@ -50,6 +53,7 @@ public class UpdateDAO {
 			 if(session != null) {
 				 cart = (ArrayList<OrderBean>)session.getAttribute("cart");
 
+				 //カートの中身の回数以下の処理を行う
 				 for (int i=0; i<cart.size(); i++) {
 
 				 // ?(INパラメータ)に、Buy_Detailオブジェクトの値を設定

@@ -53,37 +53,50 @@ public class AddDAO {
 			 p_statement_Sel_Item_Reserver = connection.prepareStatement(Sel_Item_Reserver_sql);
 	 }
 	@SuppressWarnings("unchecked")
+
+	/**
+	 * カートの中身をBuy_Detailテーブルに登録する
+	 * また、Item_Reserverテーブルも登録
+	 * @param request
+	 * @param rList		顧客の注文状況
+	 * @throws SQLException
+	 */
 	public void addOrder(HttpServletRequest request,Reservation_ListBean rList ) throws SQLException{
 
 		//Sessionオブジェクトの取得
 		HttpSession session = request.getSession(false);
 
-		//Buy_Detailに追加処理
+
 		try {
 
-		 /*
-	       カート情報をBuy_Detail表に登録
-	     */
-
+		//Buy_Detailへ登録
 		 ArrayList<OrderBean> cart = new ArrayList<>();
 		 cart =null;
 
 		 if(session != null) {
+
+			 //カートの中身を取得
 			 cart = (ArrayList<OrderBean>)session.getAttribute("cart");
 
+			 //カートに入っている種類の回数繰り返す
 			 for (int i=0; i<cart.size(); i++) {
 
 				//ResultSet型の変数をnullで初期化する
 				ResultSet rs_items = null;
+
+				//カートに入っている商品名から商品Idを取得する
 				String itemName = cart.get(i).getItemName();
 				p_statement_ItemId_Search.setString(1,itemName);
 				rs_items = p_statement_ItemId_Search.executeQuery();
 
+				//商品Idが取得されていたら以下を実行
 				while(rs_items.next()) {
 					int itemId = rs_items.getInt("itemId");
 
 					//ResultSet型の変数をnullで初期化する
 					ResultSet rs = null;
+
+					//前に注文されていたっらそのDBを更新するため、予約番号と商品番号でDBを取得する
 					p_statement_Sel_Buy_Detail.setInt(1,cart.get(i).getReservNo());
 					p_statement_Sel_Buy_Detail.setInt(2,itemId);
 					rs = p_statement_Sel_Buy_Detail.executeQuery();
@@ -91,14 +104,16 @@ public class AddDAO {
 					int itemCount;
 					int subTotal;
 
+					//前に同じ商品を注文していたら以下を実行
 					if (rs.next()) {
-						//reservNo,itemIdが一致するレコードがすでにある場合、今回の注文内容を追加する
+						//注文個数と小計を更新して、現在のDBを削除する
 						itemCount = rs.getInt("count") + cart.get(i).getItemCount();
 						subTotal = rs.getInt("subTotal") + cart.get(i).getSubTotal();
 						p_statement_Del_Buy_Detail.setInt(1,cart.get(i).getReservNo());
 						p_statement_Del_Buy_Detail.setInt(2,itemId);
 						p_statement_Del_Buy_Detail.executeUpdate();
 					} else {
+						//カートの中の個数と小計を取得する
 						itemCount = cart.get(i).getItemCount();
 						subTotal = cart.get(i).getSubTotal();
 					}
@@ -115,26 +130,31 @@ public class AddDAO {
 				}
 			 }
 
-
+			 //Reservation_Listに登録
 			 // ?(INパラメータ)に、Item_Reserverオブジェクトの値を設定
 			 //Reservation_ListBeanから取得する。
-			 if(rList != null) {
 
+			 //顧客の情報があったら以下の処理を実行
+			 if(rList != null) {
 				//ResultSet型の変数をnullで初期化する
 				ResultSet rs = null;
+
+				//現在の注文状況を予約番号で確認
 				p_statement_Sel_Item_Reserver.setInt(1,rList.getReservNo());
 				rs = p_statement_Sel_Item_Reserver.executeQuery();
 
 				int totalCount;
 				int totalPrice;
 
+				//すでに予約されていたら以下の処理を実行
 				if (rs.next()) {
-					//reservNoがすでにある場合、今回の注文内容を追加する
+					//今回の注文の合計金額、合計個数を追加する
 					totalCount = rs.getInt("totalCount") + rList.getTotalCount();
 					totalPrice = rs.getInt("totalPrice") + rList.getTotalPrice();
 					p_statement_Del_Item_Reserver.setInt(1,rList.getReservNo());
 					p_statement_Del_Item_Reserver.executeUpdate();
 				} else {
+					//今回の注文の内容を取得
 					totalCount = rList.getTotalCount();
 					totalPrice = rList.getTotalPrice();
 				}

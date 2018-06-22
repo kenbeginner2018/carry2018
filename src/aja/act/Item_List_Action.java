@@ -13,16 +13,17 @@ import aja.bean.LoginBean;
 import aja.bean.OrderBean;
 import aja.dao.ListDAO;
 import aja.dao.LoginDAO;
-
+/**
+ * itemList.jspへの遷移（表示)に関する処理を行う
+ * @author
+ *
+ */
 public class Item_List_Action extends Action {
 
 	@Override
 	public String execute(HttpServletRequest request) throws Exception {
 
 		//ListDAO listDao = new ListDAO();
-		//動作のためにはListDaoとLoginDaoの実装が必要
-		//実装後にコメントアウトを外すこと
-
 
 		//リクエスト処理
 		request.setCharacterEncoding("UTF-8");
@@ -38,12 +39,14 @@ public class Item_List_Action extends Action {
 			int showId = Integer.parseInt(request.getParameter("showId"));
 			session.setAttribute("showId",showId);
 		}
+		//一度選択していたら処理を飛ばす
 		else if(session.getAttribute("showId") != null) {
-
 		}
+		//不正アクセスの場合topへ遷移する
 		else {
 			return "/top.jsp";
 		}
+
 
 		//ログインページから遷移した場合
 		if(request.getParameter("reservNo") != null || request.getParameter("telNo") != null) {
@@ -58,12 +61,14 @@ public class Item_List_Action extends Action {
 				request.setAttribute("errorMessage",errorMessage);
 			}
 
+			//電話番号のバリテーションチェック
 			if(!checkTelNo(telNo)) {
 				String errorMessage = "電話番号はxxx-xxxx-xxxxの形式で入力してください";
 				request.setAttribute("errorMessage",errorMessage);
+
 				//入力値保持のため、reservNoとtelNoをrequest再転送
-				//request.setAttribute("reservNo", reservNo);
-				//request.setAttribute("telNo", telNo);
+				request.setAttribute("reservNo", reservNo);
+				request.setAttribute("telNo", telNo);
 				return "/loginUser.jsp";
 			}
 
@@ -74,6 +79,7 @@ public class Item_List_Action extends Action {
 			if(!loginDao.login(request)) {
 				String errorMessage = "予約番号もしくは電話番号が間違っています";
 				request.setAttribute("errorMessage",errorMessage);
+
 				//入力値保持のため、reservNoとtelNoをrequest再転送
 				request.setAttribute("reservNo", reservNo);
 				request.setAttribute("telNo", telNo);
@@ -85,28 +91,28 @@ public class Item_List_Action extends Action {
 			login.setReservNo(reservNo);
 			login.setTelNo(telNo);
 			session.setAttribute("login",login);
-		}else {			//ログインページ以外から遷移した場合
+		}
+		//ログインページ以外から遷移した場合
+		else {
 			ListDAO listDao = new ListDAO();
 
 			//select.jspから遷移のとき
 			if(request.getParameter("categoryId") == null){
-
 				//全件表示に設定
 				request.setAttribute("categoryId", 0);
-
 			}
 			else {
 				int categoryId = Integer.parseInt(request.getParameter("categoryId"));
-
 				request.setAttribute("categoryId", categoryId);
 			}
 
+			//表示する商品一覧を取得
 			ArrayList<ItemBean> items = listDao.item_List(request);
 			session.setAttribute("items",items);
 		}
 
+
 		//session.categoryが存在しない場合、カテゴリの取得を行う
-		//ArrayList<CategoryBean> category = (ArrayList<CategoryBean>)session.getAttribute("category");
 		if(session.getAttribute("category") == null) {
 			ArrayList<CategoryBean> category = new ArrayList<>();
 			ListDAO listDao = new ListDAO();
@@ -114,12 +120,14 @@ public class Item_List_Action extends Action {
 			session.setAttribute("category", category);
 		}
 
-
-		//itemCount!=0ならばカートに商品を追加
-
+		//TODO
+		//カートに追加されたならばカートに商品を追加
 		else if(request.getParameter("itemCount") != null) {
 
+			//カート確認フラグ
 			boolean check = false;
+
+			//カートに入れられたものをListに追加
 			OrderBean order = new OrderBean();
 			order.setReservNo(login.getReservNo());
 			order.setItemName(request.getParameter("itemName"));
@@ -127,12 +135,16 @@ public class Item_List_Action extends Action {
 			order.setItemPrice(Integer.parseInt(request.getParameter("itemPrice")));
 			order.setSubTotal((Integer.parseInt(request.getParameter("itemCount")))*(Integer.parseInt(request.getParameter("itemPrice"))));
 
+			//現在カートの中に商品が入っている場合
 			if(session.getAttribute("cart") != null) {
 				ArrayList<OrderBean> cart = (ArrayList<OrderBean>) session.getAttribute("cart");
 
+				//カートの回数処理を繰り返す
 				for(int i = 0;i<cart.size();i++) {
+					//新しくカートに追加したものがカートにあったら以下の処理
 					if(cart.get(i).getItemName().equals(order.getItemName())) {
 
+						//カートの中の商品の個数と小計を更新する
 						OrderBean insert_cart = new OrderBean();
 						insert_cart.setItemName(order.getItemName());
 						insert_cart.setItemPrice(order.getItemPrice());
@@ -146,11 +158,15 @@ public class Item_List_Action extends Action {
 						break;
 					}
 				}
+				//カートの中に同じ商品がなかったら以下の処理
 				if(!check) {
+						//カートの中身をリストに追加する
 						cart.add(order);
 						session.setAttribute("cart",cart);
 				}
 			}
+
+			//始めて商品をカートに入れたときの処理
 			else {
 				ArrayList<OrderBean> cart = new ArrayList<>();
 				cart.add(order);
@@ -158,11 +174,20 @@ public class Item_List_Action extends Action {
 			}
 		}
 
+		//カートの中身を更新もしくは削除されたときの処理
 		String btn = request.getParameter("btn");
 		if( btn != null) {
+
+			//更新ボタンをおされたときの処理
 			if(btn.equals("更新")) {
+
+				//更新されたカートの番号を取得
 				int i = Integer.parseInt(request.getParameter("updateNo"));
+
+				//現在のカートを取得する
 				ArrayList<OrderBean> cart = (ArrayList<OrderBean>) session.getAttribute("cart");
+
+				//更新された商品の個数と小計を更新する
 				OrderBean get_cart = new OrderBean();
 				get_cart.setItemName(cart.get(i).getItemName());
 				get_cart.setItemPrice(cart.get(i).getItemPrice());
@@ -174,7 +199,10 @@ public class Item_List_Action extends Action {
 				session.setAttribute("cart", cart);
 			}
 
+			//削除ボタンを押されたときのしょり
 			else if(btn.equals("削除") && btn != null){
+
+				//削除されたカートの番号を取得
 				int i = Integer.parseInt((String)request.getParameter("deleteNo"));
 				ArrayList<OrderBean> cart = (ArrayList<OrderBean>) session.getAttribute("cart");
 				cart.remove(i);
@@ -182,10 +210,6 @@ public class Item_List_Action extends Action {
 			}
 
 		}
-
-
-
-
 		return "/itemList.jsp";
 	}
 
