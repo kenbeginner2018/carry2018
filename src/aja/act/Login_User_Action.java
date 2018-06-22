@@ -29,7 +29,7 @@ public class Login_User_Action extends Action {
 
 			//そうでなかったら
 				//エラーメッセージに”異なるチケットでログイン中でした”
-				return "/loginUser.jsp";
+				//return "/loginUser.jsp";
 		}else {
 			return "/loginUser.jsp";
 		}

@@ -297,8 +297,9 @@ public class ListDAO {
 			//管理者に入力された公演日のチェック
 			if ((String)request.getParameter("showYear") != null && (String)request.getParameter("showMonth") != null && (String)request.getParameter("showDay") != null) {
 
+
 				//フラグ検索をされていなかったら以下の処理を行う
-				if(request.getAttribute("deliveryFlag") == null) {
+				if(request.getParameter("deliveryFlag").equals("")) {
 
 					 p_statement_reservation_List_noDeliveryFlag.setString(1,request.getParameter("showYear")+"-"+request.getParameter("showMonth")+"-"+request.getParameter("showDay"));
 
@@ -307,8 +308,8 @@ public class ListDAO {
 				}
 				//フラグ検索をしていたら以下の処理を行う
 				else {
-					p_statement_reservation_List.setString(1,(String)request.getAttribute("showYear")+"-"+(String)request.getAttribute("showMonth")+"-"+(String)request.getAttribute("showDay"));
-					p_statement_reservation_List.setInt(2, (Integer)request.getAttribute("deliveryFlag"));
+					p_statement_reservation_List.setString(1,(String)request.getParameter("showYear")+"-"+(String)request.getParameter("showMonth")+"-"+(String)request.getParameter("showDay"));
+					p_statement_reservation_List.setInt(2, Integer.parseInt(request.getParameter("deliveryFlag")));
 					//SQLの発行をし、抽出結果が格納されたResultオブジェクトを取得
 					rs_reservationLists = p_statement_reservation_List.executeQuery();
 				}
