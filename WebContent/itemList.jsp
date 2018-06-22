@@ -54,7 +54,14 @@
 							<input type="hidden" name="act" value="ItemDetailList" /><br/>
 							${item.itemName}<br/>
 							￥${item.itemPrice}<br/>
-							在庫：${item.itemStock}
+							<c:choose>
+								<c:when test = "${item.itemStock == 0}">
+  									<font color="#ff0000">売り切れ</font>
+								</c:when>
+								<c:otherwise>
+ 									在庫：${item.itemStock}
+								</c:otherwise>
+							</c:choose>
 							<input type="hidden" name="itemName" value="${item.itemName}" />
 						</td>
 					<%
@@ -66,6 +73,7 @@
 						i = 0;
 						}
 					%>
+
 				</form>
 			</c:forEach>
 		</table>
@@ -110,40 +118,44 @@
 		</tr>
 		<% int l = 0; %>
 		<c:forEach var="cart" items="${sessionScope.cart}" >
-			<form action="t-order" method="post">
-				<tr>
-					<td>
-						${cart.itemName}
-					</td>
-					<td>
-						¥${cart.itemPrice}円
-					</td>
-					<td>
-						<select name="itemcount">
-							<% int count = 1; %>
-							<c:forEach var="u" begin="1" end="${cart.itemCount + 5}" step="1">
-								<c:if test="${cart.itemCount == u }">
-									<option value=<%=count %> selected="selected">${u}</option>
-								</c:if>
-								<option value=<%=count %>>${u}</option>
-								<% count++; %>
-							</c:forEach>
-						</select>
-					</td>
-					<td>
-						<input type="hidden" name="update" value="update" />
-						<input  type="hidden"name="act" value="ItemList" />
-						<input type="hidden" name="updateNo" value = <%=l %> />
-						<input type="submit"name="btn" value="更新"/>
-					</td>
-					<td>
-						<input type="hidden" name="delete" value="delete" />
-						<input  type="hidden"name="act" value="ItemList" />
-						<input type="hidden" name="deleteNo" value = <%=l %> />
-						<input type="submit" name="btn" value="削除"/>
-					</td>
-				</tr>
-			</form>
+			<c:forEach var="item" items="${sessionScope.items}" >
+				<c:if test="${item.itemName .equals( cart.itemName )}">
+					<form action="t-order" method="post">
+						<tr>
+						<td>
+							${cart.itemName}
+						</td>
+						<td>
+							¥${cart.itemPrice}円
+						</td>
+						<td>
+							<select name="itemcount">
+								<% int count = 1; %>
+								<c:forEach var="u" begin="1" end="${item.itemStock}" step="1">
+									<c:if test="${cart.itemCount == u }">
+										<option value=<%=count %> selected="selected">${u}</option>
+									</c:if>
+									<option value=<%=count %>>${u}</option>
+									<% count++; %>
+								</c:forEach>
+							</select>
+						</td>
+						<td>
+							<input type="hidden" name="update" value="update" />
+							<input  type="hidden"name="act" value="ItemList" />
+							<input type="hidden" name="updateNo" value = <%=l %> />
+							<input type="submit"name="btn" value="更新"/>
+						</td>
+						<td>
+							<input type="hidden" name="delete" value="delete" />
+							<input  type="hidden"name="act" value="ItemList" />
+							<input type="hidden" name="deleteNo" value = <%=l %> />
+							<input type="submit" name="btn" value="削除"/>
+						</td>
+						</tr>
+					</form>
+				</c:if>
+			</c:forEach>
 			<%
 				l++;
 			%>

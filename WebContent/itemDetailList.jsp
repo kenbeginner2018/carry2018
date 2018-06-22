@@ -20,8 +20,10 @@
 			<h1>商品詳細</h1>
 			<table style="border-style: none;"border="1" width="350">
 				<%
+					int stock = 0;
 					for(int i = 0; i<details.size(); i++){
-					ItemBean detail = (ItemBean)details.get(i);
+						ItemBean detail = (ItemBean)details.get(i);
+						stock = detail.getItemStock();
 				%>
 				<tr>
 					<td style="border-style: none;" align="center" >
@@ -48,12 +50,15 @@
 			<table summary="検索欄">
 				<tr>
 					<td>
+						<% if(stock != 0){ %>
 						<select name="itemCount">
-							<option value="1" selected="selected">1</option>
-							<option value="2">2</option>
-							<option value="3">3</option>
-							<option value="4">4</option>
-							<option value="5">5</option>
+							<%
+									for(int u = 1; u<stock;u++){
+							%>
+										<option value=<%=u %>><%=u %></option>
+							<%
+									}
+							%>
 						</select>
 					</td>
 					<td>
@@ -67,6 +72,14 @@
 					%>
 					<input type="submit" name="add" value="カートに入れる" />
 					<input type="hidden" name="act" value="LoginUser" />
+					<%
+						}
+						else{
+					%>
+					<font color="#ff0000">売り切れ</font>
+					<%
+						}
+					%>
 					</td>
 				</tr>
 			</table>
