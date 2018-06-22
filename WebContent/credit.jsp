@@ -41,7 +41,7 @@
 		<table summary="検索欄">
 			<tr>
 				<td>
-					<input type="submit" name="Items" value="グッズ一覧へ" />
+					<input type="submit" name="Items" value="商品一覧へ" />
 					<input type="hidden" name="act" value="ItemList" />
 				</td>
 			</tr>
