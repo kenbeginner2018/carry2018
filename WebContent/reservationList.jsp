@@ -13,6 +13,7 @@
 <h1>予約者検索画面</h1>
 <form action="t-order" method="post">
 	<p>(*必須)検索したい公演日を入力してください</p>
+
 	<p>
 	<!-- 年の指定 -->
 		<select name="showYear">

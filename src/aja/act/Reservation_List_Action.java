@@ -30,6 +30,7 @@ public class Reservation_List_Action extends Action {
 		//受け取ったrequest情報をキーとしてListDaoのreservationList()メソッドを用いて
 		//条件に当てはまる予約情報を取得する
 
+
 		//初遷移の場合(showYear,showMonth,showDayがnullの場合)、処理を飛ばす
 		if(request.getParameter("showYear") != null && request.getParameter("showMonth") != null &&
 				request.getParameter("showDay") != null) {

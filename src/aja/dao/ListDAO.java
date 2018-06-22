@@ -297,7 +297,6 @@ public class ListDAO {
 			//管理者に入力された公演日のチェック
 			if ((String)request.getParameter("showYear") != null && (String)request.getParameter("showMonth") != null && (String)request.getParameter("showDay") != null) {
 
-
 				//フラグ検索をされていなかったら以下の処理を行う
 				if(request.getParameter("deliveryFlag").equals("")) {
 
