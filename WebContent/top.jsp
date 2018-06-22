@@ -15,7 +15,8 @@
 		<table summary="検索欄">
 			<tr>
 				<td align="center">
-					<input type="submit" name="Shows" value="公演選択" />							<input type="hidden" name="act" value="Select" />
+					<input type="submit" name="Shows" value="公演選択" />
+					<input type="hidden" name="act" value="Select" />
 				</td>
 			</tr>
 		</table>

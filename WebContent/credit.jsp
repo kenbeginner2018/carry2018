@@ -49,7 +49,9 @@
 	</form>
 	<div>
 		<c:if test="${requestScope.errorMessage != null}">
+		<font  color="#FF0000">
 			<%=request.getAttribute("errorMessage") %>
+		</font>
 		</c:if>
 	</div>
 
