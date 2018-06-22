@@ -13,7 +13,16 @@
 
 <title>商品一覧</title>
 <body>
+
 	<div class= "本文" style="float: left;" width="70%">
+		<div style="float:right;" width="70%":>
+	<form action="t-order" method="post">
+
+					<input type="submit" name="btn" value="ログアウト" />
+					<input type="hidden" name="act" value="LogOut" />
+	</form>
+
+		</div>
 		<form action="t-order" method="post">
 			<h1>商品一覧</h1>
 			<table border="1" summary="カテゴリー検索" align="center">
@@ -78,6 +87,7 @@
 				</form>
 			</c:forEach>
 		</table>
+		<c:if test = "${sessionScope.cart !=null }">
 	<form action="t-order" method="post">
 		<table summary="検索欄">
 			<tr>
@@ -87,7 +97,9 @@
 				</td>
 			</tr>
 		</table>
+
 	</form>
+	</c:if>
 	<form action="t-order" method="post">
 		<table summary="検索欄">
 			<tr>
