@@ -10,9 +10,9 @@
 <body>
 	<form action="t-order" method="post">
 		<h1>チケット照会</h1>
-		<strong>予約番号（チケット番号）</strong>
-		<input type="text" size="15" name="reservNo" />
-		<strong>電話番号</strong>
+		<strong>予約番号(チケット番号)</strong>
+		<input type="text" size="15" name="reservNo" /><br />
+		<strong>電話番号　　　　　　　　　</strong>
 		<input type="text" size="15" name="telNo" />
 		<table summary="検索欄">
 			<tr>
@@ -36,5 +36,8 @@
 			</tr>
 		</table>
 	</form>
+	<hr />
+	電話番号はハイフンを入れて入力してください。<br />
+	例）090-4532-xxxx
 </body>
 </html>

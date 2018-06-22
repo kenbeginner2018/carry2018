@@ -11,30 +11,27 @@
 <body>
 	<form action="t-order" method="post">
 		<h1>管理者ログイン</h1>
+			<strong>管理者番号</strong>
+			<input type="text" size="15" name="managerId"  /><br />
+			<strong>パスワード　</strong>
+			<input type="text" size="15" name="password" /><br />
 
-		<strong>管理者番号</strong>
-
-
-			<input type="text" size="15" name="managerId"  />
-
-
-		<strong>パスワード</strong>
-
-			<input type="text" size="15" name="password" />
-
-	<table summary="検索欄">
-	<tr>
-		<td>
-			<input type="submit" name="login" value="ログイン" />
-			<input type="hidden" name="act" value="TopManager" /></td>
-		</tr>
-	</table>
-</form>
+		<table summary="検索欄">
+			<tr>
+				<td>
+					<input type="submit" name="login" value="ログイン" />
+					<input type="hidden" name="act" value="TopManager" />
+				</td>
+			</tr>
+		</table>
+	</form>
 	<form action="t-order" method="post">
 		<table summary="検索欄">
 			<tr>
-				<td><input type="submit" name="Items" value="戻る" /> <input
-					type="hidden" name="act" value="Top" /></td>
+				<td>
+					<input type="submit" name="Items" value="戻る" />
+					<input type="hidden" name="act" value="Top" />
+				</td>
 			</tr>
 		</table>
 	</form>
