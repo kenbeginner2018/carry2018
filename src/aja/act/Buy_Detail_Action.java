@@ -26,8 +26,6 @@ public class Buy_Detail_Action extends Action {
 		request.setAttribute("totalPrice", request.getParameter("totalPrice"));
 
 		//reservNoをキーとしてListDaoのorderList()メソッドにより対応した顧客の購入情報を取得する
-		//ListDao実装後、コメントアウト状態を外すこと
-
 		ListDAO listDao = new ListDAO();
 		ArrayList<OrderBean> oList = listDao.order_List(request);
 		request.setAttribute("oList", oList);
