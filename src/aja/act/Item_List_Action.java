@@ -1,6 +1,7 @@
 package aja.act;
 
 import java.util.ArrayList;
+import java.util.Date;
 import java.util.regex.Matcher;
 import java.util.regex.Pattern;
 
@@ -11,6 +12,7 @@ import aja.bean.CategoryBean;
 import aja.bean.ItemBean;
 import aja.bean.LoginBean;
 import aja.bean.OrderBean;
+import aja.bean.ShowBean;
 import aja.dao.ListDAO;
 import aja.dao.LoginDAO;
 /**
@@ -86,11 +88,26 @@ public class Item_List_Action extends Action {
 				return "/loginUser.jsp";
 			}
 
-			//エラーが発生しなかった場合、LoginBean型loginを作成してsession転送
-			login = new LoginBean();
-			login.setReservNo(reservNo);
-			login.setTelNo(telNo);
-			session.setAttribute("login",login);
+
+			loginDao = new LoginDAO();
+			ShowBean showDate = loginDao.show_Date((Integer)session.getAttribute("showId"));
+			loginDao = new LoginDAO();
+			Date ticketDay = loginDao.ticket_Day(reservNo);
+
+			if(showDate.getShowStartDay().before(ticketDay) && ticketDay.before(showDate.getShowEndDay())) {
+				//エラーが発生しなかった場合、LoginBean型loginを作成してsession転送
+				login = new LoginBean();
+				login.setReservNo(reservNo);
+				login.setTelNo(telNo);
+				session.setAttribute("login",login);
+			}else {
+				String errorMessage = "この予約番号は選択された公演の予約番号ではありません";
+				request.setAttribute("errorMessage",errorMessage);
+
+				return "/loginUser.jsp";
+			}
+
+
 		}
 		//ログインページ以外から遷移した場合
 		else {
