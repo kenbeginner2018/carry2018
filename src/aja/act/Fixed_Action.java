@@ -23,11 +23,15 @@ public class Fixed_Action extends Action {
 
 
 
-		//order要素のItemCountと,ItemPriceの総計を算出する
+		//カートの中の商品合計数と,合計金額を算出する
 		int totalCount = 0;
 		int totalPrice = 0;
+
+		//カートに入っている商品の種類の回数ぶん繰り返す
 		for(OrderBean addOrder: cart) {
+			//それぞれの商品の個数を足していき、合計個数を求める
 			totalCount += addOrder.getItemCount();
+			//小計を足していき、合計金額を求める
 			totalPrice += addOrder.getSubTotal();
 		}
 
@@ -39,10 +43,10 @@ public class Fixed_Action extends Action {
 		rList.setDeliveryFlag(0);
 
 		//addDaoのaddOrder()を利用して、Buy_Detail,Item_Reserverにレコードを追加
-
-
 		AddDAO addDao = new AddDAO();
 		addDao.addOrder(request,rList);
+
+		//注文完了と同時に、購入された商品の数在庫を減らす
 		UpdateDAO updateDao = new UpdateDAO();
 		updateDao.updateItem(request);
 
