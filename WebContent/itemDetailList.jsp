@@ -18,7 +18,7 @@
 	<center>
 		<form action="t-order" method="post">
 			<h1>商品詳細</h1>
-			<table style="border-style: none;"border="1">
+			<table style="border-style: none;"border="1" width="350">
 				<%
 					for(int i = 0; i<details.size(); i++){
 					ItemBean detail = (ItemBean)details.get(i);
@@ -37,7 +37,9 @@
 					<input type="hidden" name="itemPrice" value=<%=detail.getItemPrice() %> />
 				</tr>
 				<tr>
-					<td style="border-style: none;"><%=detail.getItemDetail() %></td>
+					<td style="border-style: none;">
+					<%=detail.getItemDetail() %>
+					</td>
 				</tr>
 				<%
 					}

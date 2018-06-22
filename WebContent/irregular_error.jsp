@@ -8,6 +8,15 @@
 <title>Insert title here</title>
 </head>
 <body>
-<h1>エラーです！！！</h1>
+	<h1>システムでエラーが発生したため処理が中断されました。</h1>
+		エラーが発生した際の手順をお控えいただいたうえ、Carryシステムセンターまでご連絡ください。
+		<br />
+		TEL　090-5488-6524
+		<br />
+		<br />
+	<form>
+		<input type="button" name="button" value="閉じる" onclick="window.close();">
+ 		</input>
+	</form>
 </body>
 </html>
