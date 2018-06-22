@@ -20,6 +20,7 @@ public class Top_Manager_Action extends Action {
 		HttpSession session = request.getSession(true);
 		Manager_LoginBean mLogin = (Manager_LoginBean) session.getAttribute("mLogin");
 
+
 		//ログインが出来ていない場合(mLogin == null)は、ログイン処理を行う
 		if(mLogin == null) {
 
