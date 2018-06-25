@@ -1,6 +1,7 @@
 <?xml version="1.0" encoding="UTF-8" ?>
 <%@ page language="java" contentType="text/html; charset=UTF-8"
     pageEncoding="UTF-8"%>
+<%@ taglib prefix="c" uri="http://java.sun.com/jsp/jstl/core" %>
 <!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
 <html xmlns="http://www.w3.org/1999/xhtml">
 <head>
@@ -37,7 +38,16 @@
 		</table>
 	</form>
 	<hr />
-	電話番号はハイフンを入れて入力してください。<br />
-	例）090-4532-xxxx
+
+<!-- 6/24追加 -->
+	<c:if test="${requestScope.errorMessage == null }">
+		電話番号はハイフンを入れて入力してください。<br />
+		例）090-4532-xxxx
+	</c:if>
+	<c:if test="${requestScope.errorMessage != null }">
+		${requestScope.errorMessage}
+	</c:if>
+
+
 </body>
 </html>

@@ -52,16 +52,36 @@ public class Item_List_Action extends Action {
 
 		//ログインページから遷移した場合
 		if(request.getParameter("reservNo") != null || request.getParameter("telNo") != null) {
+			//6/24追加
+			//itemName,itemCountをrequestで再度転送する
+			request.setAttribute("itemName", request.getParameter("itemName"));
+			request.setAttribute("itemCount", request.getParameter("itemCount"));
+			request.setAttribute("itemPrice", request.getParameter("itemPrice"));
+
+			//6/24変更
+			//未入力チェック
+			if(request.getParameter("reservNo").equals("") || request.getParameter("telNo").equals("")) {
+				String errorMessage = "予約番号もしくは電話番号が入力されていません";
+				request.setAttribute("errorMessage",errorMessage);
+
+				return "/loginUser.jsp";
+			}
+
+			//6/24追加
+			//予約番号の正規表現チェック
+			if(!checkReservNo(request.getParameter("reservNo"))) {
+				String errorMessage = "予約番号は数字のみで入力してください";
+				request.setAttribute("errorMessage",errorMessage);
+
+				return "/loginUser.jsp";
+			}
+
+
 			//ローカル変数上にreservNoとtelNoを取得
 			int reservNo = Integer.parseInt(request.getParameter("reservNo"));
 			String telNo = request.getParameter("telNo");
 
-			//未入力チェック
-			if(request.getParameter("reservNo") == null || request.getParameter("reservNo").equals("") ||
-					request.getParameter("telNo") == null || request.getParameter("telNo").equals("")) {
-				String errorMessage = "予約番号もしくは電話番号が入力されていません";
-				request.setAttribute("errorMessage",errorMessage);
-			}
+
 
 			//電話番号のバリテーションチェック
 			if(!checkTelNo(telNo)) {
@@ -235,6 +255,15 @@ public class Item_List_Action extends Action {
 		String regex = "^[0-9]+-[0-9]+-[0-9]+$";
 		Pattern pattern = Pattern.compile(regex);
 		Matcher matcher = pattern.matcher(telNo);
+		return matcher.matches();
+	}
+
+	//6/24追加コード
+	//予約番号の形式チェック(数字のみの形式か否か)
+	private boolean checkReservNo(String reservNo) {
+		String regex = "^[0-9]+$";
+		Pattern pattern = Pattern.compile(regex);
+		Matcher matcher = pattern.matcher(reservNo);
 		return matcher.matches();
 	}
 }
