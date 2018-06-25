@@ -108,14 +108,12 @@ public class Item_List_Action extends Action {
 				request.setAttribute("telNo", telNo);
 				return "/loginUser.jsp";
 			}
-
-
 			loginDao = new LoginDAO();
 			ShowBean showDate = loginDao.show_Date((Integer)session.getAttribute("showId"));
 			loginDao = new LoginDAO();
 			Date ticketDay = loginDao.ticket_Day(reservNo);
 
-			if(showDate.getShowStartDay().before(ticketDay) && ticketDay.before(showDate.getShowEndDay())) {
+			if(showDate.getShowStartDay().before(ticketDay) && (showDate.getShowEndDay().after(ticketDay))) {
 				//エラーが発生しなかった場合、LoginBean型loginを作成してsession転送
 				login = new LoginBean();
 				login.setReservNo(reservNo);
@@ -132,6 +130,32 @@ public class Item_List_Action extends Action {
 		}
 		//ログインページ以外から遷移した場合
 		else {
+			if(session.getAttribute("login")!= null) {
+				String add = (String)request.getParameter("add");
+				if(add != null) {
+					if(add.equals("add")) {
+						LoginDAO loginDao = new LoginDAO();
+						ShowBean showDate = loginDao.show_Date((Integer)session.getAttribute("showId"));
+						loginDao = new LoginDAO();
+						Date ticketDay = loginDao.ticket_Day(login.getReservNo());
+
+						if(showDate.getShowStartDay().before(ticketDay) &&(showDate.getShowEndDay().after(ticketDay))) {
+							//エラーが発生しなかった場合、LoginBean型loginを作成してsession転送
+							login.setReservNo(login.getReservNo());
+							login.setTelNo(login.getTelNo());
+							session.setAttribute("login",login);
+						}else {
+							String errorMessage = "この予約番号は選択された公演の予約番号ではありません";
+							request.setAttribute("errorMessage",errorMessage);
+							//itemName,itemCountをrequestで再度転送する
+							request.setAttribute("itemName", request.getParameter("itemName"));
+							request.setAttribute("itemCount", request.getParameter("itemCount"));
+							request.setAttribute("itemPrice", request.getParameter("itemPrice"));
+							return "/loginUser.jsp";
+						}
+					}
+				}
+			}
 			ListDAO listDao = new ListDAO();
 
 			//select.jspから遷移のとき
@@ -166,6 +190,7 @@ public class Item_List_Action extends Action {
 		//カートに追加されたならばカートに商品を追加
 		else if(request.getParameter("itemCount") != null) {
 
+			System.out.println(login.getReservNo());
 			//カート確認フラグ
 			boolean check = false;
 

@@ -70,7 +70,11 @@
 					<%
 						}
 					%>
-					<input type="submit" name="add" value="カートに入れる" />
+					<input type="submit" name="ad" value="カートに入れる" />
+					<input type ="hidden" name="add" value="add"/>
+					<input type="hidden" name="itemCount" value=${requestScope.itemCount} />
+					<input type="hidden" name="itemPrice" value=${requestScope.itemPrice} />
+					<input type="hidden" name="itemName" value=${requestScope.itemName} />
 					<input type="hidden" name="act" value="LoginUser" />
 					<%
 						}

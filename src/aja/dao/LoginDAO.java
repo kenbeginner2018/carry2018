@@ -116,8 +116,6 @@ public class LoginDAO {
 	//idを利用して、1つの公演情報を取得する
 	public ShowBean show_Date(int id)throws SQLException{
 
-
-
 		//ResultSet型の変数をnullで初期化する
 		ResultSet rs_show = null;
 		ShowBean show = null;
