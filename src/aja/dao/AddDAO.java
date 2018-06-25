@@ -35,12 +35,12 @@ public class AddDAO {
 			 //PrepareStatementの利用。最初に枠となるSQLを設定する。
 		    // ?(INパラメータ)のところは、後から設定できる。
 			 String Buy_Detail_sql = "INSERT INTO t_order.buy_detail (reserveNo,itemId,count,subTotal) VALUES (?,?,?,?)";
-			 String ItemId_Search_sql = "SELECT * FROM t_order.item WHERE item.itemName =  ? ";
+			 String ItemId_Search_sql = "SELECT * FROM t_order.item WHERE item.itemName =  ? AND showId = ?";
 			 String Item_Reserver_sql = "INSERT INTO t_order.item_reserver (reserveNo,totalCount,totalPrice,deliveryFlag) VALUES (?,?,?,?)";
 			 String Del_Item_Reserver_sql = "DELETE FROM t_order.item_reserver WHERE reserveNo= ? ";
-			 String Del_Buy_Detail_sql = "DELETE FROM t_order.buy_detail WHERE reserveNo= ? AND itemId = ? ";
+			 String Del_Buy_Detail_sql = "DELETE FROM t_order.buy_detail WHERE reserveNo= ? AND itemId = ?";
 			 String Sel_Item_Reserver_sql = "SELECT * FROM t_order.item_reserver WHERE reserveNo= ? ";
-			 String Sel_Buy_Detail_sql = "SELECT * FROM t_order.buy_detail WHERE reserveNo= ? AND itemId = ? ";
+			 String Sel_Buy_Detail_sql = "SELECT * FROM t_order.buy_detail WHERE reserveNo= ? AND itemId = ?";
 
 			 //カートの中身をBuy_Detail表に登録するためのSQL
 			 p_statement_Buy_Detail = connection.prepareStatement(Buy_Detail_sql);
@@ -87,6 +87,7 @@ public class AddDAO {
 				//カートに入っている商品名から商品Idを取得する
 				String itemName = cart.get(i).getItemName();
 				p_statement_ItemId_Search.setString(1,itemName);
+				p_statement_ItemId_Search.setInt(2,(Integer)session.getAttribute("showId"));
 				rs_items = p_statement_ItemId_Search.executeQuery();
 
 				//商品Idが取得されていたら以下を実行
