@@ -114,6 +114,7 @@
 </div>
 <div class= "サイド" style="float: right;border-left:#000000 solid 7px;height:600px;">
 	<h1 align="center">カート一覧</h1>
+	<c:if test="${sessionScope.cart != null }">
 	<table border="4"  rules="rows">
 		<tr>
 			<td>
@@ -132,8 +133,8 @@
 		</tr>
 		<% int l = 0; %>
 		<c:forEach var="cart" items="${sessionScope.cart}" >
-			<c:forEach var="item" items="${sessionScope.items}" >
-				<c:if test="${item.itemName .equals( cart.itemName )}">
+			<c:forEach var="all_items" items="${sessionScope.all_items}" >
+				<c:if test="${all_items.itemName .equals( cart.itemName )}">
 					<form action="t-order" method="post">
 						<tr>
 						<td>
@@ -145,7 +146,7 @@
 						<td>
 							<select name="itemcount">
 								<% int count = 1; %>
-								<c:forEach var="u" begin="1" end="${item.itemStock}" step="1">
+								<c:forEach var="u" begin="1" end="${all_items.itemStock}" step="1">
 									<c:if test="${cart.itemCount == u }">
 										<option value=<%=count %> selected="selected">${u}</option>
 									</c:if>
@@ -178,6 +179,10 @@
 			%>
 		</c:forEach>
 	</table>
+	</c:if>
+	<c:if test="${sessionScope.cart == null }">
+		<p>カートに商品は入っていません</p>
+	</c:if>
 </div>
 </body>
 </html>

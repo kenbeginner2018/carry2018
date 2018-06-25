@@ -146,6 +146,10 @@ public class Item_List_Action extends Action {
 			//表示する商品一覧を取得
 			ArrayList<ItemBean> items = listDao.item_List(request);
 			session.setAttribute("items",items);
+
+			if(session.getAttribute("all_items") == null) {
+				session.setAttribute("all_items", items);
+			}
 		}
 
 
@@ -208,6 +212,7 @@ public class Item_List_Action extends Action {
 				ArrayList<OrderBean> cart = new ArrayList<>();
 				cart.add(order);
 				session.setAttribute("cart",cart);
+
 			}
 		}
 
@@ -243,7 +248,14 @@ public class Item_List_Action extends Action {
 				int i = Integer.parseInt((String)request.getParameter("deleteNo"));
 				ArrayList<OrderBean> cart = (ArrayList<OrderBean>) session.getAttribute("cart");
 				cart.remove(i);
-				session.setAttribute("cart", cart);
+
+				if(cart.size() == 0) {
+					session.removeAttribute("cart");
+				}
+				else {
+					session.setAttribute("cart", cart);
+				}
+
 			}
 
 		}

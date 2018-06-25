@@ -13,6 +13,7 @@ public class Credit_Action extends Action {
 		//カテゴリーと商品のセッションを削除
 		session.removeAttribute("category");
 		session.removeAttribute("items");
+		session.removeAttribute("all_items");
 		return "/credit.jsp";
 	}
 }
