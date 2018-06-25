@@ -9,6 +9,17 @@
 <title>内容確認</title>
 </head>
 <body>
+
+	    <div style="float:right;" width="30%">
+			<c:if test = "${sessionScope.login !=null }">
+				<form action="t-order" method="post">
+
+					<input type="submit" name="btn" value="ログアウト" />
+					<input type="hidden" name="act" value="LogOut" />
+				</form>
+			</c:if>
+		</div>
+
 <form action="t-order" method="post">
 	<h1>ご注文内容確認</h1>
 

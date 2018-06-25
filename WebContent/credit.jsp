@@ -9,6 +9,19 @@
 <title>クレジット照合</title>
 </head>
 <body>
+
+
+	    <div style="float:right;" width="30%">
+			<c:if test = "${sessionScope.login !=null }">
+				<form action="t-order" method="post">
+
+					<input type="submit" name="btn" value="ログアウト" />
+					<input type="hidden" name="act" value="LogOut" />
+				</form>
+			</c:if>
+		</div>
+
+
 <form action="t-order" method="post">
 	<h1>クレジットカード情報</h1>
 		<strong>1.カード番号</strong><br />

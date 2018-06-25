@@ -16,6 +16,17 @@
 <title>公演選択</title>
 </head>
 <body>
+
+	    <div style="float:right;" width="30%">
+			<c:if test = "${sessionScope.login !=null }">
+				<form action="t-order" method="post">
+
+					<input type="submit" name="btn" value="ログアウト" />
+					<input type="hidden" name="act" value="LogOut" />
+				</form>
+			</c:if>
+		</div>
+
 	<center>
 		<h1>公演選択</h1>
 		<table summary="検索欄">

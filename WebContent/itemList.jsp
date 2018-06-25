@@ -14,7 +14,7 @@
 <title>商品一覧</title>
 <body>
 
-	<div class= "本文" style="float: left;" width="70%">
+   	    <div class= "本文" style="float: left;" width="70%">
 		<div style="float:right;" width="70%":>
 			<c:if test = "${sessionScope.login !=null }">
 				<form action="t-order" method="post">
@@ -24,6 +24,7 @@
 				</form>
 			</c:if>
 		</div>
+
 		<form action="t-order" method="post">
 			<h1>商品一覧</h1>
 			<table border="1" summary="カテゴリー検索" align="center">
