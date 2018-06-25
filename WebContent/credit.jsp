@@ -10,7 +10,6 @@
 </head>
 <body>
 
-
 	    <div style="float:right;" width="30%">
 			<c:if test = "${sessionScope.login !=null }">
 				<form action="t-order" method="post">

@@ -23,7 +23,6 @@
 <form action="t-order" method="post">
 	<h1>ご注文内容確認</h1>
 
-
 	<center>
 		<table border="3" summary="注文内容表示" cellspacing="1">
 			<tr bgcolor="#b3b3b3" align="center">
