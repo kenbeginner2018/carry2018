@@ -149,7 +149,10 @@
 									<c:if test="${cart.itemCount == u }">
 										<option value=<%=count %> selected="selected">${u}</option>
 									</c:if>
-									<option value=<%=count %>>${u}</option>
+			<!-- 6/24：if文部分を追加 -->
+									<c:if test="${cart.itemCount != u }">
+										<option value=<%=count %>>${u}</option>
+									</c:if>
 									<% count++; %>
 								</c:forEach>
 							</select>
