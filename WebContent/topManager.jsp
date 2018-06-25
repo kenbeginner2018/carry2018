@@ -9,6 +9,17 @@
 </head>
 	<body>
 
+<div style="float:right;">
+	<c:if test = "${sessionScope.mlogin !=null }">
+		<form action="t-order" method="post">
+			<input type="submit" name="btn" value="ログアウト" />
+			<input type="hidden" name="act" value="LogOutManager" />
+		</form>
+	</c:if>
+	<br />
+</div>
+
+
 <center>
 
 <form action="t-order" method="post">
