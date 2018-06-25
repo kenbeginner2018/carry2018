@@ -15,5 +15,4 @@ public class Credit_Action extends Action {
 		session.removeAttribute("items");
 		return "/credit.jsp";
 	}
-
 }
