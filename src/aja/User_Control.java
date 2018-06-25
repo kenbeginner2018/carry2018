@@ -65,7 +65,7 @@ public class User_Control extends HttpServlet {
 				actionClassName = props.getProperty("Top");
 			}
 			/*debag control */
-			System.out.println("debug control act = " + actName);
+//			System.out.println("debug control act = " + actName);
 
 			Class<?> actionClass = Class.forName(actionClassName);
 			action = (Action) actionClass.newInstance();

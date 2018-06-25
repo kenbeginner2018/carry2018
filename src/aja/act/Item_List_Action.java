@@ -53,13 +53,11 @@ public class Item_List_Action extends Action {
 
 		//ログインページから遷移した場合
 		if(request.getParameter("reservNo") != null || request.getParameter("telNo") != null) {
-			//6/24追加
 			//itemName,itemCountをrequestで再度転送する
 			request.setAttribute("itemName", request.getParameter("itemName"));
 			request.setAttribute("itemCount", request.getParameter("itemCount"));
 			request.setAttribute("itemPrice", request.getParameter("itemPrice"));
 
-			//6/24変更
 			//未入力チェック
 			if(request.getParameter("reservNo").equals("") || request.getParameter("telNo").equals("")) {
 				String errorMessage = "予約番号もしくは電話番号が入力されていません";
@@ -68,7 +66,6 @@ public class Item_List_Action extends Action {
 				return "/loginUser.jsp";
 			}
 
-			//6/24追加
 			//予約番号の正規表現チェック
 			if(!checkReservNo(request.getParameter("reservNo"))) {
 				String errorMessage = "予約番号は数字のみで入力してください";
@@ -186,7 +183,6 @@ public class Item_List_Action extends Action {
 			session.setAttribute("category", category);
 		}
 
-		//TODO
 		//カートに追加されたならばカートに商品を追加
 		else if(request.getParameter("itemCount") != null) {
 
@@ -296,7 +292,6 @@ public class Item_List_Action extends Action {
 		return matcher.matches();
 	}
 
-	//6/24追加コード
 	//予約番号の形式チェック(数字のみの形式か否か)
 	private boolean checkReservNo(String reservNo) {
 		String regex = "^[0-9]+$";
