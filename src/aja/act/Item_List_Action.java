@@ -186,7 +186,6 @@ public class Item_List_Action extends Action {
 		//カートに追加されたならばカートに商品を追加
 		else if(request.getParameter("itemCount") != null) {
 
-			System.out.println(login.getReservNo());
 			//カート確認フラグ
 			boolean check = false;
 

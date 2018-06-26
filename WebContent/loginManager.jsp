@@ -25,16 +25,6 @@
 			</tr>
 		</table>
 	</form>
-	<form action="t-order" method="post">
-		<table summary="検索欄">
-			<tr>
-				<td>
-					<input type="submit" name="Items" value="戻る" />
-					<input type="hidden" name="act" value="Top" />
-				</td>
-			</tr>
-		</table>
-	</form>
 
 	<div>
 		<c:if test="${requestScope.errorMessage != null}">

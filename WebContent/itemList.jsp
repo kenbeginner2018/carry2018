@@ -142,7 +142,7 @@
 							${cart.itemName}
 						</td>
 						<td>
-							¥${cart.itemPrice}円
+							¥${cart.itemPrice}
 						</td>
 						<td>
 							<select name="itemcount">
