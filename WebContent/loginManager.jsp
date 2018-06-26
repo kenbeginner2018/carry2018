@@ -11,10 +11,17 @@
 <body>
 	<form action="t-order" method="post">
 		<h1>管理者ログイン</h1>
-			<strong>管理者番号</strong>
-			<input type="text" size="15" name="managerId"  /><br />
-			<strong>パスワード　</strong>
-			<input type="text" size="15" name="password" /><br />
+
+		<table summary="検索欄">
+			<tr>
+				<td><strong>管理者番号</strong></td>
+				<td><input type="text" size="15" name="managerId"  /></td>
+			</tr>
+			<tr>
+				<td><strong>パスワード</strong></td>
+				<td><input type="text" size="15" name="password" /></td>
+			</tr>
+		</table>
 
 		<table summary="検索欄">
 			<tr>
