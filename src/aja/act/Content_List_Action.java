@@ -45,17 +45,17 @@ public class Content_List_Action extends Action {
 		}
 		//creditNoの正規チェック
 		else if(!checkCreditNo(creditNo)) {
-			request.setAttribute("errorMessage", "クレジット番号を正しく入力してください");
+			request.setAttribute("errorMessage", "クレジット番号を半角数字で正しく入力してください");
 			return "/credit.jsp";
 		}
 		//名前の正規チェック
 		else if(!checkName(name)) {
-			request.setAttribute("errorMessage", "名前は以下の形式で入力してください<br />(例)TANAKA TARO");
+			request.setAttribute("errorMessage", "名前は以下のように半角大文字で入力してください<br />(例)TANAKA TARO");
 			return "/credit.jsp";
 		}
 		//securityCodeの正規チェック
 		else if(!checkSecurityCode(securityCode)) {
-			request.setAttribute("errorMessage", "セキュリティコードを正しく入力してください");
+			request.setAttribute("errorMessage", "セキュリティコードを半角数字で正しく入力してください");
 			return "/credit.jsp";
 		}
 

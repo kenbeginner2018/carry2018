@@ -68,7 +68,7 @@ public class Item_List_Action extends Action {
 
 			//予約番号の正規表現チェック
 			if(!checkReservNo(request.getParameter("reservNo"))) {
-				String errorMessage = "予約番号は数字のみで入力してください";
+				String errorMessage = "予約番号は半角数字のみで入力してください";
 				request.setAttribute("errorMessage",errorMessage);
 
 				return "/loginUser.jsp";
@@ -83,7 +83,7 @@ public class Item_List_Action extends Action {
 
 			//電話番号のバリテーションチェック
 			if(!checkTelNo(telNo)) {
-				String errorMessage = "電話番号はxxx-xxxx-xxxxの形式で入力してください";
+				String errorMessage = "電話番号は半角数字でxxx-xxxx-xxxxの形式で入力してください";
 				request.setAttribute("errorMessage",errorMessage);
 
 				//入力値保持のため、reservNoとtelNoをrequest再転送
